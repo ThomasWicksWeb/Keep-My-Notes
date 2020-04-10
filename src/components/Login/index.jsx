@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
 
 import 'bulma/css/bulma.css'
 import styles from './Login.module.scss'
@@ -42,6 +43,8 @@ const Login = () => {
                         </div>
                     </div>
                     <button className="button is-info has-text-weight-bold" type="submit">Login</button>
+                    <p className="has-text-centered">Don't have an account? <a href="#">Create one here</a></p>
+                    <p className="has-text-centered">Having trouble logging in? <a href="#"> Reset your password</a></p>
                 </form>
 
             </div>
