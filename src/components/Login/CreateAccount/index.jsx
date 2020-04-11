@@ -1,14 +1,16 @@
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 
+import firebase from 'firebase'
+
 import 'bulma/css/bulma.css'
 import styles from './CreateAccount.module.scss'
 
 const CreateAccount = () => {
 
-    const [emailField, setEmail] = useState("");
-    const [passwordField, setPassword] = useState("");
-    const [passwordFieldConfirm, setPasswordConfirm] = useState("");
+    const [email, setEmail] = useState("");
+    const [password, setPassword] = useState("");
+    const [passwordConfirm, setPasswordConfirm] = useState("");
 
     const handleEmail = (e) => {
         setEmail(e.target.value);
@@ -22,10 +24,17 @@ const CreateAccount = () => {
         setPasswordConfirm(e.target.value);
     }
 
-    const handleOnSubmit = e => {
+    const handleOnSubmit = (e) => {
         e.preventDefault();
-        console.log(emailField, passwordField);
-    }
+        firebase.auth().createUserWithEmailAndPassword(email, password).catch(function(error) {
+            // Handle Errors here.
+            const errorCode = error.code;
+            const errorMessage = error.message;
+            console.log(`Error Code: ${errorCode}`);
+            console.log(`Error Message: ${errorMessage}`);
+            // ...
+          });
+      };
 
 
     return(
@@ -39,21 +48,21 @@ const CreateAccount = () => {
                     <div className="field">
                         <label className="label">Email</label>
                         <div className="control">
-                            <input className="input" type="email" placeholder="Email" required value={emailField} onChange={handleEmail} />
+                            <input className="input" type="email" placeholder="Email" required value={email} onChange={handleEmail} />
                         </div>
                     </div>
 
                     <div className="field">
                         <label className="label">Password</label>
                         <div className="control">
-                            <input className="input" type="password" placeholder="Password" required value={passwordField} onChange={handlePassword} />
+                            <input className="input" type="password" placeholder="Password" required value={password} onChange={handlePassword} />
                         </div>
                     </div>
 
                     <div className="field">
                         <label className="label">Confirm Password</label>
                         <div className="control">
-                            <input className="input" type="password" placeholder="Password" required value={passwordFieldConfirm} onChange={handlePasswordConfirm} />
+                            <input className="input" type="password" placeholder="Password" required value={passwordConfirm} onChange={handlePasswordConfirm} />
                         </div>
                     </div>
 

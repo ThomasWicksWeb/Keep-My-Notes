@@ -1,13 +1,32 @@
 import React, { useState } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, Redirect, useHistory } from 'react-router-dom';
+
+import firebase from 'firebase'
 
 import 'bulma/css/bulma.css'
 import styles from './Login.module.scss'
 
 const StandardLogin = () => {
 
-    const [emailField, setEmail] = useState("");
-    const [passwordField, setPassword] = useState("");
+    const [email, setEmail] = useState("");
+    const [password, setPassword] = useState("");
+
+    const history = useHistory();
+
+    const handleOnSubmit = (e) => {
+        e.preventDefault();
+        firebase.auth().signInWithEmailAndPassword(email, password).then(function(user) {
+            // user signed in
+            history.push("/home");
+         }).catch(function(error) {
+            // Handle Errors here.
+            const errorCode = error.code;
+            const errorMessage = error.message;
+            console.log(`Error Code: ${errorCode}`);
+            console.log(`Error Message: ${errorMessage}`);
+            // ...
+          });
+    };
 
     const handleEmail = (e) => {
         setEmail(e.target.value);
@@ -15,11 +34,6 @@ const StandardLogin = () => {
 
     const handlePassword = e => {
         setPassword(e.target.value);
-    }
-
-    const handleOnSubmit = e => {
-        e.preventDefault();
-        console.log(emailField, passwordField);
     }
 
 
@@ -34,19 +48,21 @@ const StandardLogin = () => {
                     <div className="field">
                         <label className="label">Email</label>
                         <div className="control">
-                            <input className="input" type="email" placeholder="Email" required onChange={handleEmail} />
+                            <input className="input" type="email" placeholder="Email" required value={email} onChange={handleEmail} />
                         </div>
                     </div>
                     <div className="field">
                         <label className="label">Password</label>
                         <div className="control">
-                            <input className="input" type="password" placeholder="Password" required onChange={handlePassword} />
+                            <input className="input" type="password" placeholder="Password" required  value={password} onChange={handlePassword} />
                         </div>
                     </div>
                     <button className="button is-info has-text-weight-bold" type="submit">Login</button>
 
+                    <hr />
+
                     <p className="has-text-centered">Don't have an account?{' '}
-                        <Link to="/createaccount">Create one here</Link>
+                        <Link to="/createaccount">Create one</Link>
                     </p>
 
                     <p className="has-text-centered">Having trouble logging in?{' '}

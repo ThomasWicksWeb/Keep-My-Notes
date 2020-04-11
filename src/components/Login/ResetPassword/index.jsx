@@ -5,6 +5,7 @@ import 'bulma/css/bulma.css'
 import styles from './ResetPassword.module.scss'
 
 const ResetPassword = () => {
+    
     const [emailField, setEmail] = useState("");
 
     const handleEmail = (e) => {
@@ -39,7 +40,7 @@ const ResetPassword = () => {
                     </p>
 
                     <p className="has-text-centered">Don't have an account?{' '}
-                        <Link to="/createaccount">Create one here</Link>
+                        <Link to="/createaccount">Create one</Link>
                     </p>
                     
                 </form>
