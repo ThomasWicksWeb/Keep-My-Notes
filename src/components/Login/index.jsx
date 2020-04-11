@@ -1,57 +1,24 @@
-import React, { useState } from 'react';
+import React from 'react'
 import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
 
-import 'bulma/css/bulma.css'
-import styles from './Login.module.scss'
+import StandardLogin from './StandardLogin'
+import ResetPassword from './ResetPassword'
+import CreateAccount from './CreateAccount'
+
 
 const Login = () => {
-
-    const [emailField, setEmail] = useState("");
-    const [passwordField, setPassword] = useState("");
-
-    const handleEmail = (e) => {
-        setEmail(e.target.value);
-    }
-
-    const handlePassword = e => {
-        setPassword(e.target.value);
-    }
-
-    const handleOnSubmit = e => {
-        e.preventDefault();
-    }
-
-
     return(
-        <section className="section">
-            <div className="container">
-
-                <h3 className="has-text-weight-bold has-text-centered is-size-3">Login</h3>
-                <h3 className="has-text-weight-bold has-text-centered is-size-4">with Username or Email</h3>
-
-                <form onSubmit={handleOnSubmit} className={styles.formContainer}>
-                    <div className="field">
-                        <label className="label">Email</label>
-                        <div className="control">
-                            <input className="input" type="text" placeholder="Email" onChange={handleEmail} />
-                        </div>
-                    </div>
-                    <div className="field">
-                        <label className="label">Password</label>
-                        <div className="control">
-                            <input className="input" type="password" placeholder="Password" onChange={handlePassword} />
-                        </div>
-                    </div>
-                    <button className="button is-info has-text-weight-bold" type="submit">Login</button>
-                    <p className="has-text-centered">Don't have an account? <a href="#">Create one here</a></p>
-                    <p className="has-text-centered">Having trouble logging in? <a href="#"> Reset your password</a></p>
-                </form>
-
-            </div>
-        </section>
+        <Router>
+            <Switch>
+                <Route exact path="/" component={StandardLogin} />
+                <Route exact path="/login" component={StandardLogin} />
+                <Route exact path="/resetpassword" component={ResetPassword} />
+                <Route exact path="/createaccount" component={CreateAccount} />
+            </Switch>
+        </Router>
     )
 
-
 }
+
 
 export default Login;
