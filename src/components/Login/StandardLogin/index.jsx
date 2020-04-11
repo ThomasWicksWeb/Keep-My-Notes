@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { BrowserRouter, Route } from 'react-router-dom';
+import { BrowserRouter, Route, Switch, Link } from 'react-router-dom';
 
 import CreateAccount from '../CreateAccount'
 import ResetPassword from '../ResetPassword'
@@ -48,18 +48,14 @@ const StandardLogin = () => {
                     </div>
                     <button className="button is-info has-text-weight-bold" type="submit">Login</button>
 
-                    <BrowserRouter>
-                        <p className="has-text-centered">Don't have an account?{' '}
-                            <Route path="/createaccount"
-                                component={CreateAccount}
-                            >Create one here</Route>
-                        </p>
-                        <p className="has-text-centered">Having trouble logging in?{' '}
-                            <Route path="/resetpassword"
-                                component={ResetPassword}
-                            >Reset your password</Route>
-                        </p>
-                    </BrowserRouter>
+                    <p className="has-text-centered">Don't have an account?{' '}
+                        <Link to="/createaccount">Create one here</Link>
+                    </p>
+                    
+                    <p className="has-text-centered">Having trouble logging in?{' '}
+                        <Link to="/resetpassword">Reset your password</Link>
+                    </p>
+                    {/* <p>Reset password <Link to="/resetpassword">Here</Link></p> */}
 
                     
                     {/* <p className="has-text-centered">Having trouble logging in? <a href="#"> Reset your password</a></p> */}

@@ -1,5 +1,5 @@
 import React from 'react'
-import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
+import { BrowserRouter as Router, Route, Switch, Link } from 'react-router-dom';
 
 import StandardLogin from './StandardLogin'
 import ResetPassword from './ResetPassword'
@@ -17,7 +17,6 @@ const Login = () => {
             </Switch>
         </Router>
     )
-
 }
 
 
