@@ -1,8 +1,5 @@
 import React, { useState } from 'react';
-import { BrowserRouter, Route, Switch, Link } from 'react-router-dom';
-
-import CreateAccount from '../CreateAccount'
-import ResetPassword from '../ResetPassword'
+import { Link } from 'react-router-dom';
 
 import 'bulma/css/bulma.css'
 import styles from './Login.module.scss'
@@ -51,14 +48,11 @@ const StandardLogin = () => {
                     <p className="has-text-centered">Don't have an account?{' '}
                         <Link to="/createaccount">Create one here</Link>
                     </p>
-                    
+
                     <p className="has-text-centered">Having trouble logging in?{' '}
                         <Link to="/resetpassword">Reset your password</Link>
                     </p>
-                    {/* <p>Reset password <Link to="/resetpassword">Here</Link></p> */}
 
-                    
-                    {/* <p className="has-text-centered">Having trouble logging in? <a href="#"> Reset your password</a></p> */}
                 </form>
 
             </div>
