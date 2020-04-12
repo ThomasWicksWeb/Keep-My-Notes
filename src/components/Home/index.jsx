@@ -31,13 +31,15 @@ const Home = () => {
     // });
   }
 
-  var user = firebase.auth().currentUser;
+  
 
-  useEffect((user) => {
-    if(user != null) {
-      setEmail(user.email);
+  firebase.auth().onAuthStateChanged(function(user) {
+    if (user) {
+      // User is signed in.
+      const myUser = firebase.auth().currentUser;
+      setEmail(myUser.email);
     }
-  }, []);
+  });
 
   return(
     <>
