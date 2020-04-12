@@ -1,5 +1,5 @@
-import React, { useEffect, useState } from 'react';
-import { useHistory, Router, Route, Switch, BrowserRouter } from 'react-router-dom'
+import React from 'react';
+import { Route, Switch, BrowserRouter } from 'react-router-dom'
 import './firebase'
 
 // Firebase App (the core Firebase SDK) is always required and
@@ -35,7 +35,7 @@ function App() {
 
   return (
     <>
-      {/* <NavBar /> */}
+      <NavBar />
       <BrowserRouter>
         <Switch>
             <Route exact path="/" component={Home} />

@@ -11,6 +11,9 @@ const Home = () => {
 
   const [email, setEmail] = useState("");
   const [userID, setUserID] = useState("");
+  const [country, setCountry] = useState("");
+
+  const user = firebase.auth().currentUser;
 
   const history = useHistory();
 
@@ -19,14 +22,11 @@ const Home = () => {
     history.push("/login");
   }
 
+
   const addInfo = () => {
-  
-    const user = firebase.auth().currentUser;
-
-
     db.collection("testCollection").doc(user.uid).set({
-      name: "Los Angeles",
-      state: "CA",
+      name: "Thomas Wicks",
+      state: "NY",
       country: "USA"
     })
     .then(function() {
@@ -37,12 +37,14 @@ const Home = () => {
     });
   }
 
-  
+  db.collection("testCollection").get().then((querySnapshot) => {
+    querySnapshot.forEach((doc) => {
+        console.log(doc.data().country);
+    });
+  });
 
   firebase.auth().onAuthStateChanged(function(user) {
     if (user) {
-      // User is signed in.
-      const user = firebase.auth().currentUser;
       setEmail(user.email);
       setUserID(user.uid);
     }
@@ -50,10 +52,11 @@ const Home = () => {
 
   return(
     <>
-      <p>Hello</p>
+      <p>Welcome to the home page</p>
       <ul>
         <li>Goog morning! {email} </li>
         <li>User ID {userID} </li>
+        <li>country {country} </li>
       </ul>
       <button className="button is-info" onClick={handleLogout}>Logout</button>
       <button className="button is-info" onClick={addInfo}>Add info</button>

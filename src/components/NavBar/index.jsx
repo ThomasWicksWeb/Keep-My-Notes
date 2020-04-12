@@ -7,7 +7,7 @@ const NavBar = () => {
 
     return(
         <>
-            
+            <h1>I AM THE NAVIGATION BAR</h1>
         </>
     )
 }
