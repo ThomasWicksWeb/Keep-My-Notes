@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useHistory } from 'react-router-dom';
 
 import firebase from 'firebase'
 
@@ -10,7 +10,8 @@ const CreateAccount = () => {
 
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
-    const [passwordConfirm, setPasswordConfirm] = useState("");
+
+    let history = useHistory();
 
     const handleEmail = (e) => {
         setEmail(e.target.value);
@@ -20,13 +21,11 @@ const CreateAccount = () => {
         setPassword(e.target.value);
     }
 
-    const handlePasswordConfirm = e => {
-        setPasswordConfirm(e.target.value);
-    }
-
     const handleOnSubmit = (e) => {
         e.preventDefault();
-        firebase.auth().createUserWithEmailAndPassword(email, password).catch(function(error) {
+        firebase.auth().createUserWithEmailAndPassword(email, password).then(function(){
+            history.push("/home");
+        }).catch(function(error) {
             // Handle Errors here.
             const errorCode = error.code;
             const errorMessage = error.message;
@@ -56,13 +55,6 @@ const CreateAccount = () => {
                         <label className="label">Password</label>
                         <div className="control">
                             <input className="input" type="password" placeholder="Password" required value={password} onChange={handlePassword} />
-                        </div>
-                    </div>
-
-                    <div className="field">
-                        <label className="label">Confirm Password</label>
-                        <div className="control">
-                            <input className="input" type="password" placeholder="Password" required value={passwordConfirm} onChange={handlePasswordConfirm} />
                         </div>
                     </div>
 
