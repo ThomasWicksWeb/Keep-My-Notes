@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { useHistory, Router, Route, Switch, BrowserRouter } from 'react-router-dom'
+import './firebase'
 
 // Firebase App (the core Firebase SDK) is always required and
 // must be listed before other Firebase SDKs

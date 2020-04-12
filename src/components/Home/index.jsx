@@ -2,6 +2,7 @@ import React, { useEffect } from 'react'
 import { useHistory } from 'react-router-dom'
 
 import firebase from 'firebase'
+import { db } from '../../firebase'
 
 import 'bulma/css/bulma.css'
 import { useState } from 'react'
@@ -9,6 +10,7 @@ import { useState } from 'react'
 const Home = () => {
 
   const [email, setEmail] = useState("");
+  const [userID, setUserID] = useState("");
 
   const history = useHistory();
 
@@ -18,17 +20,21 @@ const Home = () => {
   }
 
   const addInfo = () => {
-      firebase.db.collection("testCollection").add({
-        first: "Ada",
-        last: "Lovelace",
-        born: 1815
+  
+    const user = firebase.auth().currentUser;
+
+
+    db.collection("testCollection").doc(user.uid).set({
+      name: "Los Angeles",
+      state: "CA",
+      country: "USA"
     })
-    // .then(function(docRef) {
-    //     console.log("Document written with ID: ", docRef.id);
-    // })
-    // .catch(function(error) {
-    //     console.error("Error adding document: ", error);
-    // });
+    .then(function() {
+        console.log("Document successfully written!");
+    })
+    .catch(function(error) {
+        console.error("Error writing document: ", error);
+    });
   }
 
   
@@ -36,8 +42,9 @@ const Home = () => {
   firebase.auth().onAuthStateChanged(function(user) {
     if (user) {
       // User is signed in.
-      const myUser = firebase.auth().currentUser;
-      setEmail(myUser.email);
+      const user = firebase.auth().currentUser;
+      setEmail(user.email);
+      setUserID(user.uid);
     }
   });
 
@@ -45,7 +52,8 @@ const Home = () => {
     <>
       <p>Hello</p>
       <ul>
-        <li> {email} </li>
+        <li>Goog morning! {email} </li>
+        <li>User ID {userID} </li>
       </ul>
       <button className="button is-info" onClick={handleLogout}>Logout</button>
       <button className="button is-info" onClick={addInfo}>Add info</button>
