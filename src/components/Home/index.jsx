@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import { useHistory } from 'react-router-dom'
 
 import firebase from 'firebase'
@@ -10,10 +10,14 @@ const Home = () => {
 
   const [email, setEmail] = useState("");
   const [userID, setUserID] = useState("");
-  const [noteTitle, setNoteTitle] = useState("");
-  const [noteBody, setNoteBody] = useState("");
+  const [noteTitle, setNoteTitle] = useState([]);
+  const [noteBody, setNoteBody] = useState([]);
 
   const user = firebase.auth().currentUser;
+  
+  useEffect(() => {
+    setUserID(user.uid);
+  }, [])
 
   const history = useHistory();
 
@@ -29,7 +33,6 @@ const Home = () => {
     history.push("/login");
   }
 
-
   const addInfo = () => {
     db.collection("testCollection").doc(userID).collection("Notes").doc().set({
       Title: "Note Title Testing!",
@@ -43,9 +46,10 @@ const Home = () => {
     });
   }
 
-
-  db.collection("testCollection").doc("3pOtrx0zlHZ13sx8dMxO").collection("Notes").get().then((querySnapshot) => {
+  db.collection("testCollection").doc(userID).collection("Notes").get().then((querySnapshot) => {
     querySnapshot.docs.forEach((doc) => {
+      // setNoteTitle(...noteTitle, doc.Title);
+      // setNoteBody(...noteBody, doc.Content);
       setNoteTitle(doc.Title);
       setNoteBody(doc.Content);
     });
