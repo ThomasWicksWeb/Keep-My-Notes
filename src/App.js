@@ -24,6 +24,7 @@ import ResetPassword from './components/ResetPassword'
 
 function App() {
 
+
   firebase.auth().onAuthStateChanged(function(user) {
     if (user) {
       console.log("I'm logged in");
