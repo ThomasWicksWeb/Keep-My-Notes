@@ -12,14 +12,18 @@ const Home = () => {
   const [userID, setUserID] = useState("");
   const [noteTitle, setNoteTitle] = useState([]);
   const [noteBody, setNoteBody] = useState([]);
-
-  const user = firebase.auth().currentUser;
-  
-  useEffect(() => {
-    setUserID(user.uid);
-  }, [])
+  const [allNotes, setAllNotes] = useState([]);
 
   const history = useHistory();
+
+  // const uid = firebase.auth().currentUser;
+  // console.log(firebase.auth().currentUser);
+  // console.log(firebase.auth().currentUser.uid);
+  // if (firebase.auth().currentUser !== null) {
+  //       console.log("user id: " + firebase.auth().currentUser.uid);
+  //       setUserID(firebase.auth().currentUser.uid);
+  // }
+
 
   firebase.auth().onAuthStateChanged(function(user) {
     if (user) {
@@ -46,14 +50,52 @@ const Home = () => {
     });
   }
 
+  
+
+const callInfo = () => {
+
+  if (firebase.auth().currentUser !== null) {
+    console.log("user id: " + firebase.auth().currentUser.uid);
+    setUserID(firebase.auth().currentUser.uid);
+  }
+
+  console.log("USER ID HERE:", userID)
+
+  // var x = "WrgI3qjBF8WqnuyzAmHVsCB1prt1";
+
   db.collection("testCollection").doc(userID).collection("Notes").get().then((querySnapshot) => {
     querySnapshot.docs.forEach((doc) => {
       // setNoteTitle(...noteTitle, doc.Title);
       // setNoteBody(...noteBody, doc.Content);
-      setNoteTitle(doc.Title);
-      setNoteBody(doc.Content);
+      setNoteTitle(doc.data().Title);
+      setNoteBody(doc.data().Content);
+      // console.log('-------------------------')
+      // console.log(doc.data().Title)
+      // console.log(doc.data().Content)
+      // console.log('-------------------------')
+
+      setAllNotes(...allNotes, doc.data().Title)
+      console.log("NOTES:", allNotes)
+
     });
   });
+}
+
+  // console.log("USER ID HERE:", userID)
+
+  // db.collection("testCollection").doc(uid).collection("Notes").get().then((querySnapshot) => {
+  //   querySnapshot.docs.forEach((doc) => {
+  //     // setNoteTitle(...noteTitle, doc.Title);
+  //     // setNoteBody(...noteBody, doc.Content);
+  //     setNoteTitle(doc.data().Title);
+  //     setNoteBody(doc.data().Content);
+  //     console.log('-------------------------')
+  //     console.log(doc.data())
+  //     // console.log(doc)
+  //     // console.log(doc)
+  //     console.log('-------------------------')
+  //   });
+  // });
 
 
   return(
@@ -65,9 +107,13 @@ const Home = () => {
           <li>User ID: {userID} </li>
           <li>Title: {noteTitle} </li>
           <li>Note: {noteBody} </li>
+          <li>All Notes:
+            { allNotes }
+          </li>
         </ul>
         <button className="button is-info" onClick={handleLogout}>Logout</button>
         <button className="button is-info" onClick={addInfo}>Add info</button>
+        <button className="button is-info" onClick={callInfo}>Call info</button>
       </div>
     </section>
   )
