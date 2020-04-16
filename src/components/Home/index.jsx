@@ -8,11 +8,19 @@ import 'bulma/css/bulma.css'
 
 const Home = ({myUserID}) => {
 
+  // User specific data
   const [email, setEmail] = useState("");
   const [userID, setUserID] = useState("");
   
-  const [noteTitles, setTitles] = useState([]);
+  // Array of all notes
+  const [allNotes, setNotes] = useState([]);
 
+  // Data for a new note to be added to Firebase
+  const [newNote, setNewNote] = useState({
+    Title: "",
+    Content: "",
+    LastEdit: new Date()
+  });
 
   // Input fields
   const [inputTitle, setInputTitle] = useState("");
@@ -20,31 +28,38 @@ const Home = ({myUserID}) => {
 
   const history = useHistory();
 
-  firebase.auth().onAuthStateChanged(function(user) {
-    if (user) {
-      setEmail(user.email);
-      setUserID(user.uid);
-    }
-  });
+  // firebase.auth().onAuthStateChanged(function(user) {
+  //   if (user) {
+  //     setEmail(user.email);
+  //     setUserID(user.uid);
+  //   }
+  // });
 
   /////////////////////////////////////////////////////////////////
   
-  // while (firebase.auth().currentUser === null) {
-  //   console.log("Loading...");
-  // }
+  useEffect( () => {
+    firebase.auth().onAuthStateChanged(async user => {
+      if(user) {
+        const { uid } = user;
+  
+        // Getting the entire Notes collection for the user
+        const querySnapshot = await db.collection('testCollection').doc(uid).collection('Notes').get();
 
-  // if (firebase.auth().currentUser !== null) {
-  //   console.log("user id: " + firebase.auth().currentUser.uid);
-  //   setUserID(firebase.auth().currentUser.uid);
-  // }
+        // Getting each individual note
+        const storedNotes = await Promise.all(querySnapshot.docs.map(async doc => await doc.data()));
 
-
-  // Calls firebase for data on apge load -- currently crashes app since the user ID isn't loaded from Firebase yet
-  db.collection("testCollection").doc(myUserID).collection("Notes").get().then((querySnapshot) => {
-    querySnapshot.docs.forEach((doc) => {
-      setTitles(...noteTitles, doc.data().Title)
-    });
-  });
+        setNotes(storedNotes); // Array state containing all notes
+        setEmail(user.email); // Sets user email
+        setUserID(user.uid); // Sets user's ID
+      }
+      
+    })
+  }, []);
+  
+  // If the user's ID hasn't loaded, show that it's loading
+  if(!userID) {
+    return <h1>loading...</h1>;
+  }
 
   /////////////////////////////////////////////////////////////////
 
@@ -72,9 +87,18 @@ const Home = ({myUserID}) => {
       Title: inputTitle,
       Content: inputBody,
       LastEdit: new Date()
+      
     })
     .then(function() {
         console.log("Document successfully written!");
+        setNewNote({
+          Title: inputTitle,
+          Content: inputBody,
+          LastEdit: new Date()
+        })
+
+        setNotes(allNotes, newNote);
+
     })
     .catch(function(error) {
         console.error("Error writing document: ", error);
@@ -101,14 +125,12 @@ const Home = ({myUserID}) => {
   
   // Test button to call into from FireBase
   const callInfo = () => {
-    // if (firebase.auth().currentUser !== null) {
-    //   console.log("user id: " + firebase.auth().currentUser.uid);
-    //   setUserID(firebase.auth().currentUser.uid);
-    // }
-
     db.collection("testCollection").doc(myUserID).collection("Notes").get().then((querySnapshot) => {
       querySnapshot.docs.forEach((doc) => {
-        setTitles(...noteTitles, doc.data().Title)
+        let newArr = [...allNotes, doc.data()];
+        allNotes(newArr)
+        console.log(doc.data());
+        console.log(newArr);
       });
     });
   }
@@ -144,10 +166,18 @@ const Home = ({myUserID}) => {
           <button type="submit" className="button is-size-5 is-info">Add Note to Firestore</button>
         </form>
 
+        <hr />
+
         <div className="content">
+          <h1 className="is-size-3 has-text-weight-bold">Notes</h1>
           <ul>
-            {noteTitles.map(e => {
-              return <li>{e}</li>
+            {allNotes.map(item => {
+              return(
+                <li key={item.Title}>
+                  <p className="has-text-weight-bold is-size-4">{item.Title}</p>
+                  <p className="is-size-6">{item.Content}</p>
+                </li>
+              )
             })}
           </ul>
         </div>
