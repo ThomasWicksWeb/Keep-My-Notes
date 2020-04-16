@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { Route, Switch, BrowserRouter } from 'react-router-dom'
 import './firebase'
 
@@ -23,7 +23,6 @@ import ResetPassword from './components/ResetPassword'
 
 
 function App() {
-
 
   firebase.auth().onAuthStateChanged(function(user) {
     if (user) {

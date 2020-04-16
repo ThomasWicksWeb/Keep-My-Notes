@@ -6,24 +6,19 @@ import { db } from '../../firebase'
 
 import 'bulma/css/bulma.css'
 
-const Home = () => {
+const Home = ({myUserID}) => {
 
   const [email, setEmail] = useState("");
   const [userID, setUserID] = useState("");
-  const [noteTitle, setNoteTitle] = useState([]);
-  const [noteBody, setNoteBody] = useState([]);
-  const [allNotes, setAllNotes] = useState([]);
+  
+  const [noteTitles, setTitles] = useState([]);
+
+
+  // Input fields
+  const [inputTitle, setInputTitle] = useState("");
+  const [inputBody, setInputBody] = useState("");
 
   const history = useHistory();
-
-  // const uid = firebase.auth().currentUser;
-  // console.log(firebase.auth().currentUser);
-  // console.log(firebase.auth().currentUser.uid);
-  // if (firebase.auth().currentUser !== null) {
-  //       console.log("user id: " + firebase.auth().currentUser.uid);
-  //       setUserID(firebase.auth().currentUser.uid);
-  // }
-
 
   firebase.auth().onAuthStateChanged(function(user) {
     if (user) {
@@ -32,15 +27,51 @@ const Home = () => {
     }
   });
 
+  /////////////////////////////////////////////////////////////////
+  
+  // while (firebase.auth().currentUser === null) {
+  //   console.log("Loading...");
+  // }
+
+  // if (firebase.auth().currentUser !== null) {
+  //   console.log("user id: " + firebase.auth().currentUser.uid);
+  //   setUserID(firebase.auth().currentUser.uid);
+  // }
+
+
+  // Calls firebase for data on apge load -- currently crashes app since the user ID isn't loaded from Firebase yet
+  db.collection("testCollection").doc(myUserID).collection("Notes").get().then((querySnapshot) => {
+    querySnapshot.docs.forEach((doc) => {
+      setTitles(...noteTitles, doc.data().Title)
+    });
+  });
+
+  /////////////////////////////////////////////////////////////////
+
+
+  // Handles input field for note title
+  const handleTitleChange = (e) => {
+    setInputTitle(e.target.value)
+  }
+
+  // Handles input field for new note body
+  const handleBodyChange = (e) => {
+    setInputBody(e.target.value)
+  }
+
   const handleLogout = () => {
     firebase.auth().signOut();
     history.push("/login");
   }
 
-  const addInfo = () => {
+  // Adding new note to FireBase
+  const AddNewNote = (e) => {
+    e.preventDefault();
+
     db.collection("testCollection").doc(userID).collection("Notes").doc().set({
-      Title: "Note Title Testing!",
-      Content: "This is new content test!"
+      Title: inputTitle,
+      Content: inputBody,
+      LastEdit: new Date()
     })
     .then(function() {
         console.log("Document successfully written!");
@@ -52,51 +83,35 @@ const Home = () => {
 
   
 
-const callInfo = () => {
-
-  if (firebase.auth().currentUser !== null) {
-    console.log("user id: " + firebase.auth().currentUser.uid);
-    setUserID(firebase.auth().currentUser.uid);
+ 
+  // Test button to push static info to FireBase
+  const addInfo = () => {
+    db.collection("testCollection").doc(userID).collection("Notes").doc().set({
+      Title: "Hello World",
+      Content: "This is my first firebase applicati"
+    })
+    .then(function() {
+        console.log("Document successfully written!");
+    })
+    .catch(function(error) {
+        console.error("Error writing document: ", error);
+    });
   }
 
-  console.log("USER ID HERE:", userID)
+  
+  // Test button to call into from FireBase
+  const callInfo = () => {
+    // if (firebase.auth().currentUser !== null) {
+    //   console.log("user id: " + firebase.auth().currentUser.uid);
+    //   setUserID(firebase.auth().currentUser.uid);
+    // }
 
-  // var x = "WrgI3qjBF8WqnuyzAmHVsCB1prt1";
-
-  db.collection("testCollection").doc(userID).collection("Notes").get().then((querySnapshot) => {
-    querySnapshot.docs.forEach((doc) => {
-      // setNoteTitle(...noteTitle, doc.Title);
-      // setNoteBody(...noteBody, doc.Content);
-      setNoteTitle(doc.data().Title);
-      setNoteBody(doc.data().Content);
-      // console.log('-------------------------')
-      // console.log(doc.data().Title)
-      // console.log(doc.data().Content)
-      // console.log('-------------------------')
-
-      setAllNotes(...allNotes, doc.data().Title)
-      console.log("NOTES:", allNotes)
-
+    db.collection("testCollection").doc(myUserID).collection("Notes").get().then((querySnapshot) => {
+      querySnapshot.docs.forEach((doc) => {
+        setTitles(...noteTitles, doc.data().Title)
+      });
     });
-  });
-}
-
-  // console.log("USER ID HERE:", userID)
-
-  // db.collection("testCollection").doc(uid).collection("Notes").get().then((querySnapshot) => {
-  //   querySnapshot.docs.forEach((doc) => {
-  //     // setNoteTitle(...noteTitle, doc.Title);
-  //     // setNoteBody(...noteBody, doc.Content);
-  //     setNoteTitle(doc.data().Title);
-  //     setNoteBody(doc.data().Content);
-  //     console.log('-------------------------')
-  //     console.log(doc.data())
-  //     // console.log(doc)
-  //     // console.log(doc)
-  //     console.log('-------------------------')
-  //   });
-  // });
-
+  }
 
   return(
     <section className="section">
@@ -105,15 +120,40 @@ const callInfo = () => {
         <ul>
           <li>Goog morning!: {email} </li>
           <li>User ID: {userID} </li>
-          <li>Title: {noteTitle} </li>
-          <li>Note: {noteBody} </li>
-          <li>All Notes:
-            { allNotes }
-          </li>
         </ul>
         <button className="button is-info" onClick={handleLogout}>Logout</button>
         <button className="button is-info" onClick={addInfo}>Add info</button>
         <button className="button is-info" onClick={callInfo}>Call info</button>
+
+        <form onSubmit={AddNewNote}>
+
+          <div className="field">
+            <label className="label">Note Title</label>
+            <div className="control">
+              <input className="input" type="text" placeholder="Title" onChange={handleTitleChange} value={inputTitle} />
+            </div>
+          </div>
+
+          <div className="field">
+            <label className="label">Note</label>
+            <div className="control">
+              <textarea className="textarea" placeholder="Add your note" onChange={handleBodyChange} value={inputBody}></textarea>
+            </div>
+          </div>
+
+          <button type="submit" className="button is-size-5 is-info">Add Note to Firestore</button>
+        </form>
+
+        <div className="content">
+          <ul>
+            {noteTitles.map(e => {
+              return <li>{e}</li>
+            })}
+          </ul>
+        </div>
+
+
+
       </div>
     </section>
   )
