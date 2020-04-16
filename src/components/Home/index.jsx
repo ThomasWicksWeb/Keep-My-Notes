@@ -28,12 +28,7 @@ const Home = ({myUserID}) => {
 
   const history = useHistory();
 
-  // firebase.auth().onAuthStateChanged(function(user) {
-  //   if (user) {
-  //     setEmail(user.email);
-  //     setUserID(user.uid);
-  //   }
-  // });
+
 
   /////////////////////////////////////////////////////////////////
   
@@ -51,10 +46,9 @@ const Home = ({myUserID}) => {
         setNotes(storedNotes); // Array state containing all notes
         setEmail(user.email); // Sets user email
         setUserID(user.uid); // Sets user's ID
-      }
-      
+      }      
     })
-  }, []);
+  }, [allNotes]);
   
   // If the user's ID hasn't loaded, show that it's loading
   if(!userID) {
@@ -97,7 +91,7 @@ const Home = ({myUserID}) => {
           LastEdit: new Date()
         })
 
-        setNotes(allNotes, newNote);
+        setNotes(allNotes => [...allNotes, newNote]);
 
     })
     .catch(function(error) {
@@ -122,18 +116,8 @@ const Home = ({myUserID}) => {
     });
   }
 
+
   
-  // Test button to call into from FireBase
-  const callInfo = () => {
-    db.collection("testCollection").doc(myUserID).collection("Notes").get().then((querySnapshot) => {
-      querySnapshot.docs.forEach((doc) => {
-        let newArr = [...allNotes, doc.data()];
-        allNotes(newArr)
-        console.log(doc.data());
-        console.log(newArr);
-      });
-    });
-  }
 
   return(
     <section className="section">
@@ -144,8 +128,6 @@ const Home = ({myUserID}) => {
           <li>User ID: {userID} </li>
         </ul>
         <button className="button is-info" onClick={handleLogout}>Logout</button>
-        <button className="button is-info" onClick={addInfo}>Add info</button>
-        <button className="button is-info" onClick={callInfo}>Call info</button>
 
         <form onSubmit={AddNewNote}>
 
@@ -170,16 +152,14 @@ const Home = ({myUserID}) => {
 
         <div className="content">
           <h1 className="is-size-3 has-text-weight-bold">Notes</h1>
-          <ul>
-            {allNotes.map(item => {
-              return(
-                <li key={item.Title}>
-                  <p className="has-text-weight-bold is-size-4">{item.Title}</p>
-                  <p className="is-size-6">{item.Content}</p>
-                </li>
-              )
-            })}
-          </ul>
+          {allNotes.map(item => {
+            return(
+              <div key={item.Title} className="content">
+                <p className="has-text-weight-bold is-size-4">{item.Title}</p>
+                <p className="is-size-6">{item.Content}</p>
+              </div>
+            )
+          })}
         </div>
 
 
