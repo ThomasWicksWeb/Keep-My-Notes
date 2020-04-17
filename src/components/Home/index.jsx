@@ -6,12 +6,12 @@ import { db } from '../../firebase'
 
 import Note from './Note'
 import 'bulma/css/bulma.css'
+import '../../darkmode.scss'
 
 const Home = () => {
 
   // User specific data
-  const [email, setEmail] = useState("");
-  const [userID, setUserID] = useState("");
+  const [user, setUser] = useState("");
   
   // Array of all notes
   const [allNotes, setNotes] = useState([]);
@@ -35,25 +35,31 @@ const Home = () => {
   /////////////////////////////////////////////////////////////////
   
   useEffect( () => {
-    firebase.auth().onAuthStateChanged(async user => {
-      if(user) {
-        const { uid } = user;
+    // setUser will take the whole user object. not point in storing mail and id separately :)
+    firebase.auth().onAuthStateChanged(user => {
+      // const { uid } = user;
+      console.log("check rerender from user auth() useEffect");
+      setUser(user);
+    }); 
+  }, []);
   
-        // Getting the entire Notes collection for the user
-        const querySnapshot = await db.collection('testCollection').doc(uid).collection('Notes').get();
+  useEffect( () => {
+    if(user) {
+      getCollectionData(user.uid).then(setNotes);
+      console.log("check rerender from getCollectionData() useEffect");
+    }
+  }, [user, newNote]);
 
-        // Getting each individual note
-        const storedNotes = await Promise.all(querySnapshot.docs.map(async doc => await doc.data()));
+  // outside of the component
+  async function getCollectionData() {
+    const snapshot = await db.collection('testCollection').doc(user.uid).collection('Notes').get();
+    const storedNotes = await Promise.all(snapshot.docs.map(async doc => await doc.data()));
+    console.log("check rerender from the getCollectionData function itself");
+    return storedNotes;
+  }
 
-        setNotes(storedNotes); // Array state containing all notes
-        setEmail(user.email); // Sets user email
-        setUserID(user.uid); // Sets user's ID
-      }      
-    })
-  }, [allNotes]);
-  
-  // If the user's ID hasn't loaded, show that it's loading
-  if(!userID) {
+  // If the user's ID hasn't loaded, show that the page is loading
+  if(!user) {
     return <h1>loading...</h1>;
   }
 
@@ -79,9 +85,9 @@ const Home = () => {
   const AddNewNote = (e) => {
     e.preventDefault();
 
-    const RandomID = Math.random().toString(36).substring(2);
+    let RandomID = returnRandomNumber();
 
-    db.collection("testCollection").doc(userID).collection("Notes").doc().set({
+    db.collection("testCollection").doc(user.uid).collection("Notes").doc().set({
       Title: inputTitle,
       Content: inputBody,
       LastEdit: new Date(),
@@ -97,11 +103,19 @@ const Home = () => {
           DocumentID: RandomID
         })
 
+        console.log(newNote);
         setNotes(allNotes => [...allNotes, newNote]);
+
+        setInputTitle("");
+        setInputBody("");
     })
     .catch(function(error) {
         console.error("Error writing document: ", error);
     });
+  }
+
+  function returnRandomNumber(){
+    return Math.random().toString(36).substring(2);
   }
 
   
@@ -122,9 +136,11 @@ const Home = () => {
   // }
 
 
+  // Mapped array that's output to the DOM
   const NotesToRender = allNotes.map(item => {
       return(
         <Note key={item.DocumentID} Title={item.Title} Body={item.Content} DocumentID={item.DocumentID} />
+        // <Note key={item.DocumentID} Title={item.Title} Body={item.Content} DocumentID={item.DocumentID} />
       )
     })
   
@@ -135,8 +151,8 @@ const Home = () => {
       <div className="container content">
         <p>Welcome to the home page</p>
         <ul>
-          <li>Goog morning!: {email} </li>
-          <li>User ID: {userID} </li>
+          <li>Goog morning!: {user.email} </li>
+          <li>User ID: {user.uid} </li>
         </ul>
         <button className="button is-info" onClick={handleLogout}>Logout</button>
 
