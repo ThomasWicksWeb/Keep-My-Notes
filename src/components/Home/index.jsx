@@ -4,9 +4,10 @@ import { useHistory } from 'react-router-dom'
 import firebase from 'firebase'
 import { db } from '../../firebase'
 
+import Note from './Note'
 import 'bulma/css/bulma.css'
 
-const Home = ({myUserID}) => {
+const Home = () => {
 
   // User specific data
   const [email, setEmail] = useState("");
@@ -19,7 +20,8 @@ const Home = ({myUserID}) => {
   const [newNote, setNewNote] = useState({
     Title: "",
     Content: "",
-    LastEdit: new Date()
+    LastEdit: new Date(),
+    DocumentID: 0
   });
 
   // Input fields
@@ -77,22 +79,25 @@ const Home = ({myUserID}) => {
   const AddNewNote = (e) => {
     e.preventDefault();
 
+    const RandomID = Math.random().toString(36).substring(2);
+
     db.collection("testCollection").doc(userID).collection("Notes").doc().set({
       Title: inputTitle,
       Content: inputBody,
-      LastEdit: new Date()
-      
+      LastEdit: new Date(),
+      DocumentID: RandomID
     })
     .then(function() {
         console.log("Document successfully written!");
+
         setNewNote({
           Title: inputTitle,
           Content: inputBody,
-          LastEdit: new Date()
+          LastEdit: new Date(),
+          DocumentID: RandomID
         })
 
         setNotes(allNotes => [...allNotes, newNote]);
-
     })
     .catch(function(error) {
         console.error("Error writing document: ", error);
@@ -103,20 +108,26 @@ const Home = ({myUserID}) => {
 
  
   // Test button to push static info to FireBase
-  const addInfo = () => {
-    db.collection("testCollection").doc(userID).collection("Notes").doc().set({
-      Title: "Hello World",
-      Content: "This is my first firebase applicati"
-    })
-    .then(function() {
-        console.log("Document successfully written!");
-    })
-    .catch(function(error) {
-        console.error("Error writing document: ", error);
-    });
-  }
+  // const addInfo = () => {
+  //   db.collection("testCollection").doc(userID).collection("Notes").doc().set({
+  //     Title: "Hello World",
+  //     Content: "This is my first firebase applicati"
+  //   })
+  //   .then(function() {
+  //       console.log("Document successfully written!");
+  //   })
+  //   .catch(function(error) {
+  //       console.error("Error writing document: ", error);
+  //   });
+  // }
 
 
+  const NotesToRender = allNotes.map(item => {
+      return(
+        <Note key={item.DocumentID} Title={item.Title} Body={item.Content} DocumentID={item.DocumentID} />
+      )
+    })
+  
   
 
   return(
@@ -134,14 +145,14 @@ const Home = ({myUserID}) => {
           <div className="field">
             <label className="label">Note Title</label>
             <div className="control">
-              <input className="input" type="text" placeholder="Title" onChange={handleTitleChange} value={inputTitle} />
+              <input required className="input" type="text" placeholder="Title" onChange={handleTitleChange} value={inputTitle} />
             </div>
           </div>
 
           <div className="field">
             <label className="label">Note</label>
             <div className="control">
-              <textarea className="textarea" placeholder="Add your note" onChange={handleBodyChange} value={inputBody}></textarea>
+              <textarea required className="textarea" placeholder="Add your note" onChange={handleBodyChange} value={inputBody}></textarea>
             </div>
           </div>
 
@@ -152,14 +163,7 @@ const Home = ({myUserID}) => {
 
         <div className="content">
           <h1 className="is-size-3 has-text-weight-bold">Notes</h1>
-          {allNotes.map(item => {
-            return(
-              <div key={item.Title} className="content">
-                <p className="has-text-weight-bold is-size-4">{item.Title}</p>
-                <p className="is-size-6">{item.Content}</p>
-              </div>
-            )
-          })}
+          {NotesToRender}
         </div>
 
 
