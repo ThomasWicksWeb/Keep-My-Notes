@@ -43,9 +43,10 @@ const Home = () => {
   useEffect(() => {
     if (user) {
       getCollectionData(user.uid).then(setNotes);
-      console.log('check rerender from getCollectionData() useEffect');
     }
   }, [user, newNote]);
+
+  console.log('mComponent rerenders on key presh');
 
   // outside of the component
   async function getCollectionData() {
@@ -57,7 +58,7 @@ const Home = () => {
     const storedNotes = await Promise.all(
       snapshot.docs.map(async (doc) => await doc.data())
     );
-    console.log('check rerender from the getCollectionData function itself');
+    console.log("Caling firebase")
     return storedNotes;
   }
 
@@ -147,6 +148,7 @@ const Home = () => {
         Body={item.Content}
         DocumentID={item.DocumentID}
         UserID={user.uid}
+        user={user}
       />
     );
   });

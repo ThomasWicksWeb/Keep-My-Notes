@@ -2,32 +2,69 @@ import React, { useState, useEffect } from 'react';
 import firebase from 'firebase';
 import { db } from '../../../firebase';
 
-const Note = ({ Title, Body, DocumentID }) => {
+const Note = ({ Title, Body, DocumentID, user }) => {
   const [modal, setModal] = useState(false);
-  const [user, setUser] = useState({});
+  const [inputTitle, setInputTitle] = useState('');
+  const [inputBody, setInputBody] = useState('');
 
   useEffect(() => {
-    firebase.auth().onAuthStateChanged((user) => {
-      console.log('check rerender from user auth() useEffect in <Note />');
-      setUser(user);
-    });
+    setInputTitle(Title);
+    setInputBody(Body);
   }, []);
 
-  const handleEditNote = () => {
+  //   const handleEditNote = () => {
+  //     db.collection('testCollection')
+  //       .doc(user.uid)
+  //       .collection('Notes')
+  //       .doc(DocumentID)
+  //       .update({
+  //         Content: 'This is new content!333!!!',
+  //       });
+  //   };
+
+  // Handles input field for note title
+
+  // const handleTitleChange = (e) => {
+  //     setInputTitle(e.target.value);
+  //   };
+
+  //   // Handles input field for new note body
+  //   const handleBodyChange = (e) => {
+  //     setInputBody(e.target.value);
+  //   };
+
+  const handleEditTitle = (e) => {
+    setInputTitle(e.target.value);
+
     db.collection('testCollection')
       .doc(user.uid)
       .collection('Notes')
       .doc(DocumentID)
       .update({
-        Content: 'This is new content!333!!!',
+        Title: inputTitle,
       });
   };
+  
+  const handleEditContent = (e) => {
+    setInputBody(e.target.value);
 
+    db.collection('testCollection')
+      .doc(user.uid)
+      .collection('Notes')
+      .doc(DocumentID)
+      .update({
+        Content: inputBody,
+      });
+  };
   return (
     <div className="box">
-      <h1 className="is-size-4 has-text-weight-bold">{Title}</h1>
-      <p className="is-size-6">{Body}</p>
-      <button onClick={handleEditNote}>Edit</button>
+      <h1 className="is-size-4 has-text-weight-bold">
+        <input value={inputTitle} onChange={handleEditTitle} type="text" />
+      </h1>
+      <p className="is-size-6">
+        <textarea value={inputBody} onChange={handleEditContent} type="text" />
+      </p>
+      {/* <button onClick={handleEditNote}>Edit</button> */}
     </div>
   );
 };
