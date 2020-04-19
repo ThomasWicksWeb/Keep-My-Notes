@@ -6,7 +6,7 @@ import { db } from '../../firebase'
 
 import Note from './Note'
 import 'bulma/css/bulma.css'
-import '../../darkmode.scss'
+// import '../../darkmode.scss'
 
 const Home = () => {
 
@@ -90,7 +90,7 @@ const Home = () => {
     db.collection("testCollection").doc(user.uid).collection("Notes").doc().set({
       Title: inputTitle,
       Content: inputBody,
-      LastEdit: new Date(),
+      LastEdit: firebase.firestore.FieldValue.serverTimestamp(),
       DocumentID: RandomID
     })
     .then(function() {
@@ -99,7 +99,7 @@ const Home = () => {
         setNewNote({
           Title: inputTitle,
           Content: inputBody,
-          LastEdit: new Date(),
+          LastEdit: firebase.firestore.FieldValue.serverTimestamp(),
           DocumentID: RandomID
         })
 
@@ -139,8 +139,7 @@ const Home = () => {
   // Mapped array that's output to the DOM
   const NotesToRender = allNotes.map(item => {
       return(
-        <Note key={item.DocumentID} Title={item.Title} Body={item.Content} DocumentID={item.DocumentID} />
-        // <Note key={item.DocumentID} Title={item.Title} Body={item.Content} DocumentID={item.DocumentID} />
+        <Note key={item.Body} Title={item.Title} Body={item.Content} DocumentID={item.DocumentID} UserID={user.uid} />
       )
     })
   
