@@ -87,7 +87,7 @@ const Home = () => {
 
     let RandomID = returnRandomNumber();
 
-    db.collection("testCollection").doc(user.uid).collection("Notes").doc().set({
+    db.collection("testCollection").doc(user.uid).collection("Notes").doc(RandomID).set({
       Title: inputTitle,
       Content: inputBody,
       LastEdit: firebase.firestore.FieldValue.serverTimestamp(),
@@ -103,7 +103,6 @@ const Home = () => {
           DocumentID: RandomID
         })
 
-        console.log(newNote);
         setNotes(allNotes => [...allNotes, newNote]);
 
         setInputTitle("");
@@ -119,7 +118,6 @@ const Home = () => {
   }
 
   
-
  
   // Test button to push static info to FireBase
   // const addInfo = () => {
@@ -138,10 +136,11 @@ const Home = () => {
 
   // Mapped array that's output to the DOM
   const NotesToRender = allNotes.map(item => {
-      return(
-        <Note key={item.Body} Title={item.Title} Body={item.Content} DocumentID={item.DocumentID} UserID={user.uid} />
-      )
-    })
+    console.log(item.DocumentID);
+    return(
+      <Note key={item.DocumentID} Title={item.Title} Body={item.Content} DocumentID={item.DocumentID} UserID={user.uid} />
+    )
+  })
   
   
 
