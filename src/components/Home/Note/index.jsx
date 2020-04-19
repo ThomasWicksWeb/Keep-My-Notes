@@ -44,7 +44,7 @@ const Note = ({ Title, Body, DocumentID, user }) => {
         Title: inputTitle,
       });
   };
-  
+
   const handleEditContent = (e) => {
     setInputBody(e.target.value);
 
@@ -56,6 +56,7 @@ const Note = ({ Title, Body, DocumentID, user }) => {
         Content: inputBody,
       });
   };
+
   return (
     <div className="box">
       <h1 className="is-size-4 has-text-weight-bold">

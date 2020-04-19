@@ -15,6 +15,10 @@ const Home = () => {
   // Array of all notes
   const [allNotes, setNotes] = useState([]);
 
+  // Input fields
+  const [inputTitle, setInputTitle] = useState('');
+  const [inputBody, setInputBody] = useState('');
+
   // Data for a new note to be added to Firebase
   const [newNote, setNewNote] = useState({
     Title: '',
@@ -22,10 +26,6 @@ const Home = () => {
     LastEdit: new Date(),
     DocumentID: 0,
   });
-
-  // Input fields
-  const [inputTitle, setInputTitle] = useState('');
-  const [inputBody, setInputBody] = useState('');
 
   const history = useHistory();
 
@@ -58,7 +58,7 @@ const Home = () => {
     const storedNotes = await Promise.all(
       snapshot.docs.map(async (doc) => await doc.data())
     );
-    console.log("Caling firebase")
+    console.log('Caling firebase');
     return storedNotes;
   }
 
