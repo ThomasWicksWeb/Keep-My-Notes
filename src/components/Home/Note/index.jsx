@@ -22,27 +22,6 @@ const Note = ({ Title, Body, DocumentID, user }) => {
     setInputBody(e.target.value);
   };
 
-  //   const handleEditNote = () => {
-  //     db.collection('testCollection')
-  //       .doc(user.uid)
-  //       .collection('Notes')
-  //       .doc(DocumentID)
-  //       .update({
-  //         Content: 'This is new content!333!!!',
-  //       });
-  //   };
-
-  // Handles input field for note title
-
-  // const handleTitleChange = (e) => {
-  //     setInputTitle(e.target.value);
-  //   };
-
-  //   // Handles input field for new note body
-  //   const handleBodyChange = (e) => {
-  //     setInputBody(e.target.value);
-  //   };
-
   const handleUpdateNote = (e) => {
     db.collection('testCollection')
       .doc(user.uid)
@@ -83,7 +62,9 @@ const Note = ({ Title, Body, DocumentID, user }) => {
         </div>
       </div>
 
-      <button className="is-size-6 button is-info" onClick={handleUpdateNote}>Save</button>
+      <button className="is-size-6 button is-info" onClick={handleUpdateNote}>
+        Save
+      </button>
     </div>
   );
 };
