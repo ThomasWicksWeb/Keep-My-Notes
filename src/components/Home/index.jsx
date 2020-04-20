@@ -54,6 +54,7 @@ const Home = () => {
       .collection('testCollection')
       .doc(user.uid)
       .collection('Notes')
+      .orderBy("LastEdit", "desc")
       .get();
     const storedNotes = await Promise.all(
       snapshot.docs.map(async (doc) => await doc.data())
@@ -88,8 +89,10 @@ const Home = () => {
   const AddNewNote = (e) => {
     e.preventDefault();
 
+    // Assigning a random number for the document ID
     let RandomID = returnRandomNumber();
 
+    // Adding new data to Firebase
     db.collection('testCollection')
       .doc(user.uid)
       .collection('Notes')
@@ -103,6 +106,7 @@ const Home = () => {
       .then(function () {
         console.log('Document successfully written!');
 
+        // Setting the new note state
         setNewNote({
           Title: inputTitle,
           Content: inputBody,
@@ -110,8 +114,10 @@ const Home = () => {
           DocumentID: RandomID,
         });
 
+        // Adding the singular new note to the allNotes array
         setNotes((allNotes) => [...allNotes, newNote]);
 
+        // Clearing input fields
         setInputTitle('');
         setInputBody('');
       })
@@ -120,6 +126,7 @@ const Home = () => {
       });
   };
 
+  // Returns a random 11 length alphanumberic string
   function returnRandomNumber() {
     return Math.random().toString(36).substring(2);
   }
