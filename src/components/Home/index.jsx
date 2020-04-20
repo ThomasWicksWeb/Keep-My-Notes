@@ -34,8 +34,6 @@ const Home = () => {
   useEffect(() => {
     // setUser will take the whole user object. not point in storing mail and id separately :)
     firebase.auth().onAuthStateChanged((user) => {
-      // const { uid } = user;
-      console.log('check rerender from user auth() useEffect');
       setUser(user);
     });
   }, []);
@@ -46,15 +44,13 @@ const Home = () => {
     }
   }, [user, newNote]);
 
-  console.log('mComponent rerenders on key presh');
-
   // outside of the component
   async function getCollectionData() {
     const snapshot = await db
       .collection('testCollection')
       .doc(user.uid)
       .collection('Notes')
-      .orderBy("LastEdit", "desc")
+      .orderBy('LastEdit', 'desc')
       .get();
     const storedNotes = await Promise.all(
       snapshot.docs.map(async (doc) => await doc.data())
@@ -80,6 +76,7 @@ const Home = () => {
     setInputBody(e.target.value);
   };
 
+  // Handles user logout
   const handleLogout = () => {
     firebase.auth().signOut();
     history.push('/login');
@@ -131,23 +128,8 @@ const Home = () => {
     return Math.random().toString(36).substring(2);
   }
 
-  // Test button to push static info to FireBase
-  // const addInfo = () => {
-  //   db.collection("testCollection").doc(userID).collection("Notes").doc().set({
-  //     Title: "Hello World",
-  //     Content: "This is my first firebase applicati"
-  //   })
-  //   .then(function() {
-  //       console.log("Document successfully written!");
-  //   })
-  //   .catch(function(error) {
-  //       console.error("Error writing document: ", error);
-  //   });
-  // }
-
   // Mapped array that's output to the DOM
   const NotesToRender = allNotes.map((item) => {
-    console.log(item.DocumentID);
     return (
       <Note
         key={item.DocumentID}
