@@ -12,6 +12,16 @@ const Note = ({ Title, Body, DocumentID, user }) => {
     setInputBody(Body);
   }, []);
 
+  // Handles input field for note title
+  const handleTitleChange = (e) => {
+    setInputTitle(e.target.value);
+  };
+
+  // Handles input field for new note body
+  const handleBodyChange = (e) => {
+    setInputBody(e.target.value);
+  };
+
   //   const handleEditNote = () => {
   //     db.collection('testCollection')
   //       .doc(user.uid)
@@ -33,39 +43,47 @@ const Note = ({ Title, Body, DocumentID, user }) => {
   //     setInputBody(e.target.value);
   //   };
 
-  const handleEditTitle = (e) => {
-    setInputTitle(e.target.value);
-
+  const handleUpdateNote = (e) => {
     db.collection('testCollection')
       .doc(user.uid)
       .collection('Notes')
       .doc(DocumentID)
       .update({
         Title: inputTitle,
-      });
-  };
-
-  const handleEditContent = (e) => {
-    setInputBody(e.target.value);
-
-    db.collection('testCollection')
-      .doc(user.uid)
-      .collection('Notes')
-      .doc(DocumentID)
-      .update({
         Content: inputBody,
+        LastEdit: firebase.firestore.FieldValue.serverTimestamp(),
       });
   };
 
   return (
     <div className="box">
-      <h1 className="is-size-4 has-text-weight-bold">
-        <input value={inputTitle} onChange={handleEditTitle} type="text" />
-      </h1>
-      <p className="is-size-6">
-        <textarea value={inputBody} onChange={handleEditContent} type="text" />
-      </p>
-      {/* <button onClick={handleEditNote}>Edit</button> */}
+      <div className="field">
+        <label className="is-size-4 has-text-weight-bold">{inputTitle}</label>
+        <div className="control">
+          <input
+            required
+            className="input"
+            type="text"
+            placeholder="Title"
+            onChange={handleTitleChange}
+            value={inputTitle}
+          />
+        </div>
+      </div>
+
+      <div className="field">
+        <div className="control">
+          <textarea
+            required
+            className="textarea"
+            placeholder="Add your note"
+            onChange={handleBodyChange}
+            value={inputBody}
+          ></textarea>
+        </div>
+      </div>
+
+      <button className="is-size-6 button is-info" onClick={handleUpdateNote}>Save</button>
     </div>
   );
 };
