@@ -1,12 +1,13 @@
 import React, { useState, useEffect } from 'react';
+import './Note.scss'
 import Modal from '../../Modal';
 
 const Note = ({ Title, Body, DocumentID, user, setNewNote }) => {
   const [isOpen, setModal] = useState(false);
 
-  if(isOpen){
+  // if(isOpen){
 
-  }
+  // }
 
   const toggleModal = () => {
     setModal(!isOpen);
@@ -14,14 +15,10 @@ const Note = ({ Title, Body, DocumentID, user, setNewNote }) => {
 
   return (
     <div className="box">
-      <h2 className="has-text-weight-bold is-size-3">{Title}</h2>
+      <h2 className="has-text-weight-bold is-size-4">{Title}</h2>
       <p className="is-size-6">{Body}</p>
-      <button
-        className="is-size-6 has-text-weight-bold button is-info"
-        onClick={toggleModal}
-      >
-        Edit
-      </button>
+      <i className="fas fa-edit note-edit" onClick={toggleModal}></i>
+      <i class="fas fa-trash-alt note-garbage"></i>
       <Modal
         Title={Title}
         Body={Body}
