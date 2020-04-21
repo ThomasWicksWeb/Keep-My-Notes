@@ -19,7 +19,7 @@ const ModalDelete = ({
       .doc(DocumentID)
       .delete()
       .then(() => {
-        setNewNote();
+        setNewNote({});
         console.log('Deleted!');
       });
 
@@ -47,16 +47,14 @@ const ModalDelete = ({
           </header>
 
           <section className="modal-card-body">
-            <form onSubmit={DeleteNote}>
               <div className="field">
-                <button className="button is-danger" type="submit">
+                <button className="button is-danger" onClick={DeleteNote}>
                   Delete
                 </button>
                 <button className="button" onClick={toggleModalDelete}>
                   Cancel
                 </button>
               </div>
-            </form>
           </section>
         </div>
       </aside>

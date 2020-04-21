@@ -12,7 +12,7 @@ const Note = ({ Title, Body, DocumentID, user, setNewNote }) => {
   };
 
   const toggleModalDelete = () => {
-    setModalDelete(!isOpen);
+    setModalDelete(!isOpenDelete);
   };
 
   return (
