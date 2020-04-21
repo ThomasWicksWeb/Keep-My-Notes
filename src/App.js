@@ -12,6 +12,7 @@ import 'firebase/firestore';
 
 // Other components
 import NavBar from './components/NavBar';
+import AppFooter from './components/Footer'
 
 // Logged in content
 import Home from './components/Home';
@@ -44,6 +45,7 @@ function App() {
           <Route exact path="/createaccount" component={CreateAccount} />
         </Switch>
       </BrowserRouter>
+      <AppFooter />
     </>
   );
 }
