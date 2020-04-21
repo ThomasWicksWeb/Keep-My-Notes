@@ -44,7 +44,7 @@ const Home = () => {
     }
   }, [user, newNote]);
 
-  // outside of the component
+  // Retrieves notes from Firebase
   async function getCollectionData() {
     const snapshot = await db
       .collection('testCollection')
@@ -55,7 +55,7 @@ const Home = () => {
     const storedNotes = await Promise.all(
       snapshot.docs.map(async (doc) => await doc.data())
     );
-    console.log('Caling firebase');
+    console.log('Calling firebase');
     return storedNotes;
   }
 
@@ -129,20 +129,43 @@ const Home = () => {
   }
 
   // Mapped array that's output to the DOM
-  const NotesToRender = allNotes.map((item) => {
-    return (
-      <Note
-        key={item.DocumentID}
-        Title={item.Title}
-        Body={item.Content}
-        DocumentID={item.DocumentID}
-        UserID={user.uid}
-        user={user}
-        setNewNote={setNewNote}
-      />
-    );
-  });
+  // const NotesToRender = allNotes.map((item) => {
+  //   return (
+  //     <Note
+  //       key={item.DocumentID}
+  //       Title={item.Title}
+  //       Body={item.Content}
+  //       DocumentID={item.DocumentID}
+  //       UserID={user.uid}
+  //       user={user}
+  //       setNewNote={setNewNote}
+  //     />
+  //   );
+  // });
 
+  const CheckIfNotesExist = () => {
+    if(allNotes.length === 0){
+      return <h1>Add notes!</h1>
+    } else {
+      const NotesToRender = allNotes.map((item) => {
+        return (
+          <Note
+            key={item.DocumentID}
+            Title={item.Title}
+            Body={item.Content}
+            DocumentID={item.DocumentID}
+            UserID={user.uid}
+            user={user}
+            setNewNote={setNewNote}
+          />
+        );
+      });
+      return NotesToRender
+    }
+  }
+
+
+  
   return (
     <section className="section">
       <div className="container content">
@@ -192,7 +215,8 @@ const Home = () => {
 
         <div className="content">
           <h1 className="is-size-3 has-text-weight-bold">Notes</h1>
-          {NotesToRender}
+          {/* {NotesToRender} */}
+          <CheckIfNotesExist />
         </div>
       </div>
     </section>
