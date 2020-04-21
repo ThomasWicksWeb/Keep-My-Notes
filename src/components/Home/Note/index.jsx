@@ -1,70 +1,36 @@
 import React, { useState, useEffect } from 'react';
-import firebase from 'firebase';
-import { db } from '../../../firebase';
+import Modal from '../../Modal';
 
-const Note = ({ Title, Body, DocumentID, user }) => {
-  const [modal, setModal] = useState(false);
-  const [inputTitle, setInputTitle] = useState('');
-  const [inputBody, setInputBody] = useState('');
+const Note = ({ Title, Body, DocumentID, user, setNewNote }) => {
+  const [isOpen, setModal] = useState(false);
 
-  useEffect(() => {
-    setInputTitle(Title);
-    setInputBody(Body);
-  }, []);
+  if(isOpen){
 
-  // Handles input field for note title
-  const handleTitleChange = (e) => {
-    setInputTitle(e.target.value);
-  };
+  }
 
-  // Handles input field for new note body
-  const handleBodyChange = (e) => {
-    setInputBody(e.target.value);
-  };
-
-  const handleUpdateNote = (e) => {
-    db.collection('testCollection')
-      .doc(user.uid)
-      .collection('Notes')
-      .doc(DocumentID)
-      .update({
-        Title: inputTitle,
-        Content: inputBody,
-        LastEdit: firebase.firestore.FieldValue.serverTimestamp(),
-      });
+  const toggleModal = () => {
+    setModal(!isOpen);
   };
 
   return (
     <div className="box">
-      <div className="field">
-        <label className="is-size-4 has-text-weight-bold">{inputTitle}</label>
-        <div className="control">
-          <input
-            required
-            className="input"
-            type="text"
-            placeholder="Title"
-            onChange={handleTitleChange}
-            value={inputTitle}
-          />
-        </div>
-      </div>
-
-      <div className="field">
-        <div className="control">
-          <textarea
-            required
-            className="textarea"
-            placeholder="Add your note"
-            onChange={handleBodyChange}
-            value={inputBody}
-          ></textarea>
-        </div>
-      </div>
-
-      <button className="is-size-6 button is-info" onClick={handleUpdateNote}>
-        Save
+      <h2 className="has-text-weight-bold is-size-3">{Title}</h2>
+      <p className="is-size-6">{Body}</p>
+      <button
+        className="is-size-6 has-text-weight-bold button is-info"
+        onClick={toggleModal}
+      >
+        Edit
       </button>
+      <Modal
+        Title={Title}
+        Body={Body}
+        DocumentID={DocumentID}
+        UserID={user.uid}
+        toggleModal={toggleModal}
+        isOpen={isOpen}
+        setNewNote={setNewNote}
+      />
     </div>
   );
 };
