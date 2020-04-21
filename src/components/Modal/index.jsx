@@ -2,7 +2,15 @@ import React, { useState, useEffect } from 'react';
 import firebase from 'firebase';
 import { db } from '../../firebase';
 
-const Modal = ({ Title, Body, DocumentID, UserID, toggleModal, isOpen, setNewNote }) => {
+const Modal = ({
+  Title,
+  Body,
+  DocumentID,
+  UserID,
+  toggleModal,
+  isOpen,
+  setNewNote,
+}) => {
   const [inputTitle, setInputTitle] = useState('');
   const [inputBody, setInputBody] = useState('');
 
@@ -30,17 +38,18 @@ const Modal = ({ Title, Body, DocumentID, UserID, toggleModal, isOpen, setNewNot
       .doc(DocumentID)
       .update({
         Title: inputTitle,
-				Content: inputBody,
-				DocumentID: DocumentID,
+        Content: inputBody,
+        DocumentID: DocumentID,
         LastEdit: firebase.firestore.FieldValue.serverTimestamp(),
-      }).then(() => {
-				setNewNote({
+      })
+      .then(() => {
+        setNewNote({
           Title: inputTitle,
-					Content: inputBody,
-					DocumentID: DocumentID,
+          Content: inputBody,
+          DocumentID: DocumentID,
           LastEdit: firebase.firestore.FieldValue.serverTimestamp(),
         });
-			});
+      });
 
     // Close modal on update
     toggleModal();
@@ -53,9 +62,13 @@ const Modal = ({ Title, Body, DocumentID, UserID, toggleModal, isOpen, setNewNot
         <div className="modal-card">
           <header className="modal-card-head">
             <div className="modal-card-title">
-              <h4>Edit Note</h4>
+              <h4 className="has-text-weight-bold">Edit Note</h4>
             </div>
-            <button onClick={toggleModal} className="delete" aria-label="close"></button>
+            <button
+              onClick={toggleModal}
+              className="delete"
+              aria-label="close"
+            ></button>
           </header>
 
           <section className="modal-card-body">
