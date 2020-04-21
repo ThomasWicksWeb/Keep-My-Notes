@@ -104,26 +104,15 @@ const Home = () => {
       })
       .then(function () {
         console.log('Document successfully written!');
-
-        // Setting the new note state
-        setNewNote({
-          Title: inputTitle,
-          Content: inputBody,
-          LastEdit: firebase.firestore.FieldValue.serverTimestamp(),
-          DocumentID: RandomID,
-        });
-
-        // Adding the singular new note to the allNotes array
-        setNotes((allNotes) => [...allNotes, newNote]);
-
-        // Clearing input fields
         setInputTitle('');
         setInputBody('');
+
       })
       .catch(function (error) {
         console.error('Error writing document: ', error);
       });
   };
+
 
   // Returns a random 11 length alphanumberic string
   // function returnRandomNumber() {

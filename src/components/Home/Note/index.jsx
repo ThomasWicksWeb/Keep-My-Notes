@@ -19,6 +19,7 @@ const Note = ({ Title, Body, DocumentID, user, setNewNote }) => {
     <div className="box">
       <h2 className="has-text-weight-bold is-size-4">{Title}</h2>
       <p className="is-size-6">{Body}</p>
+      <p className="is-size-6">ID: {DocumentID}</p>
       <i className="fas fa-edit note-edit" onClick={toggleModal}></i>
       <i
         className="fas fa-trash-alt note-garbage"
