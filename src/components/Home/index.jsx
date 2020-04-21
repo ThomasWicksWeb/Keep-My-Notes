@@ -15,6 +15,8 @@ const Home = () => {
   // Array of all notes
   const [allNotes, setNotes] = useState([]);
 
+  // const [RandomID, setRandomID] = useState(0);
+
   // Input fields
   const [inputTitle, setInputTitle] = useState('');
   const [inputBody, setInputBody] = useState('');
@@ -86,8 +88,8 @@ const Home = () => {
   const AddNewNote = (e) => {
     e.preventDefault();
 
-    // Assigning a random number for the document ID
-    let RandomID = returnRandomNumber();
+    const RandomID = Math.random().toString(36).substring(2);
+    console.log("Generated ID before querying DB is: ", RandomID);
 
     // Adding new data to Firebase
     db.collection('testCollection')
@@ -124,9 +126,9 @@ const Home = () => {
   };
 
   // Returns a random 11 length alphanumberic string
-  function returnRandomNumber() {
-    return Math.random().toString(36).substring(2);
-  }
+  // function returnRandomNumber() {
+  //   return Math.random().toString(36).substring(2);
+  // }
 
   // Mapped array that's output to the DOM
   // const NotesToRender = allNotes.map((item) => {
@@ -145,8 +147,16 @@ const Home = () => {
 
   const CheckIfNotesExist = () => {
     if(allNotes.length === 0){
-      return <h1>Add notes!</h1>
-    } else {
+      return(<Note
+        key={1234}
+        Title={"Click the button above to add a note!"}
+        Body={":)"}
+        DocumentID={123}
+        UserID={user.uid}
+        user={user}
+        setNewNote={setNewNote}
+      />)
+    } else if(allNotes.length >= 1) {
       const NotesToRender = allNotes.map((item) => {
         return (
           <Note
