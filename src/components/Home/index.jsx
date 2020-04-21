@@ -138,6 +138,7 @@ const Home = () => {
         DocumentID={item.DocumentID}
         UserID={user.uid}
         user={user}
+        setNewNote={setNewNote}
       />
     );
   });
