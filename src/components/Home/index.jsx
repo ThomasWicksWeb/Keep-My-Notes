@@ -4,6 +4,7 @@ import { useHistory } from 'react-router-dom';
 import firebase from 'firebase';
 import { db } from '../../firebase';
 
+import GreetingHeader from './GreetingHeader';
 import Note from './Note';
 import 'bulma/css/bulma.css';
 // import '../../darkmode.scss'
@@ -89,7 +90,6 @@ const Home = () => {
     e.preventDefault();
 
     const RandomID = Math.random().toString(36).substring(2);
-    console.log("Generated ID before querying DB is: ", RandomID);
 
     // Adding new data to Firebase
     db.collection('testCollection')
@@ -104,48 +104,29 @@ const Home = () => {
       })
       .then(function () {
         console.log('Document successfully written!');
-        setInputTitle('');
+        setInputTitle(''); // Clear input fields
         setInputBody('');
-
+        setNewNote({}); // Set NewNote state to an empty object (No longer causes duplicate key issues)
       })
       .catch(function (error) {
         console.error('Error writing document: ', error);
       });
   };
 
-
-  // Returns a random 11 length alphanumberic string
-  // function returnRandomNumber() {
-  //   return Math.random().toString(36).substring(2);
-  // }
-
-  // Mapped array that's output to the DOM
-  // const NotesToRender = allNotes.map((item) => {
-  //   return (
-  //     <Note
-  //       key={item.DocumentID}
-  //       Title={item.Title}
-  //       Body={item.Content}
-  //       DocumentID={item.DocumentID}
-  //       UserID={user.uid}
-  //       user={user}
-  //       setNewNote={setNewNote}
-  //     />
-  //   );
-  // });
-
   const CheckIfNotesExist = () => {
-    if(allNotes.length === 0){
-      return(<Note
-        key={1234}
-        Title={"Click the button above to add a note!"}
-        Body={":)"}
-        DocumentID={123}
-        UserID={user.uid}
-        user={user}
-        setNewNote={setNewNote}
-      />)
-    } else if(allNotes.length >= 1) {
+    if (allNotes.length === 0) {
+      return (
+        <Note
+          key={1234}
+          Title={'Click the button above to add a note!'}
+          Body={':)'}
+          DocumentID={123}
+          UserID={user.uid}
+          user={user}
+          setNewNote={setNewNote}
+        />
+      );
+    } else if (allNotes.length >= 1) {
       const NotesToRender = allNotes.map((item) => {
         return (
           <Note
@@ -159,20 +140,14 @@ const Home = () => {
           />
         );
       });
-      return NotesToRender
+      return NotesToRender;
     }
-  }
+  };
 
-
-  
   return (
     <section className="section">
       <div className="container content">
-        <p>Welcome to the home page</p>
-        <ul>
-          <li>Goog morning!: {user.email} </li>
-          <li>User ID: {user.uid} </li>
-        </ul>
+        <GreetingHeader user={user} />
         <button className="button is-info" onClick={handleLogout}>
           Logout
         </button>
@@ -213,8 +188,7 @@ const Home = () => {
         <hr />
 
         <div className="content">
-          <h1 className="is-size-3 has-text-weight-bold">Notes</h1>
-          {/* {NotesToRender} */}
+          <h1 className="is-size-3 has-text-weight-bold">My Notes</h1>
           <CheckIfNotesExist />
         </div>
       </div>
