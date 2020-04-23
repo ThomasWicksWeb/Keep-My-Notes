@@ -25,3 +25,18 @@
     }
   }
 }
+
+.quickActionButtons {
+  margin-top: auto !important;
+  padding-top: 15px;
+}
+
+.NoteViewMore {
+  color: #0099ff;
+  border-bottom: 1px solid #0099ff;
+  padding-left: 3px;
+
+  &:hover {
+    cursor: pointer;
+  }
+}

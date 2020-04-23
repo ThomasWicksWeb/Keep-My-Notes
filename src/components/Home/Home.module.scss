@@ -1,0 +1,6 @@
+.notesContainer {
+  display: grid !important;
+  grid-template-columns: repeat(auto-fill, minmax(400px, 1fr)) !important;
+  grid-gap: 30px !important;
+  margin: 0 auto;
+}
