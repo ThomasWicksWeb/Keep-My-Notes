@@ -1,13 +1,13 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import './Note.scss';
-import Modal from '../../Misc/Modal';
+import ModalEdit from '../../Misc/ModalEdit';
 import ModalDelete from '../../Misc/ModalDelete';
 
 const Note = ({ Title, Body, DocumentID, user, setNewNote }) => {
   const [isOpen, setModal] = useState(false);
   const [isOpenDelete, setModalDelete] = useState(false);
 
-  const toggleModal = () => {
+  const toggleModalEdit = () => {
     setModal(!isOpen);
   };
 
@@ -19,18 +19,17 @@ const Note = ({ Title, Body, DocumentID, user, setNewNote }) => {
     <div className="box">
       <h2 className="has-text-weight-bold is-size-4">{Title}</h2>
       <p className="is-size-6">{Body}</p>
-      <p className="is-size-6">ID: {DocumentID}</p>
-      <i className="fas fa-edit note-edit" onClick={toggleModal}></i>
+      <i className="fas fa-edit note-edit" onClick={toggleModalEdit}></i>
       <i
         className="fas fa-trash-alt note-garbage"
         onClick={toggleModalDelete}
       ></i>
-      <Modal
+      <ModalEdit
         Title={Title}
         Body={Body}
         DocumentID={DocumentID}
         UserID={user.uid}
-        toggleModal={toggleModal}
+        toggleModal={toggleModalEdit}
         isOpen={isOpen}
         setNewNote={setNewNote}
       />
