@@ -7,7 +7,7 @@ import { db } from '../../firebase';
 
 import GreetingHeader from './GreetingHeader';
 import Note from './Note';
-import ModalAddNewNote from '../Misc/ModalAddNewNote'
+import ModalAddNewNote from '../Misc/ModalAddNewNote';
 import 'bulma/css/bulma.css';
 import styles from './Home.module.scss';
 // import '../../darkmode.scss'
@@ -24,8 +24,8 @@ const Home = () => {
   // const [RandomID, setRandomID] = useState(0);
 
   // Input fields
-  const [inputTitle, setInputTitle] = useState('');
-  const [inputBody, setInputBody] = useState('');
+  // const [inputTitle, setInputTitle] = useState('');
+  // const [inputBody, setInputBody] = useState('');
 
   // Data for a new note to be added to Firebase
   const [newNote, setNewNote] = useState({
@@ -78,48 +78,10 @@ const Home = () => {
 
   /////////////////////////////////////////////////////////////////
 
-  // Handles input field for note title
-  const handleTitleChange = (e) => {
-    setInputTitle(e.target.value);
-  };
-
-  // Handles input field for new note body
-  const handleBodyChange = (e) => {
-    setInputBody(e.target.value);
-  };
-
   // Handles user logout
   const handleLogout = () => {
     firebase.auth().signOut();
     history.push('/login');
-  };
-
-  // Adding new note to FireBase
-  const AddNewNote = (e) => {
-    e.preventDefault();
-
-    const RandomID = Math.random().toString(36).substring(2);
-
-    // Adding new data to Firebase
-    db.collection('testCollection')
-      .doc(user.uid)
-      .collection('Notes')
-      .doc(RandomID)
-      .set({
-        Title: inputTitle,
-        Content: inputBody,
-        LastEdit: firebase.firestore.FieldValue.serverTimestamp(),
-        DocumentID: RandomID,
-      })
-      .then(function () {
-        console.log('Document successfully written!');
-        setInputTitle(''); // Clear input fields
-        setInputBody('');
-        setNewNote({}); // Set NewNote state to an empty object (No longer causes duplicate key issues)
-      })
-      .catch(function (error) {
-        console.error('Error writing document: ', error);
-      });
   };
 
   const CheckIfNotesExist = () => {
@@ -160,14 +122,22 @@ const Home = () => {
         <button className="button is-info" onClick={handleLogout}>
           Logout
         </button>
-        {/* <ModalAddNewNote
+        <p>
+          Add new note{' '}
+          <i
+            className="fas fa-edit note-edit"
+            onClick={toggleModalAddNewNote}
+          ></i>
+        </p>
+
+        <ModalAddNewNote
           UserID={user.uid}
           toggleModal={toggleModalAddNewNote}
           isOpen={isOpenAddNewNote}
           setNewNote={setNewNote}
-        /> */}
+        />
 
-        <form onSubmit={AddNewNote}>
+        {/* <form onSubmit={AddNewNote}>
           <div className="field">
             <label className="label">Note Title</label>
             <div className="control">
@@ -198,7 +168,7 @@ const Home = () => {
           <button type="submit" className="button is-size-5 is-info">
             Add Note to Firestore
           </button>
-        </form>
+        </form> */}
 
         <hr />
 
