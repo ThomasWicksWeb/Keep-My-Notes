@@ -1,12 +1,27 @@
 .note- {
+  &edit {
+    transition: all 0.2s;
 
-    &edit,
-    &garbage {
-        font-size: 1.25rem;
-        padding: 0 5px;
-
-        &:hover {
-            cursor: pointer;
-        }
+    &:hover {
+      color: #209cee;
     }
+  }
+
+  &garbage {
+    transition: all 0.2s;
+
+    &:hover {
+      color: lightcoral;
+    }
+  }
+
+  &edit,
+  &garbage {
+    font-size: 1.25rem;
+    padding: 0 5px;
+
+    &:hover {
+      cursor: pointer;
+    }
+  }
 }
