@@ -1,17 +1,22 @@
 import React, { useState, useEffect } from 'react';
 import { useHistory } from 'react-router-dom';
+import classnames from 'classnames';
 
 import firebase from 'firebase';
 import { db } from '../../firebase';
 
 import GreetingHeader from './GreetingHeader';
 import Note from './Note';
+import ModalAddNewNote from '../Misc/ModalAddNewNote'
 import 'bulma/css/bulma.css';
+import styles from './Home.module.scss';
 // import '../../darkmode.scss'
 
 const Home = () => {
   // User specific data
   const [user, setUser] = useState('');
+
+  const [isOpenAddNewNote, setModalAddNewNote] = useState(false);
 
   // Array of all notes
   const [allNotes, setNotes] = useState([]);
@@ -46,6 +51,10 @@ const Home = () => {
       getCollectionData(user.uid).then(setNotes);
     }
   }, [user, newNote]);
+
+  const toggleModalAddNewNote = () => {
+    setModalAddNewNote(!isOpenAddNewNote);
+  };
 
   // Retrieves notes from Firebase
   async function getCollectionData() {
@@ -151,6 +160,12 @@ const Home = () => {
         <button className="button is-info" onClick={handleLogout}>
           Logout
         </button>
+        {/* <ModalAddNewNote
+          UserID={user.uid}
+          toggleModal={toggleModalAddNewNote}
+          isOpen={isOpenAddNewNote}
+          setNewNote={setNewNote}
+        /> */}
 
         <form onSubmit={AddNewNote}>
           <div className="field">
@@ -189,7 +204,14 @@ const Home = () => {
 
         <div className="content">
           <h1 className="is-size-3 has-text-weight-bold">My Notes</h1>
-          <CheckIfNotesExist />
+          <main
+            className={classnames(
+              'columns is-vcentered',
+              styles.notesContainer
+            )}
+          >
+            <CheckIfNotesExist />
+          </main>
         </div>
       </div>
     </section>
