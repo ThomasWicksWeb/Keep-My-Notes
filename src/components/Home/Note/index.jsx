@@ -21,30 +21,18 @@ const Note = ({ Title, Body, DocumentID, user, setNewNote }) => {
     setModalViewNote(!isOpenViewNote);
   };
 
-  // const ViewMoreDOM = () => {
-  //   return (
-  //     <ModalViewNote
-  //       Title={Title}
-  //       Body={Body}
-  //       toggleModal={toggleModalViewNote}
-  //       isOpen={isOpenViewNote}
-  //     />
-  //   );
-  // };
-
   const CheckTextLength = () => {
     if (Body.length > 175) {
       return (
         <p className="is-size-6">
-          {Body.substring(0, 255)}... <span className="NoteViewMore" onClick={toggleModalViewNote}>View note</span>
+          {Body.substring(0, 255)}...{' '}
+          <span className="NoteViewMore" onClick={toggleModalViewNote}>
+            View note
+          </span>
         </p>
       );
     } else {
-      return (
-        <p className="is-size-6">
-          {Body}
-        </p>
-      )
+      return <p className="is-size-6">{Body}</p>;
     }
   };
 
@@ -77,7 +65,7 @@ const Note = ({ Title, Body, DocumentID, user, setNewNote }) => {
         isOpen={isOpen}
         setNewNote={setNewNote}
       />
-      
+
       <ModalDelete
         Title={Title}
         DocumentID={DocumentID}
