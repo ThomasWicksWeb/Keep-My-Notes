@@ -4,3 +4,28 @@
   grid-gap: 30px !important;
   margin: 0 auto;
 }
+
+main {
+  transition: all 0.2s;
+}
+
+.createNoteButton {
+  transition: all 0.2s;
+  margin-bottom: 2rem;
+
+  &:hover {
+    & i {
+      margin-left: 8px;
+      transform: rotate(90deg);
+    }
+  }
+
+  & i {
+    margin-left: 5px;
+    transition: all 0.2s;
+  }
+}
+
+.box:last-child {
+  margin-bottom: 1.5rem;
+}
