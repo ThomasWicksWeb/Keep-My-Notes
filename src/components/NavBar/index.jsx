@@ -14,22 +14,20 @@ const NavBar = () => {
     console.log("Nav bar render")
   }, []);
 
-//   const history = useHistory();
+  const history = useHistory();
 
   // Handles user logout
   const handleLogout = () => {
-    // firebase.auth().signOut();
-    // history.push('/login');
+    firebase.auth().signOut();
+    history.push('/login');
   };
 
   const buttons = () => {
     if (!user) {
       return (
         <div className="buttons">
-          <a className="button is-info">
-            <strong>Sign up</strong>
-          </a>
-          <a className="button is-light">Log in</a>
+          <Link className="button is-info" to="/createaccount"><strong>Sign Up</strong></Link>
+          <Link className="button is-light" to="/login"><strong>Login</strong></Link>
         </div>
       );
     } else {
@@ -53,7 +51,7 @@ const NavBar = () => {
           />
         </a>
 
-        <a
+        <button
           role="button"
           className="navbar-burger burger"
           aria-label="menu"
@@ -63,7 +61,7 @@ const NavBar = () => {
           <span aria-hidden="true"></span>
           <span aria-hidden="true"></span>
           <span aria-hidden="true"></span>
-        </a>
+        </button>
       </div>
 
       <div id="navbarBasicExample" className="navbar-menu">
