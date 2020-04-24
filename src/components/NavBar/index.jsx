@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { Router, Link, useHistory } from 'react-router-dom';
+import { Link, useHistory } from 'react-router-dom';
 
 import firebase from 'firebase';
 
@@ -11,7 +11,6 @@ const NavBar = () => {
     firebase.auth().onAuthStateChanged((user) => {
       setUser(user);
     });
-    console.log("Nav bar render")
   }, []);
 
   const history = useHistory();
@@ -26,14 +25,18 @@ const NavBar = () => {
     if (!user) {
       return (
         <div className="buttons">
-          <Link className="button is-info" to="/createaccount"><strong>Sign Up</strong></Link>
-          <Link className="button is-light" to="/login"><strong>Login</strong></Link>
+          <Link className="button is-info" to="/createaccount">
+            <strong>Sign Up</strong>
+          </Link>
+          <Link className="button is-light" to="/login">
+            <strong>Login</strong>
+          </Link>
         </div>
       );
     } else {
       return (
         <button className="button is-info" onClick={handleLogout}>
-          Logout
+          <strong>Logout</strong>
         </button>
       );
     }
