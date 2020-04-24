@@ -10,7 +10,7 @@ import Note from './Note';
 import ModalAddNewNote from '../Misc/ModalAddNewNote';
 import 'bulma/css/bulma.css';
 import styles from './Home.module.scss';
-// import '../../darkmode.scss'
+// import '../../darkmode.scss';
 
 const Home = () => {
   // User specific data
@@ -21,12 +21,6 @@ const Home = () => {
   // Array of all notes
   const [allNotes, setNotes] = useState([]);
 
-  // const [RandomID, setRandomID] = useState(0);
-
-  // Input fields
-  // const [inputTitle, setInputTitle] = useState('');
-  // const [inputBody, setInputBody] = useState('');
-
   // Data for a new note to be added to Firebase
   const [newNote, setNewNote] = useState({
     Title: '',
@@ -36,8 +30,6 @@ const Home = () => {
   });
 
   const history = useHistory();
-
-  /////////////////////////////////////////////////////////////////
 
   useEffect(() => {
     // setUser will take the whole user object. not point in storing mail and id separately :)
@@ -76,8 +68,6 @@ const Home = () => {
     return <h1>loading...</h1>;
   }
 
-  /////////////////////////////////////////////////////////////////
-
   // Handles user logout
   const handleLogout = () => {
     firebase.auth().signOut();
@@ -87,15 +77,13 @@ const Home = () => {
   const CheckIfNotesExist = () => {
     if (allNotes.length === 0) {
       return (
-        <Note
-          key={1234}
-          Title={'Click the button above to add a note!'}
-          Body={':)'}
-          DocumentID={123}
-          UserID={user.uid}
-          user={user}
-          setNewNote={setNewNote}
-        />
+        <h1 className="has-text-centered is-size-5 has-text-weight-normal">
+          <span className="has-text-weight-bold is-size-4">
+            Whoops! No notes yet!
+          </span>
+          <br />
+          Click the button above to create a note and start your collection!
+        </h1>
       );
     } else if (allNotes.length >= 1) {
       const NotesToRender = allNotes.map((item) => {
@@ -111,7 +99,14 @@ const Home = () => {
           />
         );
       });
-      return NotesToRender;
+      // return NotesToRender;
+      return (
+        <main
+          className={classnames('columns is-vcentered', styles.notesContainer)}
+        >
+          {NotesToRender}
+        </main>
+      );
     }
   };
 
@@ -119,71 +114,36 @@ const Home = () => {
     <section className="section">
       <div className="container content">
         <GreetingHeader user={user} />
+
         <button className="button is-info" onClick={handleLogout}>
           Logout
         </button>
-        <p>
-          Add new note{' '}
-          <i
-            className="fas fa-edit note-edit"
-            onClick={toggleModalAddNewNote}
-          ></i>
-        </p>
 
-        <ModalAddNewNote
+        <hr />
+
+        <div className="content">
+          <h1 className="is-size-2 has-text-weight-bold">My Notes</h1>
+          <hr />
+          <button
+            className={classnames('button is-info', styles.createNoteButton)}
+            onClick={toggleModalAddNewNote}
+          >
+            Create Note <i className="fas fa-plus"></i>
+          </button>
+
+          {/* If notes exist, render them, else render placeholder */}
+          <CheckIfNotesExist />
+
+        </div>
+      </div>
+
+      {/* Modal to add new note, doesn't matter where it's placed on the page here */}
+      <ModalAddNewNote
           UserID={user.uid}
           toggleModal={toggleModalAddNewNote}
           isOpen={isOpenAddNewNote}
           setNewNote={setNewNote}
         />
-
-        {/* <form onSubmit={AddNewNote}>
-          <div className="field">
-            <label className="label">Note Title</label>
-            <div className="control">
-              <input
-                required
-                className="input"
-                type="text"
-                placeholder="Title"
-                onChange={handleTitleChange}
-                value={inputTitle}
-              />
-            </div>
-          </div>
-
-          <div className="field">
-            <label className="label">Note</label>
-            <div className="control">
-              <textarea
-                required
-                className="textarea"
-                placeholder="Add your note"
-                onChange={handleBodyChange}
-                value={inputBody}
-              ></textarea>
-            </div>
-          </div>
-
-          <button type="submit" className="button is-size-5 is-info">
-            Add Note to Firestore
-          </button>
-        </form> */}
-
-        <hr />
-
-        <div className="content">
-          <h1 className="is-size-3 has-text-weight-bold">My Notes</h1>
-          <main
-            className={classnames(
-              'columns is-vcentered',
-              styles.notesContainer
-            )}
-          >
-            <CheckIfNotesExist />
-          </main>
-        </div>
-      </div>
     </section>
   );
 };
