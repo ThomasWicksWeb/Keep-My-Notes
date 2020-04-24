@@ -1,15 +1,19 @@
 import React, { useState, useEffect } from 'react';
-import { useHistory } from 'react-router-dom';
-import classnames from 'classnames';
 
+// Firebase
 import firebase from 'firebase';
 import { db } from '../../firebase';
 
+// Custom components
 import GreetingHeader from './GreetingHeader';
-
 import AllNotes from './AllNotes';
 import ModalAddNewNote from '../Misc/ModalAddNewNote';
 import Loading from '../Misc/Loading';
+
+// Third party
+import classnames from 'classnames';
+
+// Styling
 import 'bulma/css/bulma.css';
 import styles from './Home.module.scss';
 // import '../../darkmode.scss';
@@ -32,15 +36,13 @@ const Home = () => {
     DocumentID: 0,
   });
 
-  const history = useHistory();
-
   useEffect(() => {
-    // Forces the loader to appear for a minimum of 1 second, otherwise the loader flashses and it's jarring
+    // Forces the loader to appear for a minimum of 1.2 second, otherwise the loader flashses and it's jarring
     setTimeout(() => {
       firebase.auth().onAuthStateChanged((user) => {
         setUser(user);
       });
-    }, 1000);
+    }, 1200);
   }, []);
 
   // Fetches user's notes from Firestore once the user is set
@@ -77,31 +79,23 @@ const Home = () => {
     return IsLoading();
   }
 
-  // Handles user logout
-  const handleLogout = () => {
-    firebase.auth().signOut();
-    history.push('/login');
-  };
-
   return (
     <section className="section">
       <div className="container content">
-        <GreetingHeader user={user} />
-
-        <button className="button is-info" onClick={handleLogout}>
-          Logout
-        </button>
-
-        <hr />
+        <GreetingHeader />
 
         <div className="content">
-          <h1 className="is-size-2 has-text-weight-bold">My Notes</h1>
+          <h1 className="is-size-2 has-text-weight-bold">
+            <strong>My Notes</strong>
+          </h1>
           <hr />
           <button
             className={classnames('button is-info', styles.createNoteButton)}
             onClick={toggleModalAddNewNote}
           >
-            Create Note <i className="fas fa-plus"></i>
+            <strong>
+              Create Note <i className="fas fa-plus"></i>
+            </strong>
           </button>
 
           {/* If notes exist, render them, else render placeholder */}
