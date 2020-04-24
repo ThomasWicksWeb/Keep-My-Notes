@@ -6,8 +6,10 @@ import firebase from 'firebase';
 import { db } from '../../firebase';
 
 import GreetingHeader from './GreetingHeader';
-import Note from './Note';
+
+import AllNotes from './AllNotes';
 import ModalAddNewNote from '../Misc/ModalAddNewNote';
+import Loading from '../Misc/Loading';
 import 'bulma/css/bulma.css';
 import styles from './Home.module.scss';
 // import '../../darkmode.scss';
@@ -16,6 +18,7 @@ const Home = () => {
   // User specific data
   const [user, setUser] = useState('');
 
+  // 'Add Note' modal is clased by default
   const [isOpenAddNewNote, setModalAddNewNote] = useState(false);
 
   // Array of all notes
@@ -32,12 +35,15 @@ const Home = () => {
   const history = useHistory();
 
   useEffect(() => {
-    // setUser will take the whole user object. not point in storing mail and id separately :)
-    firebase.auth().onAuthStateChanged((user) => {
-      setUser(user);
-    });
+    // Forces the loader to appear for a minimum of 1 second, otherwise the loader flashses and it's jarring
+    setTimeout(() => {
+      firebase.auth().onAuthStateChanged((user) => {
+        setUser(user);
+      });
+    }, 1000);
   }, []);
 
+  // Fetches user's notes from Firestore once the user is set
   useEffect(() => {
     if (user) {
       getCollectionData(user.uid).then(setNotes);
@@ -65,49 +71,16 @@ const Home = () => {
 
   // If the user's ID hasn't loaded, show that the page is loading
   if (!user) {
-    return <h1>loading...</h1>;
+    function IsLoading() {
+      return <Loading />;
+    }
+    return IsLoading();
   }
 
   // Handles user logout
   const handleLogout = () => {
     firebase.auth().signOut();
     history.push('/login');
-  };
-
-  const CheckIfNotesExist = () => {
-    if (allNotes.length === 0) {
-      return (
-        <h1 className="has-text-centered is-size-5 has-text-weight-normal">
-          <span className="has-text-weight-bold is-size-4">
-            Whoops! No notes yet!
-          </span>
-          <br />
-          Click the button above to create a note and start your collection!
-        </h1>
-      );
-    } else if (allNotes.length >= 1) {
-      const NotesToRender = allNotes.map((item) => {
-        return (
-          <Note
-            key={item.DocumentID}
-            Title={item.Title}
-            Body={item.Content}
-            DocumentID={item.DocumentID}
-            UserID={user.uid}
-            user={user}
-            setNewNote={setNewNote}
-          />
-        );
-      });
-      // return NotesToRender;
-      return (
-        <main
-          className={classnames('columns is-vcentered', styles.notesContainer)}
-        >
-          {NotesToRender}
-        </main>
-      );
-    }
   };
 
   return (
@@ -132,18 +105,17 @@ const Home = () => {
           </button>
 
           {/* If notes exist, render them, else render placeholder */}
-          <CheckIfNotesExist />
-
+          <AllNotes user={user} setNewNote={setNewNote} allNotes={allNotes} />
         </div>
       </div>
 
       {/* Modal to add new note, doesn't matter where it's placed on the page here */}
       <ModalAddNewNote
-          UserID={user.uid}
-          toggleModal={toggleModalAddNewNote}
-          isOpen={isOpenAddNewNote}
-          setNewNote={setNewNote}
-        />
+        UserID={user.uid}
+        toggleModal={toggleModalAddNewNote}
+        isOpen={isOpenAddNewNote}
+        setNewNote={setNewNote}
+      />
     </section>
   );
 };
