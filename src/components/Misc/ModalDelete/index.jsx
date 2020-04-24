@@ -36,7 +36,7 @@ const ModalDelete = ({
           <header className="modal-card-head">
             <div className="modal-card-title">
               <h4 className="has-text-weight-normal">
-                Are you sure you want to delete <br />
+                Are you sure you want to delete: <br />
                 <span className="has-text-weight-bold">{Title}</span>?
               </h4>
             </div>
