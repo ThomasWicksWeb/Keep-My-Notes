@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { Link, useHistory } from 'react-router-dom';
 
 import firebase from 'firebase';
+import classnames from 'classnames';
 
 import 'bulma/css/bulma.css';
 import styles from './Login.module.scss';
@@ -40,7 +41,7 @@ const StandardLogin = () => {
   };
 
   return (
-    <section className="section">
+    <section className={classnames('section', styles.LoginBackground)}>
       <div className="container">
         <h3 className="has-text-weight-bold has-text-centered is-size-3">
           Login
