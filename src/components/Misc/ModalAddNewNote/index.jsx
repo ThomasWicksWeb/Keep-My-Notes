@@ -8,7 +8,7 @@ const ModalAddNewNote = ({ UserID, toggleModal, isOpen, setNewNote }) => {
   const [inputTitle, setInputTitle] = useState('');
   const [inputBody, setInputBody] = useState('');
 
-  // Handles input field for note title
+  // Handles input field for new note title
   const handleTitleChange = (e) => {
     setInputTitle(e.target.value);
   };
@@ -18,9 +18,11 @@ const ModalAddNewNote = ({ UserID, toggleModal, isOpen, setNewNote }) => {
     setInputBody(e.target.value);
   };
 
+  // Function to add a new note
   const AddNewNote = (e) => {
     e.preventDefault();
 
+    // Assigning custom, random ID to the document
     const RandomID = Math.random().toString(36).substring(2);
 
     // Adding new data to Firebase
