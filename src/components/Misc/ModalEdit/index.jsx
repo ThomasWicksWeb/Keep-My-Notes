@@ -57,6 +57,22 @@ const Modal = ({
     toggleModal();
   };
 
+  const CheckIfEdited = () => {
+    if (Body === inputBody) {
+      return (
+        <button className="button is-success" disabled type="submit">
+          Save changes
+        </button>
+      );
+    } else {
+      return (
+        <button className="button is-success" type="submit">
+          Save changes
+        </button>
+      );
+    }
+  };
+
   if (isOpen === true) {
     return (
       <aside className="modal is-active">
@@ -103,9 +119,10 @@ const Modal = ({
                 </div>
               </div>
               <div className={styles.buttonContainer}>
-                <button className="button is-success" type="submit">
+                {/* <button className="button is-success" type="submit">
                   Save changes
-                </button>
+                </button> */}
+                {CheckIfEdited()}
                 <button className="button" onClick={toggleModal}>
                   Cancel
                 </button>
