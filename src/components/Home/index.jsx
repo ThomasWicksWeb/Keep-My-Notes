@@ -52,9 +52,15 @@ const Home = () => {
     }
   }, [user, newNote]);
 
+  // Toggle Add New Note modal
   const toggleModalAddNewNote = () => {
     setModalAddNewNote(!isOpenAddNewNote);
   };
+
+  // If the user's ID hasn't loaded, show that the page is loading
+  if (!user) {
+    return <Loading />;
+  }
 
   // Retrieves notes from Firebase
   async function getCollectionData() {
@@ -69,14 +75,6 @@ const Home = () => {
     );
     console.log('Calling firebase');
     return storedNotes;
-  }
-
-  // If the user's ID hasn't loaded, show that the page is loading
-  if (!user) {
-    function IsLoading() {
-      return <Loading />;
-    }
-    return IsLoading();
   }
 
   return (
