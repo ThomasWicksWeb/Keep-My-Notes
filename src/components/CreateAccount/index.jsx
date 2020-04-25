@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { Link, useHistory } from 'react-router-dom';
+import ErrorMessage from '../Misc/Error';
 
 import firebase from 'firebase';
 
@@ -9,6 +10,12 @@ import styles from './CreateAccount.module.scss';
 const CreateAccount = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+
+  const [error, setError] = useState({
+    IsError: false,
+    ErrorTitle: '',
+    ErrorMessage: '',
+  });
 
   let history = useHistory();
 
@@ -29,13 +36,24 @@ const CreateAccount = () => {
         history.push('/home');
       })
       .catch(function (error) {
-        // Handle Errors here.
-        const errorCode = error.code;
-        const errorMessage = error.message;
-        console.log(`Error Code: ${errorCode}`);
-        console.log(`Error Message: ${errorMessage}`);
-        // ...
+        setError({
+          IsError: true,
+          ErrorTitle: error.code,
+          ErrorMessage: error.message,
+        });
+        CheckForError();
       });
+  };
+
+  const CheckForError = () => {
+    if (error.IsError) {
+      return (
+        <ErrorMessage
+          ErrorTitle={error.ErrorTitle}
+          ErrorBody={error.ErrorMessage}
+        />
+      );
+    }
   };
 
   return (
@@ -44,6 +62,8 @@ const CreateAccount = () => {
         <h3 className="has-text-weight-bold has-text-centered is-size-3">
           Create Account
         </h3>
+
+        {CheckForError()}
 
         <form onSubmit={handleOnSubmit} className={styles.formContainer}>
           <div className="field">
