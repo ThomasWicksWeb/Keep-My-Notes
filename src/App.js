@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { Route, Switch, BrowserRouter } from 'react-router-dom';
 import './firebase';
 
@@ -16,7 +16,7 @@ import AppFooter from './components/Footer';
 
 // Logged in content
 import Home from './components/Home';
-import Account from './components/Account';
+import AccountSettings from './components/AccountSettings';
 
 // Logged out content
 import StandardLogin from './components/StandardLogin';
@@ -40,7 +40,7 @@ function App() {
         <Switch>
           <Route exact path="/" component={Home} />
           <Route exact path="/home" component={Home} />
-          <Route exact path="/account" component={Account} />
+          <Route exact path="/account" component={AccountSettings} />
           <Route exact path="/notes" component={Home} />
           <Route exact path="/login" component={StandardLogin} />
           <Route exact path="/resetpassword" component={ResetPassword} />
