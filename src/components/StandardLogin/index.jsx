@@ -3,6 +3,7 @@ import { Link, useHistory } from 'react-router-dom';
 
 import firebase from 'firebase';
 import classnames from 'classnames';
+import ErrorMessage from '../Misc/Error';
 
 import 'bulma/css/bulma.css';
 import styles from './Login.module.scss';
@@ -10,6 +11,11 @@ import styles from './Login.module.scss';
 const StandardLogin = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+  const [error, setError] = useState({
+    IsError: false,
+    ErrorTitle: '',
+    ErrorMessage: '',
+  });
 
   const history = useHistory();
 
@@ -23,13 +29,24 @@ const StandardLogin = () => {
         history.push('/home');
       })
       .catch(function (error) {
-        // Handle Errors here.
-        const errorCode = error.code;
-        const errorMessage = error.message;
-        console.log(`Error Code: ${errorCode}`);
-        console.log(`Error Message: ${errorMessage}`);
-        // ...
+        setError({
+          IsError: true,
+          ErrorTitle: error.code,
+          ErrorMessage: error.message,
+        });
+        CheckForError();
       });
+  };
+
+  const CheckForError = () => {
+    if (error.IsError) {
+      return (
+        <ErrorMessage
+          ErrorTitle={error.ErrorTitle}
+          ErrorBody={error.ErrorMessage}
+        />
+      );
+    }
   };
 
   const handleEmail = (e) => {
@@ -43,6 +60,8 @@ const StandardLogin = () => {
   return (
     <section className={classnames('section', styles.LoginBackground)}>
       <div className="container">
+        {CheckForError()}
+
         <h3 className="has-text-weight-bold has-text-centered is-size-3">
           Login
         </h3>
