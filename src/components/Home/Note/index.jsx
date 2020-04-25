@@ -1,8 +1,8 @@
 import React, { useState } from 'react';
 import './Note.scss';
-import ModalEdit from '../../Misc/ModalEdit';
-import ModalDelete from '../../Misc/ModalDelete';
-import ModalViewNote from '../../Misc/ModalViewNote';
+import ModalEdit from './ModalEdit';
+import ModalDelete from './ModalDelete';
+import ModalViewNote from './ModalViewNote';
 
 const Note = ({ Title, Body, DocumentID, user, setNewNote }) => {
   const [isOpen, setModal] = useState(false);
