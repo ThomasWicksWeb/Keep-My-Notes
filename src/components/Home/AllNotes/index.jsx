@@ -1,6 +1,7 @@
 import React from 'react';
 import classnames from 'classnames';
 import Note from '../Note';
+import Emoji from '../../Misc/Emoji'
 import styles from './AllNotes.module.scss';
 
 const CheckIfNotesExist = ({ allNotes, user, setNewNote }) => {
@@ -8,11 +9,11 @@ const CheckIfNotesExist = ({ allNotes, user, setNewNote }) => {
   if (allNotes.length === 0) {
     return (
       <h1 className="has-text-centered is-size-5 has-text-weight-normal">
-        <span className="has-text-weight-bold is-size-4">
+        <span className="has-text-weight-bold is-size-3">
           Whoops! No notes yet!
         </span>
         <br />
-        Click the button above to create a note and start your collection!
+        Click the button above to create a note and start your collection <Emoji Emoji="😁" Label="Smiley face :)" />
       </h1>
     );
   } else if (allNotes.length >= 1) {
