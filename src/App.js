@@ -1,5 +1,6 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { Route, Switch, BrowserRouter } from 'react-router-dom';
+import { Helmet } from 'react-helmet';
 import './firebase';
 
 // Firebase App (the core Firebase SDK) is always required and
@@ -19,16 +20,27 @@ import Home from './components/Home';
 import AccountSettings from './components/AccountSettings';
 
 // Logged out content
+import IndexPage from './components/index';
 import StandardLogin from './components/StandardLogin';
 import CreateAccount from './components/CreateAccount';
 import ResetPassword from './components/ResetPassword';
 
 function App() {
+  useEffect(() => {
+    const IsDarkModeActive = localStorage.getItem('DarkMode');
+    if (IsDarkModeActive) {
+      return (
+        <Helmet>
+          <link src="./darkmode.scss" />
+        </Helmet>
+      );
+    }
+  }, []);
+
   firebase.auth().onAuthStateChanged(function (user) {
     if (user) {
       console.log("I'm logged in");
     } else {
-      // No user is signed in.
       console.log("I'm NOT logged in");
     }
   });
@@ -38,8 +50,8 @@ function App() {
       <BrowserRouter>
         <NavBar />
         <Switch>
-          <Route exact path="/" component={Home} />
-          <Route exact path="/home" component={Home} />
+          <Route exact path="/" component={IndexPage} />
+          <Route exact path="/home" component={IndexPage} />
           <Route exact path="/account" component={AccountSettings} />
           <Route exact path="/notes" component={Home} />
           <Route exact path="/login" component={StandardLogin} />
