@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import { Helmet } from 'react-helmet';
 
 // Firebase
 import firebase from 'firebase';
@@ -9,6 +10,7 @@ import GreetingHeader from './GreetingHeader';
 import AllNotes from './AllNotes';
 import ModalAddNewNote from '../Misc/ModalAddNewNote';
 import Loading from '../Misc/Loading';
+import Emoji from '../Misc/Emoji';
 
 // Third party
 import classnames from 'classnames';
@@ -80,11 +82,13 @@ const Home = () => {
   return (
     <section className="section">
       <div className="container content">
-        <GreetingHeader />
+        {/* <GreetingHeader /> */}
 
         <div className="content">
           <h1 className="is-size-2 has-text-weight-bold">
-            <strong>My Notes</strong>
+            <strong>
+              My Notes <Emoji Emoji="✏️" Label="Note Pad" />
+            </strong>
           </h1>
           <hr />
           <button
@@ -108,6 +112,9 @@ const Home = () => {
         isOpen={isOpenAddNewNote}
         setNewNote={setNewNote}
       />
+      <Helmet>
+        <title>Notes | Keep My Notes</title>
+      </Helmet>
     </section>
   );
 };
