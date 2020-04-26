@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { Link, useHistory } from 'react-router-dom';
+import { Helmet } from 'react-helmet'
 
 import firebase from 'firebase';
 import classnames from 'classnames';
@@ -105,6 +106,9 @@ const StandardLogin = () => {
           </p>
         </form>
       </div>
+      <Helmet>
+        <title>Login | Keep My Notes</title>
+      </Helmet>
     </section>
   );
 };

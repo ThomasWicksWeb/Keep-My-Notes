@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
+import { Helmet } from 'react-helmet'
 import 'firebase';
 import { auth } from '../../firebase';
 
@@ -79,6 +80,9 @@ const ResetPassword = () => {
           </p>
         </form>
       </div>
+      <Helmet>
+        <title>Reset Password | Keep My Notes</title>
+      </Helmet>
     </section>
   );
 };
