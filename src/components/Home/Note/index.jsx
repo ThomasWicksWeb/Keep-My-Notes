@@ -43,7 +43,7 @@ const Note = ({ Title, Body, DocumentID, user, setNewNote }) => {
       <div className="quickActionButtons">
         <i className="fas fa-edit note-edit" onClick={toggleModalEdit}></i>
         <i
-          className="fas fa-trash-alt note-garbage"
+          className="fas fa-trash-alt note-garbage swing"
           onClick={toggleModalDelete}
         ></i>
         {/* <button className="link" onClick={toggleModalViewNote}>View Note</button> */}
