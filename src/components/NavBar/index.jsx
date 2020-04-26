@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { Link, useHistory } from 'react-router-dom';
 
 import firebase from 'firebase';
+import './NavBar.scss';
 
 const NavBar = () => {
   const [user, setUser] = useState('');
@@ -35,9 +36,17 @@ const NavBar = () => {
       );
     } else {
       return (
-        <button className="button is-info" onClick={handleLogout}>
-          <strong>Logout</strong>
-        </button>
+        <>
+          <Link to="/notes" className="navbar-item">
+            <strong>My Notes</strong>
+          </Link>
+          <Link to="/account" className="navbar-item">
+            <strong>Account</strong>
+          </Link>
+          <button className="button is-info" onClick={handleLogout}>
+            <strong>Logout</strong>
+          </button>
+        </>
       );
     }
   };
@@ -45,17 +54,11 @@ const NavBar = () => {
   return (
     <nav className="navbar" role="navigation" aria-label="main navigation">
       <div className="navbar-brand">
-        <a className="navbar-item" href="https://bulma.io">
-          <img
-            src="https://bulma.io/images/bulma-logo.png"
-            width="112"
-            height="28"
-            alt="logo"
-          />
-        </a>
+        <Link to="/" className="navbar-item is-size-3 ScriptFont">
+          Keep My Notes
+        </Link>
 
         <button
-          role="button"
           className="navbar-burger burger"
           aria-label="menu"
           aria-expanded="false"
@@ -68,36 +71,10 @@ const NavBar = () => {
       </div>
 
       <div id="navbarBasicExample" className="navbar-menu">
-        <div className="navbar-start">
-          {/* <Router>
-            <p className="navbar-item">
-              <Link to="/notes">Notes</Link>
-            </p>
-          </Router> */}
-
-          <div className="navbar-item has-dropdown is-hoverable">
-            <a className="navbar-link">More</a>
-
-            <div className="navbar-dropdown">
-              <a className="navbar-item">About</a>
-              <a className="navbar-item">Jobs</a>
-              <a className="navbar-item">Contact</a>
-              <hr className="navbar-divider" />
-              <a className="navbar-item">Report an issue</a>
-            </div>
-          </div>
-        </div>
+        <div className="navbar-start"></div>
 
         <div className="navbar-end">
-          <div className="navbar-item">
-            {/* <div className="buttons">
-              <a className="button is-primary">
-                <strong>Sign up</strong>
-              </a>
-              <a className="button is-light">Log in</a>
-            </div> */}
-            {buttons()}
-          </div>
+          <div className="navbar-item">{buttons()}</div>
         </div>
       </div>
     </nav>
