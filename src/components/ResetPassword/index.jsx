@@ -13,7 +13,6 @@ const ResetPassword = () => {
 
   const [error, setError] = useState({
     IsError: false,
-    ErrorTitle: '',
     ErrorMessage: '',
   });
 
@@ -31,19 +30,17 @@ const ResetPassword = () => {
       .catch(function (error) {
         setError({
           IsError: true,
-          ErrorTitle: error.code,
-          ErrorMessage: error.message
-        })
+          ErrorMessage: error.message,
+        });
         CheckForError();
       });
   };
 
-const CheckForError = () => {
-  if(error.IsError){
-    return <ErrorMessage ErrorTitle={error.ErrorTitle} ErrorBody={error.ErrorMessage} />
-  }
-}
-
+  const CheckForError = () => {
+    if (error.IsError) {
+      return <ErrorMessage ErrorBody={error.ErrorMessage} />;
+    }
+  };
 
   return (
     <section className="section">
