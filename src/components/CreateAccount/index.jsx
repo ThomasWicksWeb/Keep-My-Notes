@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { Link, useHistory } from 'react-router-dom';
+import { Helmet } from 'react-helmet'
 import ErrorMessage from '../Misc/Error';
 
 import firebase from 'firebase';
@@ -101,6 +102,9 @@ const CreateAccount = () => {
           </p>
         </form>
       </div>
+      <Helmet>
+        <title>Create Account | Keep My Notes</title>
+      </Helmet>
     </section>
   );
 };
