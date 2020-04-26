@@ -13,7 +13,6 @@ const StandardLogin = () => {
   const [password, setPassword] = useState('');
   const [error, setError] = useState({
     IsError: false,
-    ErrorTitle: '',
     ErrorMessage: '',
   });
 
@@ -31,7 +30,6 @@ const StandardLogin = () => {
       .catch(function (error) {
         setError({
           IsError: true,
-          ErrorTitle: error.code,
           ErrorMessage: error.message,
         });
         CheckForError();
@@ -40,12 +38,7 @@ const StandardLogin = () => {
 
   const CheckForError = () => {
     if (error.IsError) {
-      return (
-        <ErrorMessage
-          ErrorTitle={error.ErrorTitle}
-          ErrorBody={error.ErrorMessage}
-        />
-      );
+      return <ErrorMessage ErrorBody={error.ErrorMessage} />;
     }
   };
 
