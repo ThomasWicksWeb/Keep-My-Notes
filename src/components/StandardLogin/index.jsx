@@ -26,7 +26,7 @@ const StandardLogin = () => {
       .signInWithEmailAndPassword(email, password)
       .then(function (user) {
         // user signed in
-        history.push('/home');
+        history.push('/notes');
       })
       .catch(function (error) {
         setError({
