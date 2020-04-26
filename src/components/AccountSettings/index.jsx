@@ -19,11 +19,7 @@ const Account = () => {
 
   // If the user's ID hasn't loaded, show that the page is loading
   if (!user) {
-    // function IsLoading() {
-    //   return <Loading />;
-    // }
-    // return IsLoading();
-    return <Loading />
+    return <Loading />;
   }
 
   return (
