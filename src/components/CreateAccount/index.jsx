@@ -13,7 +13,6 @@ const CreateAccount = () => {
 
   const [error, setError] = useState({
     IsError: false,
-    ErrorTitle: '',
     ErrorMessage: '',
   });
 
@@ -38,7 +37,6 @@ const CreateAccount = () => {
       .catch(function (error) {
         setError({
           IsError: true,
-          ErrorTitle: error.code,
           ErrorMessage: error.message,
         });
         CheckForError();
@@ -47,12 +45,7 @@ const CreateAccount = () => {
 
   const CheckForError = () => {
     if (error.IsError) {
-      return (
-        <ErrorMessage
-          ErrorTitle={error.ErrorTitle}
-          ErrorBody={error.ErrorMessage}
-        />
-      );
+      return <ErrorMessage ErrorBody={error.ErrorMessage} />;
     }
   };
 
