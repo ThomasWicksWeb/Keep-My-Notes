@@ -1,0 +1,21 @@
+.MainWrapper {
+    display: flex;
+    justify-self: space-evenly;
+    align-items: center;
+
+    padding: 4rem 2rem;
+}
+
+.content {
+    flex: 1;
+}
+
+.ImageContent {
+    flex: 1;
+    display: flex;
+
+    & img {
+        max-width: 80%;
+        margin: 0 auto;
+    }
+}
