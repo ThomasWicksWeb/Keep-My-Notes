@@ -21,6 +21,7 @@ import AccountSettings from './components/AccountSettings';
 
 // Logged out content
 import IndexPage from './components/index';
+import About from './components/About';
 import StandardLogin from './components/StandardLogin';
 import CreateAccount from './components/CreateAccount';
 import ResetPassword from './components/ResetPassword';
@@ -52,6 +53,7 @@ function App() {
         <Switch>
           <Route exact path="/" component={IndexPage} />
           <Route exact path="/home" component={IndexPage} />
+          <Route exact path="/about" component={About} />
           <Route exact path="/account" component={AccountSettings} />
           <Route exact path="/notes" component={Home} />
           <Route exact path="/login" component={StandardLogin} />
