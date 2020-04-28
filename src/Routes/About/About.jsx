@@ -1,9 +1,13 @@
 import React from 'react';
+import { Helmet } from 'react-helmet';
 import styles from './About.module.scss';
 
 const About = () => {
   return (
     <main>
+      <Helmet>
+        <title>About | Keep My Notes</title>
+      </Helmet>
       <section className="section">
         <div className="container content">
           <h3 className="has-text-weight-bold is-size-3">
@@ -34,7 +38,9 @@ const About = () => {
               The learning experience that this project has presented has been
               phenominal to my growth as a web developer. I was able to learn
               and incorporate Firebase authentication and the Firestore -- both
-              of which I've been eager to put into a project for a while now.
+              of which I've been eager to put into a project for a while now, as
+              well as learn more about how React works than I initially thought
+              I would have.
             </p>
             <p className="is-size-6">
               Thank you again for taking the time to check out{' '}
