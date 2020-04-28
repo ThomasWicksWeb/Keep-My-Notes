@@ -1,6 +1,6 @@
 import React from 'react';
 
-import ExternalLink from '../Misc/ExternalLink';
+import {ExternalLink} from '../ExternalLink';
 
 function AppFooter() {
   return (

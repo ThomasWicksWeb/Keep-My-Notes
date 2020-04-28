@@ -1,6 +1,5 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 import { Route, Switch, BrowserRouter } from 'react-router-dom';
-import { Helmet } from 'react-helmet';
 import './firebase';
 
 // Firebase App (the core Firebase SDK) is always required and
@@ -16,28 +15,17 @@ import NavBar from './components/NavBar';
 import AppFooter from './components/Footer';
 
 // Logged in content
-import Home from './components/Home';
-import AccountSettings from './components/AccountSettings';
+import { Home } from './Routes/Home';
+import { AccountSettings } from './Routes/AccountSettings';
 
 // Logged out content
-import IndexPage from './components/index';
-import About from './components/About';
-import StandardLogin from './components/StandardLogin';
-import CreateAccount from './components/CreateAccount';
-import ResetPassword from './components/ResetPassword';
+import { IndexPage } from './Routes/IndexPage';
+import { About } from './Routes/About';
+import { StandardLogin } from './Routes/StandardLogin';
+import { CreateAccount } from './Routes/CreateAccount';
+import { ResetPassword } from './Routes/ResetPassword';
 
 function App() {
-  // useEffect(() => {
-  //   const IsDarkModeActive = localStorage.getItem('DarkMode');
-  //   if (IsDarkModeActive) {
-  //     return (
-  //       <Helmet>
-  //         <link src="./darkmode.scss" />
-  //       </Helmet>
-  //     );
-  //   }
-  // }, []);
-
   firebase.auth().onAuthStateChanged(function (user) {
     if (user) {
       console.log("I'm logged in");

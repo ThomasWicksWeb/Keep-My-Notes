@@ -1,0 +1,15 @@
+.delete {
+    position: absolute !important;
+    top: 10px !important;
+    right: 10px !important;
+}
+
+.buttonContainer {
+    & button:first-child {
+        margin-right: 10px;
+    }
+}
+
+.content h4 {
+    margin-bottom: 0px !important;
+}
