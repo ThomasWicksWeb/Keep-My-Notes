@@ -34,7 +34,7 @@ const Modal = ({
   const handleUpdateNote = (e) => {
     e.preventDefault();
 
-    db.collection('testCollection')
+    db.collection('users')
       .doc(UserID)
       .collection('Notes')
       .doc(DocumentID)

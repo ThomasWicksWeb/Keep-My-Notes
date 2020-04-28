@@ -6,7 +6,6 @@ import firebase from 'firebase';
 import { db } from '../../firebase';
 
 // Custom components
-import GreetingHeader from './GreetingHeader';
 import AllNotes from './AllNotes';
 import ModalAddNewNote from '../Misc/ModalAddNewNote';
 import Loading from '../Misc/Loading';
@@ -67,7 +66,7 @@ const Home = () => {
   // Retrieves notes from Firebase
   async function getCollectionData() {
     const snapshot = await db
-      .collection('testCollection')
+      .collection('users')
       .doc(user.uid)
       .collection('Notes')
       .orderBy('LastEdit', 'desc')
@@ -82,8 +81,6 @@ const Home = () => {
   return (
     <section className="section">
       <div className="container content">
-        {/* <GreetingHeader /> */}
-
         <div className="content">
           <h1 className="is-size-2 has-text-weight-bold">
             <strong>

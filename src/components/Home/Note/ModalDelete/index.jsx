@@ -14,7 +14,7 @@ const ModalDelete = ({
   const DeleteNote = (e) => {
     e.preventDefault();
 
-    db.collection('testCollection')
+    db.collection('users')
       .doc(UserID)
       .collection('Notes')
       .doc(DocumentID)

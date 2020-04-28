@@ -26,7 +26,7 @@ const ModalAddNewNote = ({ UserID, toggleModal, isOpen, setNewNote }) => {
     const RandomID = Math.random().toString(36).substring(2);
 
     // Adding new data to Firebase
-    db.collection('testCollection')
+    db.collection('users')
       .doc(UserID)
       .collection('Notes')
       .doc(RandomID)
