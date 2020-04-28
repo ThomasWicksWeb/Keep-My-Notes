@@ -57,6 +57,9 @@ const NavBar = () => {
         <Link to="/" className="navbar-item is-size-3 ScriptFont">
           Keep My Notes
         </Link>
+        <Link to="/about" className="navbar-item">
+          <strong>About</strong>
+        </Link>
 
         <button
           className="navbar-burger burger"
