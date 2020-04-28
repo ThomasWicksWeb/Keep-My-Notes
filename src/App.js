@@ -26,16 +26,16 @@ import CreateAccount from './components/CreateAccount';
 import ResetPassword from './components/ResetPassword';
 
 function App() {
-  useEffect(() => {
-    const IsDarkModeActive = localStorage.getItem('DarkMode');
-    if (IsDarkModeActive) {
-      return (
-        <Helmet>
-          <link src="./darkmode.scss" />
-        </Helmet>
-      );
-    }
-  }, []);
+  // useEffect(() => {
+  //   const IsDarkModeActive = localStorage.getItem('DarkMode');
+  //   if (IsDarkModeActive) {
+  //     return (
+  //       <Helmet>
+  //         <link src="./darkmode.scss" />
+  //       </Helmet>
+  //     );
+  //   }
+  // }, []);
 
   firebase.auth().onAuthStateChanged(function (user) {
     if (user) {
