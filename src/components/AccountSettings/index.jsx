@@ -54,7 +54,7 @@ const Account = () => {
           </li>
         </ul>
 
-        <h1 className="title">Settings</h1>
+        {/* <h1 className="title">Settings</h1>
         <ul>
           <li className="settingsGroup has-text-weight-bold">
             <label className="checkbox is-size-5">
@@ -72,7 +72,7 @@ const Account = () => {
               User ID: <span className="is-size-6">{user.uid}</span>
             </p>
           </li>
-        </ul>
+        </ul> */}
       </div>
       <Helmet>
         <title>Account | Keep My Notes</title>
