@@ -1,11 +1,49 @@
 .hero {
-    background-image: url('../images/KeepMyNotesIndexBackground.svg');
-    background-repeat: no-repeat;
-    background-size: contain;
-    background-position: 100% 10px;
-    background-position: right top;
+  background-image: url('../images/KeepMyNotesIndexBackground.svg');
+  background-repeat: no-repeat;
+  background-size: contain;
+  background-position: 100% 10px;
+  background-position: right top;
+}
+
+.MainWrapper {
+  display: flex;
+  justify-self: space-evenly;
+  align-items: center;
+
+  padding: 4rem 2rem;
+}
+
+.content {
+  flex: 1;
+}
+
+.ImageContent {
+  flex: 1.5;
+  display: flex;
+
+  & img {
+    max-width: 80%;
+    margin: 0 auto;
+  }
 }
 
 .ScriptFont {
-    font-family: 'Satisfy', cursive;
+  font-family: 'Satisfy', cursive;
+}
+
+@media only screen and (max-width: 1000px) {
+  .ImageContent {
+    flex: 1;
+  }
+}
+
+@media only screen and (max-width: 700px) {
+  .MainWrapper {
+		flex-direction: column;
+  }
+
+  .ImageContent {
+    flex: 0.75;
+  }
 }
