@@ -20,6 +20,7 @@ const IndexPage = () => {
     });
   }, []);
 
+  // Buttons in the 'call to action' are dependent on if a user is logged in or not
   const CheckCallToActionButton = () => {
     if (user) {
       return (
@@ -31,9 +32,12 @@ const IndexPage = () => {
       );
     } else {
       return (
-        <strong>
+        <strong className={styles.groupedButtons}>
           <Link className="button is-info" to="/createaccount">
             Create an Account
+          </Link>
+          <Link className="button" to="/login">
+            Login
           </Link>
         </strong>
       );
