@@ -1,6 +1,9 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
+import { Link } from 'react-router-dom';
 import { Helmet } from 'react-helmet';
 import classnames from 'classnames';
+
+import * as firebase from 'firebase/app';
 
 import Emoji from '../Misc/Emoji';
 import TextPhotoBlock from './TextPhotoBlock';
@@ -8,27 +11,56 @@ import styles from './Index.module.scss';
 import TextPhotoBlockReversed from './TextPhotoBlockReversed';
 
 const IndexPage = () => {
+  const [user, setUser] = useState('');
+
+  useEffect(() => {
+    // setUser will take the whole user object. not point in storing mail and id separately :)
+    firebase.auth().onAuthStateChanged((user) => {
+      setUser(user);
+    });
+  }, []);
+
+  const CheckCallToActionButton = () => {
+    if (user) {
+      return (
+        <strong>
+          <Link className="button is-info" to="/notes">
+            View My Notes
+          </Link>
+        </strong>
+      );
+    } else {
+      return (
+        <strong>
+          <Link className="button is-info" to="/createaccount">
+            Create an Account
+          </Link>
+        </strong>
+      );
+    }
+  };
+
   return (
     <>
-      <section
-        // className={classnames('hero is-large', styles.hero)}
-        className={classnames('hero is-fullheight-with-navbar', styles.hero)}
-      >
-        <div className="hero-body">
-          <div className="container">
-            <h1 className={classnames('title is-size-1', styles.ScriptFont)}>
+      <section className="section">
+        <article className={classnames('container', styles.MainWrapper)}>
+          <div className={classnames('content', styles.content)}>
+            <h2 className={classnames('is-size-1', styles.ScriptFont)}>
               Keep My Notes <Emoji Emoji="📝" Label="Note Pad" />
-            </h1>
-            <h2 className="subtitle is-size-4">
+            </h2>
+            <p className="is-size-4">
               The lightning fast <Emoji Emoji="⚡" Label="Lightning Bolt" /> and
               lightweight <Emoji Emoji="☁️" label="Lightweight" /> notes app
-            </h2>
+            </p>
+            {CheckCallToActionButton()}
           </div>
-        </div>
-
-        <Helmet>
-          <title>Welcome | Keep My Notes</title>
-        </Helmet>
+          <div className={styles.ImageContent}>
+            <img
+              src="./images/KeepMyNotesIndexBackground.svg"
+              alt="Home page splash"
+            />
+          </div>
+        </article>
       </section>
 
       <div className="container">
@@ -51,6 +83,10 @@ const IndexPage = () => {
           img={'./images/UndrawSecurity.svg'}
         />
       </div>
+
+      <Helmet>
+        <title>Welcome | Keep My Notes</title>
+      </Helmet>
     </>
   );
 };
