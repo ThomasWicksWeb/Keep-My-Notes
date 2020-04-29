@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import firebase from 'firebase';
+import PropTypes from 'prop-types';
 import classnames from 'classnames';
 import styles from './ModalEdit.module.scss';
 import { db } from '../../../../firebase';
@@ -135,6 +136,16 @@ const Modal = ({
   } else {
     return <></>;
   }
+};
+
+Modal.propTypes = {
+  Title: PropTypes.string.isRequired,
+  Body: PropTypes.string.isRequired,
+  DocumentID: PropTypes.string.isRequired,
+  UserID: PropTypes.string.isRequired,
+  toggleModal: PropTypes.func.isRequired,
+  isOpen: PropTypes.bool.isRequired,
+  setNewNote: PropTypes.func.isRequired,
 };
 
 export default Modal;
