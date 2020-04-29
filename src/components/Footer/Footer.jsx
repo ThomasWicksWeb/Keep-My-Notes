@@ -32,6 +32,7 @@ function AppFooter() {
             className="is-size-6 hvr-sweep-to-right text-highlight has-text-weight-bold"
           ></ExternalLink>{' '}
         </p>
+        <p className="is-size-6">Site last updated <strong>April 29th, 2020</strong></p>
       </div>
     </footer>
   );
