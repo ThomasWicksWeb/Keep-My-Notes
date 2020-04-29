@@ -13,9 +13,9 @@ const About = () => {
           <h3 className="has-text-weight-bold is-size-3">
             Thank you for taking the time to check out <em>Keep My Notes</em>!
           </h3>
-          <h2 className="has-text-weight-bold is-size-4">
+          {/* <h2 className="has-text-weight-bold is-size-4">
             So what exactly is <em>'Keep My Notes'</em>?
-          </h2>
+          </h2> */}
           <hr />
           <div className={styles.paragraphs}>
             <p className="is-size-5">Hey There!</p>
