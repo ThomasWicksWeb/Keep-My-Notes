@@ -1,6 +1,6 @@
 import React from 'react';
 import { Route, Switch, BrowserRouter } from 'react-router-dom';
-import './firebase';
+// import './firebase';
 
 // Firebase App (the core Firebase SDK) is always required and
 // must be listed before other Firebase SDKs
@@ -10,9 +10,12 @@ import * as firebase from 'firebase/app';
 import 'firebase/auth';
 import 'firebase/firestore';
 
+// Styles
+import './BulmaFixes.scss';
+
 // Other components
-import NavBar from './components/NavBar';
-import AppFooter from './components/Footer';
+import { NavBar } from './components/NavBar';
+import { AppFooter } from './components/Footer';
 
 // Logged in content
 import { Home } from './Routes/Home';
