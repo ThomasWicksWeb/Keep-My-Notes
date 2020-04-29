@@ -5,10 +5,10 @@ import classnames from 'classnames';
 
 import * as firebase from 'firebase/app';
 
+import { TextPhotoBlock } from './TextPhotoBlock';
+import { TextPhotoBlockReversed } from './TextPhotoBlockReversed';
 import Emoji from '../../components/Emoji';
-import TextPhotoBlock from './TextPhotoBlock';
 import styles from './Index.module.scss';
-import TextPhotoBlockReversed from './TextPhotoBlockReversed';
 
 const IndexPage = () => {
   const [user, setUser] = useState('');
