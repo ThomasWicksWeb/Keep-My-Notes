@@ -1,5 +1,6 @@
 import React from 'react';
 import { Helmet } from 'react-helmet';
+import { ExternalLink } from '../../components/ExternalLink';
 import styles from './About.module.scss';
 
 const About = () => {
@@ -46,6 +47,9 @@ const About = () => {
               Thank you again for taking the time to check out{' '}
               <em>Keep My Notes</em>, I truly hope you like what I've created
               here!
+            </p>
+            <p className="is-size-6">
+              If you'd like to shoot me an email, please contact me on my <ExternalLink text="main page" href="https://www.thomaswicks.com/#contactMe" icon="fas fa-paper-plane" />
             </p>
             <p className="is-size-5">
               All the best,
