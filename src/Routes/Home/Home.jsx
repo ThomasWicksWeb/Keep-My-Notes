@@ -6,9 +6,8 @@ import firebase from 'firebase';
 import { db } from '../../firebase';
 
 // Custom components
-import AllNotes from './AllNotes';
-import ModalAddNewNote from '../../components/ModalAddNewNote';
-import Loading from '../../components/Loading';
+import { AllNotes } from './AllNotes';
+import { ModalAddNewNote } from './ModalAddNewNote';
 import Emoji from '../../components/Emoji';
 
 // Third party
@@ -38,11 +37,9 @@ const Home = () => {
 
   useEffect(() => {
     // Forces the loader to appear for a minimum of 1.2 second, otherwise the loader flashses and it's jarring
-    setTimeout(() => {
-      firebase.auth().onAuthStateChanged((user) => {
-        setUser(user);
-      });
-    }, 1200);
+    firebase.auth().onAuthStateChanged((user) => {
+      setUser(user);
+    });
   }, []);
 
   // Fetches user's notes from Firestore once the user is set
@@ -59,7 +56,7 @@ const Home = () => {
 
   // If the user's ID hasn't loaded, show that the page is loading
   if (!user) {
-    return <Loading />;
+    return <></>;
   }
 
   // Retrieves notes from Firebase
