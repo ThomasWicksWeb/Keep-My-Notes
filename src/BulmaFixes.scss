@@ -1,0 +1,4 @@
+// Fixed last element with e bulma 'box' class to look as if it were pushed down
+.box:not(:last-child) {
+  margin-bottom: 0rem !important;
+}
