@@ -4,7 +4,8 @@ import { Helmet } from 'react-helmet';
 import 'firebase';
 import { auth } from '../../firebase';
 
-import ErrorMessage from '../../components/Error';
+import { ErrorMessage } from '../../components/Error';
+import { SuccessMessage } from '../../components/SuccessMessage';
 
 import 'bulma/css/bulma.css';
 import styles from './ResetPassword.module.scss';
@@ -17,6 +18,8 @@ const ResetPassword = () => {
     ErrorMessage: '',
   });
 
+  const [success, setSuccess] = useState(false);
+
   const handleEmail = (e) => {
     setEmail(e.target.value);
   };
@@ -26,7 +29,8 @@ const ResetPassword = () => {
     auth
       .sendPasswordResetEmail(emailField)
       .then(function () {
-        // Email sent.
+        setSuccess(true);
+        setEmail('');
       })
       .catch(function (error) {
         setError({
@@ -43,14 +47,23 @@ const ResetPassword = () => {
     }
   };
 
+  const ResetIsSuccessfull = () => {
+    if (success) {
+      return (
+        <SuccessMessage body="A password reset email has been sent to you. Please check your inbox." />
+      );
+    }
+  };
+
   return (
     <section className="section">
       <div className="container">
+        {CheckForError()}
+        {ResetIsSuccessfull()}
+
         <h3 className="has-text-weight-bold has-text-centered is-size-3">
           Reset your Password
         </h3>
-
-        {CheckForError()}
 
         <form onSubmit={handleOnSubmit} className={styles.formContainer}>
           <div className="field">

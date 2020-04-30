@@ -7,7 +7,7 @@ const ModalViewNote = ({ Title, Body, toggleModal, isOpen }) => {
     return (
       <aside className="modal is-active">
         <div className="modal-background" onClick={toggleModal}></div>
-        <div className="modal-card">
+        <div className={classnames("modal-card", styles.modal)}>
           <header className="modal-card-head">
             <div className="modal-card-title">
               <h4 className="has-text-weight-bold">{Title}</h4>

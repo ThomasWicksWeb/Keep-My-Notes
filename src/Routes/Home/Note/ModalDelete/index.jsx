@@ -32,7 +32,7 @@ const ModalDelete = ({
     return (
       <aside className="modal is-active">
         <div className="modal-background" onClick={toggleModalDelete}></div>
-        <div className="modal-card">
+        <div className={classnames("modal-card", styles.modal)}>
           <header className="modal-card-head">
             <div className="modal-card-title">
               <h4 className="has-text-weight-normal">

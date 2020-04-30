@@ -1,10 +1,12 @@
 import React, { useState } from 'react';
+import classnames from 'classnames';
 import './Note.scss';
+import styles from './NoteModule.module.scss';
 import ModalEdit from './ModalEdit';
 import ModalDelete from './ModalDelete';
 import ModalViewNote from './ModalViewNote';
 
-const Note = ({ Title, Body, DocumentID, user, setNewNote }) => {
+const Note = ({ Title, Body, DocumentID, user, setNewNote, LastEdit }) => {
   const [isOpen, setModal] = useState(false);
   const [isOpenDelete, setModalDelete] = useState(false);
   const [isOpenViewNote, setModalViewNote] = useState(false);
@@ -37,8 +39,11 @@ const Note = ({ Title, Body, DocumentID, user, setNewNote }) => {
   };
 
   return (
-    <div className="box">
-      <h2 className="has-text-weight-bold is-size-4">{Title}</h2>
+    <div className={classnames('box', styles.NoteBox)}>
+      <h2 className="has-text-weight-bold is-size-4">
+        <strong>{Title}</strong>
+      </h2>
+      {/* <h6 className="is-size-7 has-text-light-grey">{LastEdit.getDate()}</h6> */}
       <div>{CheckTextLength()}</div>
       <div className="quickActionButtons">
         <i className="fas fa-edit note-edit" onClick={toggleModalEdit}></i>

@@ -1,10 +1,10 @@
 import React, { useState } from 'react';
 import { Link, useHistory } from 'react-router-dom';
-import { Helmet } from 'react-helmet'
+import { Helmet } from 'react-helmet';
 
 import firebase from 'firebase';
 import classnames from 'classnames';
-import ErrorMessage from '../../components/Error';
+import { ErrorMessage } from '../../components/Error';
 
 import 'bulma/css/bulma.css';
 import styles from './Login.module.scss';

@@ -19,7 +19,7 @@ const CheckIfNotesExist = ({ allNotes, user, setNewNote }) => {
     );
   } else if (allNotes.length >= 1) {
     // If notes exist, map them to NotesToRender then return it
-    const NotesToRender = allNotes.map((item) => {
+    const MappedNotes = allNotes.map((item) => {
       return (
         <Note
           key={item.DocumentID}
@@ -28,6 +28,7 @@ const CheckIfNotesExist = ({ allNotes, user, setNewNote }) => {
           DocumentID={item.DocumentID}
           UserID={user.uid}
           user={user}
+          // LastEdit={item.LastEdit}
           setNewNote={setNewNote}
         />
       );
@@ -36,7 +37,7 @@ const CheckIfNotesExist = ({ allNotes, user, setNewNote }) => {
       <main
         className={classnames('columns is-vcentered', styles.notesContainer)}
       >
-        {NotesToRender}
+        {MappedNotes}
       </main>
     );
   }

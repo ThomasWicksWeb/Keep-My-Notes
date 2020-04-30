@@ -1,11 +1,14 @@
 .delete {
-    position: absolute !important;
-    top: 10px !important;
-    right: 10px !important;
+  position: absolute !important;
+  top: 10px !important;
+  right: 10px !important;
 }
 
 .buttonContainer {
-    & button:first-child {
-        margin-right: 10px;
-    }
+  & button:first-child {
+    margin-right: 10px;
+  }
+}
+.modal {
+  max-width: 95% !important;
 }
