@@ -26,7 +26,7 @@ const About = () => {
             </p>
             <p className="is-size-6">
               My main goal with this project was to jump into furthering my
-              React skills with my most technically abitious project yet, and I
+              React skills with my most technically ambitious project yet, and I
               also really wanted to create a project that incorporated some sort
               of database -- since everything I've created up until this point
               has been static.
@@ -37,15 +37,15 @@ const About = () => {
             </p>
             <p className="is-size-6">
               The learning experience that this project has presented has been
-              phenominal to my growth as a web developer. I was able to learn
+              Phenomenal to my growth as a web developer. I was able to learn
               and incorporate Firebase authentication and the Firestore -- both
-              of which I've been eager to put into a project for a while now, as
-              well as learn more about how React works than I initially thought
+              of which I've been eager to put into a project for a while now. As
+              well, I was able to learn more about how React works than I initially thought
               I would have.
             </p>
             <p className="is-size-6">
               Thank you again for taking the time to check out{' '}
-              <em>Keep My Notes</em>, I truly hope you like what I've created
+              <em>Keep My Notes</em>. I truly hope you like what I've created
               here!
             </p>
             <p className="is-size-6">
