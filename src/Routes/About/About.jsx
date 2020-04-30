@@ -40,8 +40,8 @@ const About = () => {
               Phenomenal to my growth as a web developer. I was able to learn
               and incorporate Firebase authentication and the Firestore -- both
               of which I've been eager to put into a project for a while now. As
-              well, I was able to learn more about how React works than I initially thought
-              I would have.
+              well, I was able to learn more about how React works than I
+              initially thought I would have.
             </p>
             <p className="is-size-6">
               Thank you again for taking the time to check out{' '}
@@ -49,7 +49,12 @@ const About = () => {
               here!
             </p>
             <p className="is-size-6">
-              If you'd like to shoot me an email, please contact me on my <ExternalLink text="main page" href="https://www.thomaswicks.com/#contactMe" icon="fas fa-paper-plane" />
+              If you'd like to shoot me an email, please contact me on my{' '}
+              <ExternalLink
+                text="main page"
+                href="https://www.thomaswicks.com/#contactMe"
+                icon="fas fa-paper-plane"
+              />
             </p>
             <p className="is-size-5">
               All the best,
