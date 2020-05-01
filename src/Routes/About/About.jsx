@@ -37,10 +37,9 @@ const About = () => {
             </p>
             <p className="is-size-6">
               The learning experience that this project has presented has been
-              Phenomenal to my growth as a web developer. I was able to learn
+              phenomenal to my growth as a web developer. I was able to learn
               and incorporate Firebase authentication and the Firestore -- both
-              of which I've been eager to put into a project for a while now. As
-              well, I was able to learn more about how React works than I
+              of which I've been eager to put into a project for a while now. Alongside this, I was able to learn more about how React works than I
               initially thought I would have.
             </p>
             <p className="is-size-6">
