@@ -28,7 +28,6 @@ const CheckIfNotesExist = ({ allNotes, user, setNewNote }) => {
           DocumentID={item.DocumentID}
           UserID={user.uid}
           user={user}
-          // LastEdit={item.LastEdit}
           setNewNote={setNewNote}
         />
       );
