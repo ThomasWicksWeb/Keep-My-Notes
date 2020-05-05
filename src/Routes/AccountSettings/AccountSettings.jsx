@@ -4,6 +4,7 @@ import { Helmet } from 'react-helmet';
 import firebase from 'firebase';
 import 'bulma/css/bulma.css';
 import './Account.scss';
+import { ChangeEmail } from '../../components/ChangeEmail';
 
 const Account = () => {
   // User specific data
@@ -66,12 +67,16 @@ const Account = () => {
           </li>
         </ul>
 
-        <h1 className="title account-section">Actions</h1>
+        <h1 className="title account-section AccountHeader">Actions</h1>
         <ul>
           <li className="has-text-weight-bold">
             <Link to="resetpassword" className="button is-size-6 is-link">
               Reset Password
             </Link>
+          </li>
+          <li>
+            <h1 className="title account-section AccountHeader">Change Email</h1>
+            <ChangeEmail />
           </li>
         </ul>
       </div>
