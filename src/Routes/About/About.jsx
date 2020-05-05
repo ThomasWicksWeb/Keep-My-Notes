@@ -14,9 +14,6 @@ const About = () => {
           <h3 className="has-text-weight-bold is-size-3">
             Thank you for taking the time to check out <em>Keep My Notes</em>!
           </h3>
-          {/* <h2 className="has-text-weight-bold is-size-4">
-            So what exactly is <em>'Keep My Notes'</em>?
-          </h2> */}
           <hr />
           <div className={styles.paragraphs}>
             <p className="is-size-5">Hey There!</p>
@@ -39,8 +36,9 @@ const About = () => {
               The learning experience that this project has presented has been
               phenomenal to my growth as a web developer. I was able to learn
               and incorporate Firebase authentication and the Firestore -- both
-              of which I've been eager to put into a project for a while now. Alongside this, I was able to learn more about how React works than I
-              initially thought I would have.
+              of which I've been eager to put into a project for a while now.
+              Alongside this, I was able to learn more about how React works
+              than I initially thought I would have.
             </p>
             <p className="is-size-6">
               Thank you again for taking the time to check out{' '}
