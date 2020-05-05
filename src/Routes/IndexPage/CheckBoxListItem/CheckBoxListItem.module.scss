@@ -1,0 +1,32 @@
+.listItem {
+  display: grid;
+  grid-template-areas:
+    'img title'
+    'img subtitle';
+  margin: 0 auto 1.25rem auto;
+  justify-content: flex-start;
+  align-self: center;
+  align-items: center;
+}
+
+.icon {
+  color: #209cee;
+  padding-right: 0.2rem;
+
+  grid-area: img;
+  justify-self: center;
+  align-self: center;
+  padding-right: 1rem;
+}
+
+.iconTitle {
+  grid-area: title;
+  justify-self: flex-start;
+  align-self: flex-end;
+}
+
+.iconSubtitle {
+  grid-area: subtitle;
+  justify-self: flex-start;
+  align-self: flex-start;
+}
