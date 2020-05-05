@@ -7,6 +7,7 @@ import * as firebase from 'firebase/app';
 
 import { TextPhotoBlock } from './TextPhotoBlock';
 import { TextPhotoBlockReversed } from './TextPhotoBlockReversed';
+import { CheckBoxListItem } from './CheckBoxListItem';
 import Emoji from '../../components/Emoji';
 import styles from './Index.module.scss';
 
@@ -75,6 +76,26 @@ const IndexPage = () => {
           paragraph1="All your data is backed up in the cloud so once you create a note, there's zero worry that you'll lose it"
           img={'./images/UndrawCloudSync.svg'}
         />
+
+        <hr />
+
+        <ul className={classnames("container", styles.ListItemContainer)}>
+          <CheckBoxListItem
+            icon="fas fa-mobile"
+            title="Works on all platforms"
+            subtitle="From your phone to laptop to desktop"
+          />
+          <CheckBoxListItem
+            icon="fas fa-check-circle"
+            title="Super simple and easy to use"
+            subtitle="Easy to pickup Keep My Notes in just a few minutes"
+          />
+          <CheckBoxListItem
+            icon="fas fa-sync-alt"
+            title="Synced Across all devices"
+            subtitle="Your notes are wherever you are"
+          />
+        </ul>
 
         <hr />
 
