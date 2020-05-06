@@ -1,9 +1,12 @@
 import React from 'react';
 import classnames from 'classnames';
+import PropTypes from 'prop-types'
 import { Note } from '../Note';
 import Emoji from '../../../components/Emoji';
 import styles from './AllNotes.module.scss';
 
+// If no notes exist for the user, return placeholder <div> letting the user know that no notes exist
+// Else return their entire collection of notes
 const CheckIfNotesExist = ({ allNotes, user, setNewNote }) => {
   // If there aren't any notes, display text saying so
   if (allNotes.length === 0) {
@@ -40,6 +43,12 @@ const CheckIfNotesExist = ({ allNotes, user, setNewNote }) => {
       </main>
     );
   }
+};
+
+CheckIfNotesExist.propType = {
+  allNotes: PropTypes.array.isRequired,
+  user: PropTypes.object.isRequired,
+  setNewNote: PropTypes.func.isRequired,
 };
 
 export default CheckIfNotesExist;
