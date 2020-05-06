@@ -35,31 +35,31 @@ const Home = () => {
     DocumentID: 0,
   });
 
+  // On component load, get the current user and assign that returned object to the local 'user' state
   useEffect(() => {
-    // Forces the loader to appear for a minimum of 1.2 second, otherwise the loader flashses and it's jarring
     firebase.auth().onAuthStateChanged((user) => {
       setUser(user);
     });
   }, []);
 
-  // Fetches user's notes from Firestore once the user is set
+  // Fetches user's notes from Firestore once the user state is set
   useEffect(() => {
     if (user) {
       getCollectionData(user.uid).then(setNotes);
     }
   }, [user, newNote]);
 
-  // Toggle Add New Note modal
-  const toggleModalAddNewNote = () => {
-    setModalAddNewNote(!isOpenAddNewNote);
-  };
-
   // If the user's ID hasn't loaded, show that the page is loading
   if (!user) {
     return <></>;
   }
 
-  // Retrieves notes from Firebase
+  // Toggle Add New Note modal
+  const toggleModalAddNewNote = () => {
+    setModalAddNewNote(!isOpenAddNewNote);
+  };
+
+  // Async retrieves notes from Firebase Firestore for current user
   async function getCollectionData() {
     const snapshot = await db
       .collection('users')
