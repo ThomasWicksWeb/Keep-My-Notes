@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import classnames from 'classnames';
+import PropTypes from 'prop-types';
 import styles from './Notification.module.scss';
 
 const Notification = ({ text }) => {
@@ -24,6 +25,10 @@ const Notification = ({ text }) => {
   };
 
   return <div>{CheckVisibility()}</div>;
+};
+
+Notification.propType = {
+  text: PropTypes.string.isRequired,
 };
 
 export default Notification;
