@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import classnames from 'classnames';
+import PropTypes from 'prop-types'
 import './Note.scss';
 import styles from './NoteModule.module.scss';
 import ModalEdit from './ModalEdit';
@@ -81,6 +82,15 @@ const Note = ({ Title, Body, DocumentID, user, setNewNote, LastEdit }) => {
       />
     </div>
   );
+};
+
+Note.propType = {
+  Title: PropTypes.string.isRequired,
+  Body: PropTypes.string.isRequired,
+  DocumentID: PropTypes.string.isRequired,
+  user: PropTypes.object.isRequired,
+  setNewNote: PropTypes.func.isRequired,
+  LastEdit: PropTypes.string.isRequired,
 };
 
 export default Note;
