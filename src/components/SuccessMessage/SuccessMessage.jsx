@@ -1,6 +1,7 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 
-const ErrorMessage = ({ body }) => {
+const SuccessMessage = ({ body }) => {
   return (
     <article className="notification is-success">
       <strong>{body}</strong>
@@ -8,4 +9,8 @@ const ErrorMessage = ({ body }) => {
   );
 };
 
-export default ErrorMessage;
+SuccessMessage.propType = {
+  body: PropTypes.string.isRequired,
+};
+
+export default SuccessMessage;
