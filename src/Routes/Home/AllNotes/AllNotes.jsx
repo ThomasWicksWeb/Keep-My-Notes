@@ -1,6 +1,6 @@
 import React from 'react';
 import classnames from 'classnames';
-import PropTypes from 'prop-types'
+import PropTypes from 'prop-types';
 import { Note } from '../Note';
 import Emoji from '../../../components/Emoji';
 import styles from './AllNotes.module.scss';
@@ -21,15 +21,12 @@ const CheckIfNotesExist = ({ allNotes, user, setNewNote }) => {
       </h1>
     );
   } else if (allNotes.length >= 1) {
-    // If notes exist, map them to NotesToRender then return it
-    const MappedNotes = allNotes.map((item) => {
+    // If notes exist, map them to MappedNotes then return that object
+    const MappedNotes = allNotes.map((note) => {
       return (
         <Note
-          key={item.DocumentID}
-          Title={item.Title}
-          Body={item.Content}
-          DocumentID={item.DocumentID}
-          UserID={user.uid}
+          key={note.DocumentID}
+          note={note}
           user={user}
           setNewNote={setNewNote}
         />
