@@ -1,17 +1,17 @@
 import React, { useState } from 'react';
 import classnames from 'classnames';
-import PropTypes from 'prop-types'
+import PropTypes from 'prop-types';
 import './Note.scss';
 import styles from './NoteModule.module.scss';
 import ModalEdit from './ModalEdit';
 import ModalDelete from './ModalDelete';
 import ModalViewNote from './ModalViewNote';
 
-const Note = ({ Title, Body, DocumentID, user, setNewNote, LastEdit }) => {
+const Note = ({ note, user, setNewNote }) => {
   const [isOpen, setModal] = useState(false);
   const [isOpenDelete, setModalDelete] = useState(false);
   const [isOpenViewNote, setModalViewNote] = useState(false);
-
+  console.log(note);
   const toggleModalEdit = () => {
     setModal(!isOpen);
   };
@@ -24,27 +24,29 @@ const Note = ({ Title, Body, DocumentID, user, setNewNote, LastEdit }) => {
     setModalViewNote(!isOpenViewNote);
   };
 
+  // If the note is more than 255 characters, trim it there and add 'View Note' button
+  // Else return the entire content of the note body
   const CheckTextLength = () => {
-    if (Body.length > 175) {
+    if (note.Content.length > 255) {
       return (
         <p className="is-size-6">
-          {Body.substring(0, 255)}...{' '}
+          {note.Content.substring(0, 255)}...{' '}
           <span className="NoteViewMore" onClick={toggleModalViewNote}>
             View note
           </span>
         </p>
       );
     } else {
-      return <p className="is-size-6">{Body}</p>;
+      return <p className="is-size-6">{note.Content}</p>;
     }
   };
 
+  // Return each <Note /> 
   return (
     <div className={classnames('box', styles.NoteBox)}>
       <h2 className="has-text-weight-bold is-size-4">
-        <strong>{Title}</strong>
+        <strong>{note.Title}</strong>
       </h2>
-      {/* <h6 className="is-size-7 has-text-light-grey">{LastEdit.getDate()}</h6> */}
       <div>{CheckTextLength()}</div>
       <div className="quickActionButtons">
         <i className="fas fa-edit note-edit" onClick={toggleModalEdit}></i>
@@ -52,20 +54,19 @@ const Note = ({ Title, Body, DocumentID, user, setNewNote, LastEdit }) => {
           className="fas fa-trash-alt note-garbage swing"
           onClick={toggleModalDelete}
         ></i>
-        {/* <button className="link" onClick={toggleModalViewNote}>View Note</button> */}
       </div>
 
       <ModalViewNote
-        Title={Title}
-        Body={Body}
+        Title={note.Title}
+        Body={note.Content}
         toggleModal={toggleModalViewNote}
         isOpen={isOpenViewNote}
       />
 
       <ModalEdit
-        Title={Title}
-        Body={Body}
-        DocumentID={DocumentID}
+        Title={note.Title}
+        Body={note.Content}
+        DocumentID={note.DocumentID}
         UserID={user.uid}
         toggleModal={toggleModalEdit}
         isOpen={isOpen}
@@ -73,8 +74,8 @@ const Note = ({ Title, Body, DocumentID, user, setNewNote, LastEdit }) => {
       />
 
       <ModalDelete
-        Title={Title}
-        DocumentID={DocumentID}
+        Title={note.Title}
+        DocumentID={note.DocumentID}
         UserID={user.uid}
         toggleModalDelete={toggleModalDelete}
         isOpen={isOpenDelete}
@@ -85,9 +86,7 @@ const Note = ({ Title, Body, DocumentID, user, setNewNote, LastEdit }) => {
 };
 
 Note.propType = {
-  Title: PropTypes.string.isRequired,
-  Body: PropTypes.string.isRequired,
-  DocumentID: PropTypes.string.isRequired,
+  note: PropTypes.object.isRequired,
   user: PropTypes.object.isRequired,
   setNewNote: PropTypes.func.isRequired,
   LastEdit: PropTypes.string.isRequired,
