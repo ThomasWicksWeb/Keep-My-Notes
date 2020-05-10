@@ -27,6 +27,9 @@ const Home = () => {
   // Array of all notes
   const [allNotes, setNotes] = useState([]);
 
+  // Search field input
+  const [SearchInput, setSearchInput] = useState('');
+
   // Data for a new note to be added to Firebase
   const [newNote, setNewNote] = useState({
     Title: '',
@@ -53,6 +56,10 @@ const Home = () => {
   if (!user) {
     return <></>;
   }
+
+  const handleSearchInput = (e) => {
+    setSearchInput(e.target.value);
+  };
 
   // Toggle Add New Note modal
   const toggleModalAddNewNote = () => {
@@ -84,17 +91,29 @@ const Home = () => {
             </strong>
           </h1>
           <hr />
-          <button
-            className={classnames('button is-info', styles.createNoteButton)}
-            onClick={toggleModalAddNewNote}
-          >
-            <strong>
-              Create Note <i className="fas fa-plus"></i>
-            </strong>
-          </button>
+          <div className={styles.CreateAndSearchParent}>
+            <button
+              className={classnames('button is-info', styles.createNoteButton)}
+              onClick={toggleModalAddNewNote}
+            >
+              <strong>
+                Create Note <i className="fas fa-plus"></i>
+              </strong>
+            </button>
+            <div className="field">
+              <div className="control">
+                <input className="input" type="text" placeholder="Search notes" value={SearchInput} onChange={handleSearchInput} />
+              </div>
+            </div>
+          </div>
 
           {/* If notes exist, render them, else render placeholder */}
-          <AllNotes user={user} setNewNote={setNewNote} allNotes={allNotes} />
+          <AllNotes
+            user={user}
+            setNewNote={setNewNote}
+            allNotes={allNotes}
+            SearchInput={SearchInput}
+          />
         </div>
       </div>
 
