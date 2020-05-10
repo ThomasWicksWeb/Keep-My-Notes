@@ -100,10 +100,20 @@ const Home = () => {
                 Create Note <i className="fas fa-plus"></i>
               </strong>
             </button>
-            <div className="field">
-              <div className="control">
-                <input className="input" type="text" placeholder="Search notes" value={SearchInput} onChange={handleSearchInput} />
-              </div>
+
+            <div class="field">
+              <p class="control has-icons-left">
+                <input
+                  class="input"
+                  type="email"
+                  placeholder="Search notes"
+                  value={SearchInput}
+                  onChange={handleSearchInput}
+                />
+                <span class="icon is-small is-left">
+                  <i class="fas fa-search"></i>
+                </span>
+              </p>
             </div>
           </div>
 
