@@ -29,3 +29,12 @@ main {
 .box:last-child {
   margin-bottom: 1.5rem;
 }
+
+.CreateAndSearchParent {
+  display: flex;
+
+  & div {
+    margin-left: .5rem;
+    flex: 1;
+  }
+}
