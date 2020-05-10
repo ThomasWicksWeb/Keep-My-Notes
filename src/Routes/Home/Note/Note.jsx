@@ -11,7 +11,7 @@ const Note = ({ note, user, setNewNote }) => {
   const [isOpen, setModal] = useState(false);
   const [isOpenDelete, setModalDelete] = useState(false);
   const [isOpenViewNote, setModalViewNote] = useState(false);
-  console.log(note);
+
   const toggleModalEdit = () => {
     setModal(!isOpen);
   };
@@ -41,7 +41,7 @@ const Note = ({ note, user, setNewNote }) => {
     }
   };
 
-  // Return each <Note /> 
+  // Return each <Note />
   return (
     <div className={classnames('box', styles.NoteBox)}>
       <h2 className="has-text-weight-bold is-size-4">
