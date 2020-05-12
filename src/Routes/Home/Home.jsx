@@ -5,6 +5,10 @@ import { Helmet } from 'react-helmet';
 import firebase from 'firebase';
 import { db } from '../../firebase';
 
+// Notifications
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+
 // Custom components
 import { AllNotes } from './AllNotes';
 import { ModalAddNewNote } from './ModalAddNewNote';
@@ -69,6 +73,20 @@ const Home = () => {
     setSelectedVal(e.target.value);
   };
 
+  // Green success notification
+  const SuccessNotfication = text => {
+    toast.success(text, {
+      position: 'top-center',
+    });
+  }
+
+  // Red danger notification
+  const DangerNotfication = text => {
+    toast.error(text, {
+      position: 'top-center',
+    });
+  }
+
   // Toggle Add New Note modal
   const toggleModalAddNewNote = () => {
     setModalAddNewNote(!isOpenAddNewNote);
@@ -105,6 +123,9 @@ const Home = () => {
 
   return (
     <section className="section">
+
+      <ToastContainer />
+
       <div className="container content">
         <div className="content">
           <h1 className="is-size-2 has-text-weight-bold">
@@ -161,12 +182,15 @@ const Home = () => {
             setNewNote={setNewNote}
             allNotes={allNotes}
             SearchInput={SearchInput}
+            SuccessNotfication={SuccessNotfication}
+            DangerNotfication={DangerNotfication}
           />
         </div>
       </div>
 
       {/* Modal to add new note, doesn't matter where it's placed on the page here */}
       <ModalAddNewNote
+        SuccessNotfication={SuccessNotfication}
         UserID={user.uid}
         toggleModal={toggleModalAddNewNote}
         isOpen={isOpenAddNewNote}
