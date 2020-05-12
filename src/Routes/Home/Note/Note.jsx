@@ -3,7 +3,7 @@ import classnames from 'classnames';
 import PropTypes from 'prop-types';
 import './Note.scss';
 import styles from './NoteModule.module.scss';
-import ModalEdit from './ModalEdit';
+import { ModalEdit } from './ModalEdit';
 import ModalDelete from './ModalDelete';
 import ModalViewNote from './ModalViewNote';
 

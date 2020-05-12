@@ -30,6 +30,9 @@ const Home = () => {
   // Search field input
   const [SearchInput, setSearchInput] = useState('');
 
+  // Value for the <selevt> element to filter notes
+  const [selectVal, setSelectedVal] = useState('desc');
+
   // Data for a new note to be added to Firebase
   const [newNote, setNewNote] = useState({
     Title: '',
@@ -50,15 +53,20 @@ const Home = () => {
     if (user) {
       getCollectionData(user.uid).then(setNotes);
     }
-  }, [user, newNote]);
+  }, [user, newNote, selectVal]);
 
-  // If the user's ID hasn't loaded, show that the page is loading
+  // If the user's ID hasn't loaded, show nothing 
   if (!user) {
     return <></>;
   }
 
   const handleSearchInput = (e) => {
     setSearchInput(e.target.value);
+  };
+
+  const handleSelectChange = (e) => {
+    console.log(e.target.value);
+    setSelectedVal(e.target.value);
   };
 
   // Toggle Add New Note modal
@@ -68,17 +76,31 @@ const Home = () => {
 
   // Async retrieves notes from Firebase Firestore for current user
   async function getCollectionData() {
-    const snapshot = await db
-      .collection('users')
-      .doc(user.uid)
-      .collection('Notes')
-      .orderBy('LastEdit', 'desc')
-      .get();
-    const storedNotes = await Promise.all(
-      snapshot.docs.map(async (doc) => await doc.data())
-    );
-    console.log('Calling firebase');
-    return storedNotes;
+    // Sort by desc or asc (desc by default on page load)
+    if (selectVal === 'desc' || selectVal === 'asc') {
+      const snapshot = await db
+        .collection('users')
+        .doc(user.uid)
+        .collection('Notes')
+        .orderBy('LastEdit', selectVal)
+        .get();
+      const storedNotes = await Promise.all(
+        snapshot.docs.map(async (doc) => await doc.data())
+      );
+      return storedNotes;
+    } else {
+      // Else sort by alphabetical order
+      const snapshot = await db
+        .collection('users')
+        .doc(user.uid)
+        .collection('Notes')
+        .orderBy('Title')
+        .get();
+      const storedNotes = await Promise.all(
+        snapshot.docs.map(async (doc) => await doc.data())
+      );
+      return storedNotes;
+    }
   }
 
   return (
@@ -90,28 +112,42 @@ const Home = () => {
               My Notes <Emoji Emoji="✏️" Label="Note Pad" />
             </strong>
           </h1>
-          <hr />
-          <div className={styles.CreateAndSearchParent}>
-            <button
-              className={classnames('button is-info', styles.createNoteButton)}
-              onClick={toggleModalAddNewNote}
-            >
-              <strong>
-                Create Note <i className="fas fa-plus"></i>
-              </strong>
-            </button>
 
-            <div class="field">
-              <p class="control has-icons-left">
+          <hr />
+
+          {/* Button to open modal to create new note */}
+          <button
+            className={classnames('button is-info', styles.createNoteButton)}
+            onClick={toggleModalAddNewNote}
+          >
+            <strong>
+              Create Note <i className="fas fa-plus"></i>
+            </strong>
+          </button>
+
+          <div className={styles.FilterAndSearch}>
+            {/* Select element to filter notes by */}
+            <div className="select">
+              <select value={selectVal} onChange={handleSelectChange}>
+                <option disabled value="desc">Sort Notes</option>
+                <option value="desc">Newest</option>
+                <option value="asc">Oldest</option>
+                <option value="alphabetical">Alphabetical</option>
+              </select>
+            </div>
+
+            {/* Input field to search notes */}
+            <div className={classnames('field', styles.searchContainer)}>
+              <p className="control has-icons-left">
                 <input
-                  class="input"
+                  className="input"
                   type="email"
                   placeholder="Search notes"
                   value={SearchInput}
                   onChange={handleSearchInput}
                 />
-                <span class="icon is-small is-left">
-                  <i class="fas fa-search"></i>
+                <span className="icon is-small is-left">
+                  <i className="fas fa-search"></i>
                 </span>
               </p>
             </div>

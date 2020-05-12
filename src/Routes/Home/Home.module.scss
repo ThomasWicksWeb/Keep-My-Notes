@@ -30,11 +30,12 @@ main {
   margin-bottom: 1.5rem;
 }
 
-.CreateAndSearchParent {
+.FilterAndSearch {
   display: flex;
+  margin: -.75rem 0 2.5rem 0;
 
-  & div {
-    margin-left: .5rem;
+  & .searchContainer {
     flex: 1;
+    padding-left: 1.5rem;
   }
 }

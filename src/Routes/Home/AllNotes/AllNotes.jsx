@@ -6,11 +6,9 @@ import Emoji from '../../../components/Emoji';
 import styles from './AllNotes.module.scss';
 
 // If no notes exist for the user, return placeholder <div> letting the user know that no notes exist
-// Else return their entire collection of notes
 const CheckIfNotesExist = ({ allNotes, user, setNewNote, SearchInput }) => {
   // If there aren't any notes, display text saying so
   if (allNotes.length === 0) {
-    console.log('Checking if notes exist');
     return (
       <h1 className="has-text-centered is-size-5 has-text-weight-normal">
         <span className="has-text-weight-bold is-size-3">
@@ -22,7 +20,6 @@ const CheckIfNotesExist = ({ allNotes, user, setNewNote, SearchInput }) => {
       </h1>
     );
   } else if (allNotes.length >= 1 && SearchInput.length === 0) {
-    console.log('Notes exist!');
     // If notes exist, map them to MappedNotes then return that object
     const MappedNotes = allNotes.map((note) => {
       return (
@@ -43,7 +40,6 @@ const CheckIfNotesExist = ({ allNotes, user, setNewNote, SearchInput }) => {
       </main>
     );
   } else if (allNotes.length >= 1 && SearchInput.length >= 1) {
-    console.log("Let's see if we can find that note!");
     const filteredNotes = allNotes.filter((note) => {
       if (
         note.Content.toLowerCase().includes(SearchInput.toLowerCase()) ||
