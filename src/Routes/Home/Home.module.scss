@@ -30,11 +30,29 @@ main {
   margin-bottom: 1.5rem;
 }
 
-.CreateAndSearchParent {
-  display: flex;
+// .CreateAndSearchParent {
+//   display: flex;
 
-  & div {
-    margin-left: .5rem;
+//   & > * {
+//     margin-right: .5rem;
+//   }
+
+//   & select {
+//     margin-right: -5;
+//   }
+
+//   & .searchContainer {
+//     margin-left: .5rem;
+//     flex: 1;
+//   }
+// }
+
+.FilterAndSearch {
+  display: flex;
+  margin: -.75rem 0 2.5rem 0;
+
+  & .searchContainer {
     flex: 1;
+    padding-left: 1.5rem;
   }
 }
