@@ -55,7 +55,7 @@ const Home = () => {
     }
   }, [user, newNote, selectVal]);
 
-  // If the user's ID hasn't loaded, show nothing 
+  // If the user's ID hasn't loaded, show nothing
   if (!user) {
     return <></>;
   }
@@ -129,7 +129,9 @@ const Home = () => {
             {/* Select element to filter notes by */}
             <div className="select">
               <select value={selectVal} onChange={handleSelectChange}>
-                <option disabled value="desc">Sort Notes</option>
+                <option disabled value="desc">
+                  Sort Notes
+                </option>
                 <option value="desc">Newest</option>
                 <option value="asc">Oldest</option>
                 <option value="alphabetical">Alphabetical</option>
