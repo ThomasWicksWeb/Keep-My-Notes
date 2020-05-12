@@ -39,7 +39,6 @@ const ModalAddNewNote = ({ UserID, toggleModal, isOpen, setNewNote }) => {
         DocumentID: RandomID,
       })
       .then(function () {
-        console.log('Document successfully written!');
         setInputTitle(''); // Clear input fields
         setInputBody('');
         setNewNote({}); // Set NewNote state to an empty object (No longer causes duplicate key issues)
@@ -53,8 +52,9 @@ const ModalAddNewNote = ({ UserID, toggleModal, isOpen, setNewNote }) => {
   if (isOpen === true) {
     return (
       <aside className="modal is-active">
+
         <div className="modal-background" onClick={toggleModal}></div>
-        <div className={classnames("modal-card", styles.modal)}>
+        <div className={classnames('modal-card', styles.modal)}>
           <header className="modal-card-head">
             <div className="modal-card-title">
               <h4 className="has-text-weight-bold">Add New Note</h4>
