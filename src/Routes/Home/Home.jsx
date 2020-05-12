@@ -30,7 +30,7 @@ const Home = () => {
   // Search field input
   const [SearchInput, setSearchInput] = useState('');
 
-  // Filters select
+  // Value for the <selevt> element to filter notes
   const [selectVal, setSelectedVal] = useState('desc');
 
   // Data for a new note to be added to Firebase
@@ -55,7 +55,7 @@ const Home = () => {
     }
   }, [user, newNote, selectVal]);
 
-  // If the user's ID hasn't loaded, show that the page is loading
+  // If the user's ID hasn't loaded, show nothing 
   if (!user) {
     return <></>;
   }
@@ -76,8 +76,7 @@ const Home = () => {
 
   // Async retrieves notes from Firebase Firestore for current user
   async function getCollectionData() {
-    console.log('Calling firebase');
-
+    // Sort by desc or asc (desc by default on page load)
     if (selectVal === 'desc' || selectVal === 'asc') {
       const snapshot = await db
         .collection('users')
@@ -90,6 +89,7 @@ const Home = () => {
       );
       return storedNotes;
     } else {
+      // Else sort by alphabetical order
       const snapshot = await db
         .collection('users')
         .doc(user.uid)
@@ -112,7 +112,10 @@ const Home = () => {
               My Notes <Emoji Emoji="✏️" Label="Note Pad" />
             </strong>
           </h1>
+
           <hr />
+
+          {/* Button to open modal to create new note */}
           <button
             className={classnames('button is-info', styles.createNoteButton)}
             onClick={toggleModalAddNewNote}
@@ -121,17 +124,9 @@ const Home = () => {
               Create Note <i className="fas fa-plus"></i>
             </strong>
           </button>
-          {/* <div className={styles.CreateAndSearchParent}> */}
-          <div className={styles.FilterAndSearch}>
-            {/* <button
-              className={classnames('button is-info', styles.createNoteButton)}
-              onClick={toggleModalAddNewNote}
-            >
-              <strong>
-                Create Note <i className="fas fa-plus"></i>
-              </strong>
-            </button> */}
 
+          <div className={styles.FilterAndSearch}>
+            {/* Select element to filter notes by */}
             <div className="select">
               <select value={selectVal} onChange={handleSelectChange}>
                 <option value="desc">Newest</option>
@@ -140,6 +135,7 @@ const Home = () => {
               </select>
             </div>
 
+            {/* Input field to search notes */}
             <div className={classnames('field', styles.searchContainer)}>
               <p className="control has-icons-left">
                 <input
