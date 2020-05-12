@@ -5,7 +5,7 @@ import PropTypes from 'prop-types';
 import { db } from '../../../firebase';
 import styles from './ModalAddNewNote.module.scss';
 
-const ModalAddNewNote = ({ UserID, toggleModal, isOpen, setNewNote }) => {
+const ModalAddNewNote = ({ UserID, toggleModal, isOpen, setNewNote, SuccessNotfication }) => {
   const [inputTitle, setInputTitle] = useState('');
   const [inputBody, setInputBody] = useState('');
 
@@ -43,6 +43,7 @@ const ModalAddNewNote = ({ UserID, toggleModal, isOpen, setNewNote }) => {
         setInputBody('');
         setNewNote({}); // Set NewNote state to an empty object (No longer causes duplicate key issues)
         toggleModal(); // Close modal
+        SuccessNotfication("Note successfully created");
       })
       .catch(function (error) {
         console.error('Error writing document: ', error);

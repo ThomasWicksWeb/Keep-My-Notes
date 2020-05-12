@@ -7,7 +7,7 @@ import { ModalEdit } from './ModalEdit';
 import ModalDelete from './ModalDelete';
 import ModalViewNote from './ModalViewNote';
 
-const Note = ({ note, user, setNewNote }) => {
+const Note = ({ note, user, setNewNote, DangerNotfication, SuccessNotfication }) => {
   const [isOpen, setModal] = useState(false);
   const [isOpenDelete, setModalDelete] = useState(false);
   const [isOpenViewNote, setModalViewNote] = useState(false);
@@ -71,6 +71,7 @@ const Note = ({ note, user, setNewNote }) => {
         toggleModal={toggleModalEdit}
         isOpen={isOpen}
         setNewNote={setNewNote}
+        SuccessNotfication={SuccessNotfication}
       />
 
       <ModalDelete
@@ -80,6 +81,7 @@ const Note = ({ note, user, setNewNote }) => {
         toggleModalDelete={toggleModalDelete}
         isOpen={isOpenDelete}
         setNewNote={setNewNote}
+        SuccessNotfication={SuccessNotfication}
       />
     </div>
   );

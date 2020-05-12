@@ -10,6 +10,7 @@ const ModalDelete = ({
   toggleModalDelete,
   isOpen,
   setNewNote,
+  SuccessNotfication
 }) => {
   const DeleteNote = (e) => {
     e.preventDefault();
@@ -23,6 +24,8 @@ const ModalDelete = ({
         setNewNote({});
         console.log('Deleted!');
       });
+
+    SuccessNotfication("Note successfully deleted")
 
     // Close modal on update
     toggleModalDelete();
