@@ -129,6 +129,7 @@ const Home = () => {
             {/* Select element to filter notes by */}
             <div className="select">
               <select value={selectVal} onChange={handleSelectChange}>
+                <option disabled value="desc">Sort Notes</option>
                 <option value="desc">Newest</option>
                 <option value="asc">Oldest</option>
                 <option value="alphabetical">Alphabetical</option>
