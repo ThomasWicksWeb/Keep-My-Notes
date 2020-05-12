@@ -7,7 +7,9 @@ import { db } from '../../firebase';
 
 // Notifications
 import { ToastContainer, toast } from 'react-toastify';
-import 'react-toastify/dist/ReactToastify.css';
+// import { NotificationSuccess } from '../../components/NotificationSuccess';
+// import { NotificationDanger } from '../../components/NotificationDanger';
+// import 'react-toastify/dist/ReactToastify.css';
 
 // Custom components
 import { AllNotes } from './AllNotes';
@@ -74,18 +76,18 @@ const Home = () => {
   };
 
   // Green success notification
-  const SuccessNotfication = text => {
+  const NotificationSuccess = (text) => {
     toast.success(text, {
       position: 'top-center',
     });
-  }
+  };
 
   // Red danger notification
-  const DangerNotfication = text => {
+  const NotificationDanger = (text) => {
     toast.error(text, {
       position: 'top-center',
     });
-  }
+  };
 
   // Toggle Add New Note modal
   const toggleModalAddNewNote = () => {
@@ -106,13 +108,25 @@ const Home = () => {
         snapshot.docs.map(async (doc) => await doc.data())
       );
       return storedNotes;
-    } else {
-      // Else sort by alphabetical order
+    } else if (selectVal === 'alphabeticalDesc') {
+      // Else sort by alphabetical order A -> Z
       const snapshot = await db
         .collection('users')
         .doc(user.uid)
         .collection('Notes')
-        .orderBy('Title')
+        .orderBy('Title', 'asc')
+        .get();
+      const storedNotes = await Promise.all(
+        snapshot.docs.map(async (doc) => await doc.data())
+      );
+      return storedNotes;
+    } else {
+      // Else sort by alphabetical order Z -> A
+      const snapshot = await db
+        .collection('users')
+        .doc(user.uid)
+        .collection('Notes')
+        .orderBy('Title', 'desc')
         .get();
       const storedNotes = await Promise.all(
         snapshot.docs.map(async (doc) => await doc.data())
@@ -123,7 +137,6 @@ const Home = () => {
 
   return (
     <section className="section">
-
       <ToastContainer />
 
       <div className="container content">
@@ -155,7 +168,8 @@ const Home = () => {
                 </option>
                 <option value="desc">Newest</option>
                 <option value="asc">Oldest</option>
-                <option value="alphabetical">Alphabetical</option>
+                <option value="alphabeticalDesc">Alphabetical A->Z</option>
+                <option value="alphabeticalAsc">Alphabetical Z->A</option>
               </select>
             </div>
 
@@ -182,15 +196,15 @@ const Home = () => {
             setNewNote={setNewNote}
             allNotes={allNotes}
             SearchInput={SearchInput}
-            SuccessNotfication={SuccessNotfication}
-            DangerNotfication={DangerNotfication}
+            NotificationSuccess={NotificationSuccess}
+            NotificationDanger={NotificationDanger}
           />
         </div>
       </div>
 
       {/* Modal to add new note, doesn't matter where it's placed on the page here */}
       <ModalAddNewNote
-        SuccessNotfication={SuccessNotfication}
+        NotificationSuccess={NotificationSuccess}
         UserID={user.uid}
         toggleModal={toggleModalAddNewNote}
         isOpen={isOpenAddNewNote}
