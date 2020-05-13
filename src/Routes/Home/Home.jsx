@@ -5,6 +5,12 @@ import { Helmet } from 'react-helmet';
 import firebase from 'firebase';
 import { db } from '../../firebase';
 
+// Notifications
+import { ToastContainer, toast } from 'react-toastify';
+// import { NotificationSuccess } from '../../components/NotificationSuccess';
+// import { NotificationDanger } from '../../components/NotificationDanger';
+// import 'react-toastify/dist/ReactToastify.css';
+
 // Custom components
 import { AllNotes } from './AllNotes';
 import { ModalAddNewNote } from './ModalAddNewNote';
@@ -55,7 +61,7 @@ const Home = () => {
     }
   }, [user, newNote, selectVal]);
 
-  // If the user's ID hasn't loaded, show nothing 
+  // If the user's ID hasn't loaded, show nothing
   if (!user) {
     return <></>;
   }
@@ -67,6 +73,20 @@ const Home = () => {
   const handleSelectChange = (e) => {
     console.log(e.target.value);
     setSelectedVal(e.target.value);
+  };
+
+  // Green success notification
+  const NotificationSuccess = (text) => {
+    toast.success(text, {
+      position: 'top-center',
+    });
+  };
+
+  // Red danger notification
+  const NotificationDanger = (text) => {
+    toast.error(text, {
+      position: 'top-center',
+    });
   };
 
   // Toggle Add New Note modal
@@ -88,13 +108,25 @@ const Home = () => {
         snapshot.docs.map(async (doc) => await doc.data())
       );
       return storedNotes;
-    } else {
-      // Else sort by alphabetical order
+    } else if (selectVal === 'alphabeticalDesc') {
+      // Else sort by alphabetical order A -> Z
       const snapshot = await db
         .collection('users')
         .doc(user.uid)
         .collection('Notes')
-        .orderBy('Title')
+        .orderBy('Title', 'asc')
+        .get();
+      const storedNotes = await Promise.all(
+        snapshot.docs.map(async (doc) => await doc.data())
+      );
+      return storedNotes;
+    } else {
+      // Else sort by alphabetical order Z -> A
+      const snapshot = await db
+        .collection('users')
+        .doc(user.uid)
+        .collection('Notes')
+        .orderBy('Title', 'desc')
         .get();
       const storedNotes = await Promise.all(
         snapshot.docs.map(async (doc) => await doc.data())
@@ -105,6 +137,8 @@ const Home = () => {
 
   return (
     <section className="section">
+      <ToastContainer />
+
       <div className="container content">
         <div className="content">
           <h1 className="is-size-2 has-text-weight-bold">
@@ -129,10 +163,13 @@ const Home = () => {
             {/* Select element to filter notes by */}
             <div className="select">
               <select value={selectVal} onChange={handleSelectChange}>
-                <option disabled value="desc">Sort Notes</option>
+                <option disabled value="desc">
+                  Sort Notes
+                </option>
                 <option value="desc">Newest</option>
                 <option value="asc">Oldest</option>
-                <option value="alphabetical">Alphabetical</option>
+                <option value="alphabeticalDesc">Alphabetical A->Z</option>
+                <option value="alphabeticalAsc">Alphabetical Z->A</option>
               </select>
             </div>
 
@@ -159,12 +196,15 @@ const Home = () => {
             setNewNote={setNewNote}
             allNotes={allNotes}
             SearchInput={SearchInput}
+            NotificationSuccess={NotificationSuccess}
+            NotificationDanger={NotificationDanger}
           />
         </div>
       </div>
 
       {/* Modal to add new note, doesn't matter where it's placed on the page here */}
       <ModalAddNewNote
+        NotificationSuccess={NotificationSuccess}
         UserID={user.uid}
         toggleModal={toggleModalAddNewNote}
         isOpen={isOpenAddNewNote}

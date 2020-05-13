@@ -13,6 +13,7 @@ const Modal = ({
   toggleModal,
   isOpen,
   setNewNote,
+  NotificationSuccess
 }) => {
   const [inputTitle, setInputTitle] = useState('');
   const [inputBody, setInputBody] = useState('');
@@ -52,6 +53,7 @@ const Modal = ({
           DocumentID: DocumentID,
           LastEdit: firebase.firestore.FieldValue.serverTimestamp(),
         });
+        NotificationSuccess("Note edited!")
       });
 
     // Close modal on update

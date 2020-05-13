@@ -1,10 +1,11 @@
 import React, { useState } from 'react';
 import { Link, useHistory } from 'react-router-dom';
 import { Helmet } from 'react-helmet';
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 import firebase from 'firebase';
 import classnames from 'classnames';
-import { ErrorMessage } from '../../components/Error';
 
 import 'bulma/css/bulma.css';
 import styles from './Login.module.scss';
@@ -12,10 +13,6 @@ import styles from './Login.module.scss';
 const StandardLogin = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
-  const [error, setError] = useState({
-    IsError: false,
-    ErrorMessage: '',
-  });
 
   const history = useHistory();
 
@@ -26,21 +23,16 @@ const StandardLogin = () => {
       .signInWithEmailAndPassword(email, password)
       .then(function (user) {
         // user signed in
+        toast.success('Login successful!', {
+          position: 'top-center',
+        });
         history.push('/notes');
       })
       .catch(function (error) {
-        setError({
-          IsError: true,
-          ErrorMessage: error.message,
+        toast.error(error.message, {
+          position: 'top-center',
         });
-        CheckForError();
       });
-  };
-
-  const CheckForError = () => {
-    if (error.IsError) {
-      return <ErrorMessage ErrorBody={error.ErrorMessage} />;
-    }
   };
 
   const handleEmail = (e) => {
@@ -54,7 +46,7 @@ const StandardLogin = () => {
   return (
     <section className={classnames('section', styles.LoginBackground)}>
       <div className="container">
-        {CheckForError()}
+        <ToastContainer />
 
         <h3 className="has-text-weight-bold has-text-centered is-size-3">
           Login
