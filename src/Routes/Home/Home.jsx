@@ -79,6 +79,7 @@ const Home = () => {
   const NotificationSuccess = (text) => {
     toast.success(text, {
       position: 'top-center',
+      autoClose: 3000
     });
   };
 
@@ -86,6 +87,7 @@ const Home = () => {
   const NotificationDanger = (text) => {
     toast.error(text, {
       position: 'top-center',
+      autoClose: 3000
     });
   };
 

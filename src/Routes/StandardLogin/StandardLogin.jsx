@@ -25,12 +25,14 @@ const StandardLogin = () => {
         // user signed in
         toast.success('Login successful!', {
           position: 'top-center',
+          autoClose: 3000
         });
         history.push('/notes');
       })
       .catch(function (error) {
         toast.error(error.message, {
           position: 'top-center',
+          autoClose: 3000
         });
       });
   };
