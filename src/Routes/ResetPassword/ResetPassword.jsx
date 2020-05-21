@@ -4,21 +4,13 @@ import { Helmet } from 'react-helmet';
 import 'firebase';
 import { auth } from '../../firebase';
 
-import { ErrorMessage } from '../../components/Error';
-import { SuccessMessage } from '../../components/SuccessMessage';
+import { toast, ToastContainer } from 'react-toastify';
 
 import 'bulma/css/bulma.css';
 import styles from './ResetPassword.module.scss';
 
 const ResetPassword = () => {
   const [emailField, setEmail] = useState('');
-
-  const [error, setError] = useState({
-    IsError: false,
-    ErrorMessage: '',
-  });
-
-  const [success, setSuccess] = useState(false);
 
   const handleEmail = (e) => {
     setEmail(e.target.value);
@@ -29,37 +21,22 @@ const ResetPassword = () => {
     auth
       .sendPasswordResetEmail(emailField)
       .then(function () {
-        setSuccess(true);
+        toast.success("Please check your email for further instructions on resetting your password.", {
+          position: 'top-center',
+        });
         setEmail('');
       })
       .catch(function (error) {
-        setError({
-          IsError: true,
-          ErrorMessage: error.message,
+        toast.error(error.message, {
+          position: 'top-center',
         });
-        CheckForError();
       });
-  };
-
-  const CheckForError = () => {
-    if (error.IsError) {
-      return <ErrorMessage ErrorBody={error.ErrorMessage} />;
-    }
-  };
-
-  const ResetIsSuccessfull = () => {
-    if (success) {
-      return (
-        <SuccessMessage body="A password reset email has been sent to you. Please check your inbox." />
-      );
-    }
   };
 
   return (
     <section className="section">
       <div className="container">
-        {CheckForError()}
-        {ResetIsSuccessfull()}
+        <ToastContainer />
 
         <h3 className="has-text-weight-bold has-text-centered is-size-3">
           Reset your Password
