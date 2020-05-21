@@ -48,6 +48,8 @@ const CheckIfNotesExist = ({ allNotes, user, setNewNote, SearchInput, Notificati
         note.Title.toLowerCase().includes(SearchInput.toLowerCase())
       ) {
         return note;
+      } else {
+        return null;
       }
     });
 
