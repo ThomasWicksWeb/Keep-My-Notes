@@ -1,7 +1,5 @@
-import React from 'react'
-
-// Notifications
-import { toast, ToastContainer } from 'react-toastify';
+ // Notifications
+import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 
 export function NotificationSuccess({ text }) {
@@ -9,7 +7,4 @@ export function NotificationSuccess({ text }) {
   toast.success(text, {
     position: 'top-center',
   });
-  return <ToastContainer></ToastContainer>
 };
-
-// export default NotificationSuccess;
