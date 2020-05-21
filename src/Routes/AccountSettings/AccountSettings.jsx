@@ -1,7 +1,6 @@
-import React, { useEffect, useState } from 'react';
+import React from 'react';
 import { Link } from 'react-router-dom';
 import { Helmet } from 'react-helmet';
-import firebase from 'firebase';
 import 'bulma/css/bulma.css';
 import './Account.scss';
 import { ChangeEmail } from '../../components/ChangeEmail';
