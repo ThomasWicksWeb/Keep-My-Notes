@@ -1,29 +1,24 @@
-import React, { useState, useEffect } from 'react';
+import React, { useContext } from 'react';
 import { Link } from 'react-router-dom';
 import { Helmet } from 'react-helmet';
 import classnames from 'classnames';
 
-import * as firebase from 'firebase/app';
+import { AuthContext } from '../../contexts/AuthContext'
 
 import { TextPhotoBlock } from './TextPhotoBlock';
 import { TextPhotoBlockReversed } from './TextPhotoBlockReversed';
 import { CheckBoxListItem } from './CheckBoxListItem';
 import Emoji from '../../components/Emoji';
 import styles from './Index.module.scss';
+import BackgroundImage from '../../images/blue-bg-2.png';
 
 const IndexPage = () => {
-  const [user, setUser] = useState('');
-
-  useEffect(() => {
-    // setUser will take the whole user object. not point in storing mail and id separately :)
-    firebase.auth().onAuthStateChanged((user) => {
-      setUser(user);
-    });
-  }, []);
+  
+  const { userState } = useContext(AuthContext);
 
   // Buttons in the 'call to action' are dependent on if a user is logged in or not
   const CheckCallToActionButton = () => {
-    if (user) {
+    if (userState) {
       return (
         <strong>
           <Link className="button is-info" to="/notes">
@@ -45,9 +40,13 @@ const IndexPage = () => {
     }
   };
 
+  const backgroundImageURL = {
+    backgroundImage: `url(${BackgroundImage})`,
+  }
+
   return (
     <>
-      <section className="section">
+      <section className={classnames("section", styles.SplashSection)}  style={backgroundImageURL}>
         <article className={classnames('container', styles.MainWrapper)}>
           <div className={classnames('content', styles.content)}>
             <h2 className={classnames('is-size-1', styles.ScriptFont)}>
