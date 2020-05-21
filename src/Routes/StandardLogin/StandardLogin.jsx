@@ -2,7 +2,6 @@ import React, { useState } from 'react';
 import { Link, useHistory } from 'react-router-dom';
 import { Helmet } from 'react-helmet';
 import { ToastContainer, toast } from 'react-toastify';
-import 'react-toastify/dist/ReactToastify.css';
 
 import firebase from 'firebase';
 import classnames from 'classnames';
@@ -21,18 +20,17 @@ const StandardLogin = () => {
     firebase
       .auth()
       .signInWithEmailAndPassword(email, password)
-      .then(function (user) {
-        // user signed in
+      .then(function () {
         toast.success('Login successful!', {
           position: 'top-center',
-          autoClose: 3000
+          autoClose: 3000,
         });
         history.push('/notes');
       })
       .catch(function (error) {
         toast.error(error.message, {
           position: 'top-center',
-          autoClose: 3000
+          autoClose: 3000,
         });
       });
   };
