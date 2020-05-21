@@ -1,3 +1,8 @@
+.SplashSection {
+  background-position: center;
+  background-size: cover;
+}
+
 .MainWrapper {
   display: flex;
   justify-self: space-evenly;
@@ -8,6 +13,7 @@
 
 .content {
   flex: 1;
+  color: white
 }
 
 .ImageContent {
@@ -22,6 +28,7 @@
 
 .ScriptFont {
   font-family: 'Satisfy', cursive;
+  color: white !important
 }
 
 .groupedButtons {
