@@ -1,18 +1,15 @@
-import React, { useEffect, useState } from 'react';
+import React, { useContext } from 'react';
 import { Link, useHistory } from 'react-router-dom';
+
+// Import Auth Context
+import { AuthContext } from '../../contexts/AuthContext';
 
 import firebase from 'firebase';
 import './NavBar.scss';
 
 const NavBar = () => {
-  const [user, setUser] = useState('');
 
-  useEffect(() => {
-    // setUser will take the whole user object. not point in storing mail and id separately :)
-    firebase.auth().onAuthStateChanged((user) => {
-      setUser(user);
-    });
-  }, []);
+  const { userState } = useContext(AuthContext);
 
   const history = useHistory();
 
@@ -23,7 +20,7 @@ const NavBar = () => {
   };
 
   const buttons = () => {
-    if (!user) {
+    if (!userState) {
       return (
         <div className="buttons">
           <Link className="button is-info" to="/createaccount">
@@ -57,7 +54,6 @@ const NavBar = () => {
         <Link to="/" className="navbar-item is-size-3 ScriptFont">
           Keep My Notes
         </Link>
-        
 
         <button
           className="navbar-burger burger"
@@ -73,9 +69,9 @@ const NavBar = () => {
 
       <div id="navbarBasicExample" className="navbar-menu">
         <div className="navbar-start">
-        <Link to="/about" className="navbar-item">
-          <strong>About</strong>
-        </Link>
+          <Link to="/about" className="navbar-item">
+            <strong>About</strong>
+          </Link>
         </div>
 
         <div className="navbar-end">
