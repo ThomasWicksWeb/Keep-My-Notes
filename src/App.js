@@ -10,6 +10,8 @@ import * as firebase from 'firebase/app';
 import 'firebase/auth';
 import 'firebase/firestore';
 
+import AuthContextProvider from './contexts/AuthContext';
+
 // Styles
 import './BulmaFixes.scss';
 
@@ -40,17 +42,19 @@ function App() {
   return (
     <>
       <BrowserRouter>
-        <NavBar />
-        <Switch>
-          <Route exact path="/" component={IndexPage} />
-          <Route exact path="/home" component={IndexPage} />
-          <Route exact path="/about" component={About} />
-          <Route exact path="/account" component={AccountSettings} />
-          <Route exact path="/notes" component={Home} />
-          <Route exact path="/login" component={StandardLogin} />
-          <Route exact path="/resetpassword" component={ResetPassword} />
-          <Route exact path="/createaccount" component={CreateAccount} />
-        </Switch>
+        <AuthContextProvider>
+          <NavBar />
+          <Switch>
+            <Route exact path="/" component={IndexPage} />
+            <Route exact path="/account" component={AccountSettings} />
+            <Route exact path="/notes" component={Home} />
+            <Route exact path="/home" component={IndexPage} />
+            <Route exact path="/about" component={About} />
+            <Route exact path="/login" component={StandardLogin} />
+            <Route exact path="/resetpassword" component={ResetPassword} />
+            <Route exact path="/createaccount" component={CreateAccount} />
+          </Switch>
+        </AuthContextProvider>
       </BrowserRouter>
       <AppFooter />
     </>
