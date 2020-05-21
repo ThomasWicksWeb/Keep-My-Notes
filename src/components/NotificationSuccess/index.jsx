@@ -1,1 +1,1 @@
-export { default as NotificationSuccess } from './NotificationSuccess';
+export { NotificationSuccess } from './NotificationSuccess';
