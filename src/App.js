@@ -4,7 +4,7 @@ import { Route, Switch, BrowserRouter } from 'react-router-dom';
 
 // Firebase App (the core Firebase SDK) is always required and
 // must be listed before other Firebase SDKs
-import * as firebase from 'firebase/app';
+import { auth } from 'firebase/app';
 
 // Add the Firebase services that you want to use
 import 'firebase/auth';
@@ -31,7 +31,7 @@ import { CreateAccount } from './Routes/CreateAccount';
 import { ResetPassword } from './Routes/ResetPassword';
 
 function App() {
-  firebase.auth().onAuthStateChanged(function (user) {
+  auth().onAuthStateChanged(function (user) {
     if (user) {
       console.log("I'm logged in");
     } else {
