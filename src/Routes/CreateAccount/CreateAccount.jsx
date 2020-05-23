@@ -92,6 +92,10 @@ const CreateAccount = () => {
       </div>
       <Helmet>
         <title>Create Account | Keep My Notes</title>
+        <meta
+          name="description"
+          content="Create your Keep My Notes account"
+        />
       </Helmet>
     </section>
   );

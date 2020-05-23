@@ -100,6 +100,10 @@ const StandardLogin = () => {
       </div>
       <Helmet>
         <title>Login | Keep My Notes</title>
+        <meta
+          name="description"
+          content="Login to your Keep My Notes account"
+        />
       </Helmet>
     </section>
   );

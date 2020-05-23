@@ -8,6 +8,10 @@ const About = () => {
     <main>
       <Helmet>
         <title>About | Keep My Notes</title>
+        <meta
+          name="description"
+          content="About Keep My Notes and the developer"
+        />
       </Helmet>
       <section className="section">
         <div className="container content">

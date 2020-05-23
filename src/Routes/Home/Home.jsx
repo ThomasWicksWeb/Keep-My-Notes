@@ -205,6 +205,10 @@ const Home = () => {
       />
       <Helmet>
         <title>Notes | Keep My Notes</title>
+        <meta
+          name="description"
+          content="View all your notes..."
+        />
       </Helmet>
     </section>
   );

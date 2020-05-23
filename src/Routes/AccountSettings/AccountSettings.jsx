@@ -52,6 +52,10 @@ const Account = () => {
       </div>
       <Helmet>
         <title>Account | Keep My Notes</title>
+        <meta
+          name="description"
+          content="Account information and settings"
+        />
       </Helmet>
     </main>
   );

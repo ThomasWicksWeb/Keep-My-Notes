@@ -72,6 +72,10 @@ const ResetPassword = () => {
       </div>
       <Helmet>
         <title>Reset Password | Keep My Notes</title>
+        <meta
+          name="description"
+          content="Reset your Keep My Notes password"
+        />
       </Helmet>
     </section>
   );
