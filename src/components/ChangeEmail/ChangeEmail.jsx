@@ -1,22 +1,13 @@
 import React, { useState } from 'react';
 import firebase from 'firebase';
 import classnames from 'classnames';
-import { ErrorMessage } from '../Error';
-import { SuccessMessage } from '../SuccessMessage';
+
+import { toast, ToastContainer } from 'react-toastify';
 
 import styles from './ChangeEmail.module.scss';
 
 const ChangeEmail = () => {
   const [EmailField, SetEmailField] = useState('');
-  const [error, setError] = useState({
-    IsError: false,
-    ErrorMessage: '',
-  });
-
-  const [success, setSuccess] = useState({
-    IsSuccess: false,
-    SuccessMessage: '',
-  });
 
   var user = firebase.auth().currentUser;
 
@@ -34,45 +25,22 @@ const ChangeEmail = () => {
     user
       .updateEmail(EmailField)
       .then(function () {
-        console.log('Email updated!');
-        setSuccess({
-          IsSuccess: true,
-          SuccessMessage: '',
+        toast.success('Email successfully updated', {
+          position: 'top-center',
         });
-        CheckForError();
-        SetEmailField('');
       })
       .catch(function (error) {
-        setError({
-          IsError: true,
-          ErrorMessage: error.message,
+        toast.error(error.message, {
+          position: 'top-center',
         });
-        CheckForError();
       });
-  };
-
-  const CheckForError = () => {
-    if (error.IsError) {
-      console.log('Error', error.IsError);
-      return <ErrorMessage ErrorBody={error.ErrorMessage} />;
-    }
-  };
-
-  const CheckForSuccess = () => {
-    if (success.IsSuccess) {
-      console.log('Success', success.IsSuccess);
-      return (
-        <SuccessMessage body="Account email has been successfully changed!" />
-      );
-    }
   };
 
   return (
     <section>
       <form>
         <div className={classnames('field', styles.field)}>
-          {CheckForError()}
-          {CheckForSuccess()}
+          <ToastContainer />
           <div className="control">
             <input
               className="input"
