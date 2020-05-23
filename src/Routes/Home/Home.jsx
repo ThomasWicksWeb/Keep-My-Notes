@@ -1,13 +1,15 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useContext } from 'react';
 import { Helmet } from 'react-helmet';
 
 // Firebase
-import firebase from 'firebase';
 import { db } from '../../firebase';
+
+// Import Auth Context
+import { AuthContext } from '../../contexts/AuthContext';
 
 // Notifications
 import { ToastContainer, toast } from 'react-toastify';
-// import { NotificationSuccess } from '../../components/NotificationSuccess';
+import { NotificationSuccess } from '../../components/NotificationSuccess';
 // import { NotificationDanger } from '../../components/NotificationDanger';
 // import 'react-toastify/dist/ReactToastify.css';
 
@@ -24,11 +26,14 @@ import 'bulma/css/bulma.css';
 import styles from './Home.module.scss';
 
 const Home = () => {
-  // User specific data
-  const [user, setUser] = useState('');
+  // User data from AuthContext
+  const { userState } = useContext(AuthContext);
 
   // 'Add Note' modal is clased by default
   const [isOpenAddNewNote, setModalAddNewNote] = useState(false);
+
+  // Data for a new note to be added to Firebase
+  const [newNote, setNewNote] = useState({});
 
   // Array of all notes
   const [allNotes, setNotes] = useState([]);
@@ -39,30 +44,16 @@ const Home = () => {
   // Value for the <selevt> element to filter notes
   const [selectVal, setSelectedVal] = useState('desc');
 
-  // Data for a new note to be added to Firebase
-  const [newNote, setNewNote] = useState({
-    Title: '',
-    Content: '',
-    LastEdit: new Date(),
-    DocumentID: 0,
-  });
-
-  // On component load, get the current user and assign that returned object to the local 'user' state
-  useEffect(() => {
-    firebase.auth().onAuthStateChanged((user) => {
-      setUser(user);
-    });
-  }, []);
 
   // Fetches user's notes from Firestore once the user state is set
   useEffect(() => {
-    if (user) {
-      getCollectionData(user.uid).then(setNotes);
+    if (userState) {
+      getCollectionData(userState.uid).then(setNotes);
     }
-  }, [user, newNote, selectVal]);
+  }, [userState, newNote, selectVal]);
 
   // If the user's ID hasn't loaded, show nothing
-  if (!user) {
+  if (!userState) {
     return <></>;
   }
 
@@ -76,16 +67,18 @@ const Home = () => {
   };
 
   // Green success notification
-  const NotificationSuccess = (text) => {
-    toast.success(text, {
-      position: 'top-center',
-    });
-  };
+  // const NotificationSuccess = (text) => {
+  //   toast.success(text, {
+  //     position: 'top-center',
+  //     autoClose: 3000,
+  //   });
+  // };
 
   // Red danger notification
   const NotificationDanger = (text) => {
     toast.error(text, {
       position: 'top-center',
+      autoClose: 3000,
     });
   };
 
@@ -100,7 +93,7 @@ const Home = () => {
     if (selectVal === 'desc' || selectVal === 'asc') {
       const snapshot = await db
         .collection('users')
-        .doc(user.uid)
+        .doc(userState.uid)
         .collection('Notes')
         .orderBy('LastEdit', selectVal)
         .get();
@@ -112,7 +105,7 @@ const Home = () => {
       // Else sort by alphabetical order A -> Z
       const snapshot = await db
         .collection('users')
-        .doc(user.uid)
+        .doc(userState.uid)
         .collection('Notes')
         .orderBy('Title', 'asc')
         .get();
@@ -124,7 +117,7 @@ const Home = () => {
       // Else sort by alphabetical order Z -> A
       const snapshot = await db
         .collection('users')
-        .doc(user.uid)
+        .doc(userState.uid)
         .collection('Notes')
         .orderBy('Title', 'desc')
         .get();
@@ -168,8 +161,8 @@ const Home = () => {
                 </option>
                 <option value="desc">Newest</option>
                 <option value="asc">Oldest</option>
-                <option value="alphabeticalDesc">Alphabetical A->Z</option>
-                <option value="alphabeticalAsc">Alphabetical Z->A</option>
+                <option value="alphabeticalDesc">Alphabetical A -> Z</option>
+                <option value="alphabeticalAsc">Alphabetical Z -> A</option>
               </select>
             </div>
 
@@ -192,7 +185,7 @@ const Home = () => {
 
           {/* If notes exist, render them, else render placeholder */}
           <AllNotes
-            user={user}
+            user={userState}
             setNewNote={setNewNote}
             allNotes={allNotes}
             SearchInput={SearchInput}
@@ -205,13 +198,17 @@ const Home = () => {
       {/* Modal to add new note, doesn't matter where it's placed on the page here */}
       <ModalAddNewNote
         NotificationSuccess={NotificationSuccess}
-        UserID={user.uid}
+        UserID={userState.uid}
         toggleModal={toggleModalAddNewNote}
         isOpen={isOpenAddNewNote}
         setNewNote={setNewNote}
       />
       <Helmet>
         <title>Notes | Keep My Notes</title>
+        <meta
+          name="description"
+          content="View all your notes..."
+        />
       </Helmet>
     </section>
   );

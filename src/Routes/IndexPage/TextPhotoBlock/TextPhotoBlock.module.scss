@@ -1,37 +1,38 @@
 .MainWrapper {
-    display: flex;
-    justify-self: space-evenly;
-    align-items: center;
+  display: flex;
+  justify-self: space-evenly;
+  align-items: center;
+  margin: 2rem 0;
 }
 
 .content {
-    flex: 1;
+  flex: 1;
 }
 
 .ImageContent {
-    flex: 1;
-    display: flex;
+  flex: 2;
+  display: flex;
 
-    & img {
-        max-width: 80%;
-        margin: 0 auto;
-    }
+  & img {
+    margin: 0 auto 0 1.25rem;
+    padding: 0.5rem;
+  }
 }
 
 @media only screen and (max-width: 700px) {
-    .MainWrapper {
-      flex-direction: column;
-      padding: 2rem .5rem;
-    }
-  
-    .ScriptFont {
-      font-size: 2.75rem !important;
-    }
-  
-    .ImageContent {
-      flex: 0.75;
-      & img {
-        max-width: 95%;
-      }
+  .MainWrapper {
+    flex-direction: column;
+    padding: 2rem 0.5rem;
+  }
+
+  .ScriptFont {
+    font-size: 2.75rem !important;
+  }
+
+  .ImageContent {
+    flex: 0.75;
+    & img {
+      max-width: 95%;
     }
   }
+}

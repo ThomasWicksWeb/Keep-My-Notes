@@ -1,9 +1,9 @@
-import React, { useState, useEffect } from 'react';
+import React, { useContext } from 'react';
 import { Link } from 'react-router-dom';
 import { Helmet } from 'react-helmet';
 import classnames from 'classnames';
 
-import * as firebase from 'firebase/app';
+import { AuthContext } from '../../contexts/AuthContext';
 
 import { TextPhotoBlock } from './TextPhotoBlock';
 import { TextPhotoBlockReversed } from './TextPhotoBlockReversed';
@@ -11,19 +11,21 @@ import { CheckBoxListItem } from './CheckBoxListItem';
 import Emoji from '../../components/Emoji';
 import styles from './Index.module.scss';
 
-const IndexPage = () => {
-  const [user, setUser] = useState('');
+// Images
+import BackgroundImage from '../../images/blue-bg-4.png';
+import NotesExampleImage from '../../images/screenshot-notes.png';
+import FileSearchImage from '../../images/file-search.svg';
 
-  useEffect(() => {
-    // setUser will take the whole user object. not point in storing mail and id separately :)
-    firebase.auth().onAuthStateChanged((user) => {
-      setUser(user);
-    });
-  }, []);
+import CheckmarkImage from '../../images/checkmark.svg'
+import ResponsiveImage from '../../images/responsive.svg'
+import FileSyncImage from '../../images/sync-files.svg'
+
+const IndexPage = () => {
+  const { userState } = useContext(AuthContext);
 
   // Buttons in the 'call to action' are dependent on if a user is logged in or not
   const CheckCallToActionButton = () => {
-    if (user) {
+    if (userState) {
       return (
         <strong>
           <Link className="button is-info" to="/notes">
@@ -45,9 +47,16 @@ const IndexPage = () => {
     }
   };
 
+  const backgroundImageURL = {
+    backgroundImage: `url(${BackgroundImage})`,
+  };
+
   return (
     <>
-      <section className="section">
+      <section
+        className={classnames('section', styles.SplashSection)}
+        style={backgroundImageURL}
+      >
         <article className={classnames('container', styles.MainWrapper)}>
           <div className={classnames('content', styles.content)}>
             <h2 className={classnames('is-size-1', styles.ScriptFont)}>
@@ -70,28 +79,33 @@ const IndexPage = () => {
 
       <div className="container">
         <TextPhotoBlock
-          header="Stored in the cloud"
-          emoji="🌥️"
-          emojiLabel="High above in the cloud!"
-          paragraph1="All your data is backed up in the cloud so once you create a note, there's zero worry that you'll lose it"
-          img={'./images/UndrawCloudSync.svg'}
+          header="Note taking, kept super simple"
+          emoji="📝"
+          emojiLabel="Notepad"
+          paragraph1="A super simple notes app with none of the bloat."
+          paragraph2="It's so easy to find over-engineered applications these days, one of the main goals with Keep My Notes was to keep is straight-forward and easy to use."
+          img={NotesExampleImage}
         />
 
         <hr />
 
-        <ul className={classnames("container", styles.ListItemContainer)}>
+        <h3 className="is-size-2 has-text-centered has-text-weight-bold block">What we do well</h3>
+        <ul className={classnames('container', styles.ListItemContainer)}>
           <CheckBoxListItem
-            icon="fas fa-mobile"
+            img={ResponsiveImage}
+            imgAlt="Responsive design"
             title="Works on all platforms"
             subtitle="From your phone to laptop to desktop"
           />
           <CheckBoxListItem
-            icon="fas fa-check-circle"
+            img={CheckmarkImage}
+            imgAlt="Checkmark! Easy and simple to use!"
             title="Super simple and easy to use"
             subtitle="Easy to pickup Keep My Notes in just a few minutes"
           />
           <CheckBoxListItem
-            icon="fas fa-sync-alt"
+            img={FileSyncImage}
+            imgAlt="Notes are synced across all devices! Neato!"
             title="Synced Across all devices"
             subtitle="Your notes are wherever you are"
           />
@@ -100,17 +114,21 @@ const IndexPage = () => {
         <hr />
 
         <TextPhotoBlockReversed
-          header="Completely Secured Data"
-          emoji="🔒"
-          emojiLabel="Locked' n' secure!"
-          paragraph1="All of your notes are securely stored on Google's servers, for your eyes only"
-          paragraph2="So not only are your notes safe from hackers, but your notes will reach you in milliseconds with Google's infrastructure"
-          img={'./images/UndrawSecurity.svg'}
+          header="Easily search through all of your notes"
+          emoji=" 🔎"
+          emojiLabel="Searchin' searchin' searchin'!"
+          paragraph1="With our powerful search, you're able to easily find any of your notes in your collection."
+          paragraph2="There's no longer any need to worry about endlessly scrolling through all of your notes to find the one you're looking for - all of that hassle is far behind you."
+          img={FileSearchImage}
         />
       </div>
 
       <Helmet>
         <title>Welcome | Keep My Notes</title>
+        <meta
+          name="description"
+          content="Keep My Notes - the lightning fast notes app on the web!"
+        />
       </Helmet>
     </>
   );

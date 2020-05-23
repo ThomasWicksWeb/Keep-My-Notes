@@ -1,7 +1,8 @@
 import React, { useState } from 'react';
 import { Link, useHistory } from 'react-router-dom';
 import { Helmet } from 'react-helmet';
-import { ErrorMessage } from '../../components/Error';
+
+import { ToastContainer, toast } from 'react-toastify';
 
 import firebase from 'firebase';
 
@@ -11,11 +12,6 @@ import styles from './CreateAccount.module.scss';
 const CreateAccount = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
-
-  const [error, setError] = useState({
-    IsError: false,
-    ErrorMessage: '',
-  });
 
   let history = useHistory();
 
@@ -36,18 +32,10 @@ const CreateAccount = () => {
         history.push('/home');
       })
       .catch(function (error) {
-        setError({
-          IsError: true,
-          ErrorMessage: error.message,
+        toast.error(error.message, {
+          position: 'top-center',
         });
-        CheckForError();
       });
-  };
-
-  const CheckForError = () => {
-    if (error.IsError) {
-      return <ErrorMessage ErrorBody={error.ErrorMessage} />;
-    }
   };
 
   return (
@@ -57,7 +45,7 @@ const CreateAccount = () => {
           Create Account
         </h3>
 
-        {CheckForError()}
+        <ToastContainer />
 
         <form onSubmit={handleOnSubmit} className={styles.formContainer}>
           <div className="field">
@@ -104,6 +92,10 @@ const CreateAccount = () => {
       </div>
       <Helmet>
         <title>Create Account | Keep My Notes</title>
+        <meta
+          name="description"
+          content="Create your Keep My Notes account"
+        />
       </Helmet>
     </section>
   );

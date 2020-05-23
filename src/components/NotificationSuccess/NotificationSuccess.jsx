@@ -1,14 +1,10 @@
-import React from 'react';
-
-// Notifications
-import { ToastContainer, toast } from 'react-toastify';
+ // Notifications
+import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 
-const NotificationSuccess = ({ text }) => {
+export function NotificationSuccess({ text }) {
   console.log('test');
   toast.success(text, {
     position: 'top-center',
   });
 };
-
-export default NotificationSuccess;

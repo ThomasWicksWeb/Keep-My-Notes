@@ -1,3 +1,8 @@
+.SplashSection {
+  background-position: center;
+  background-size: cover;
+}
+
 .MainWrapper {
   display: flex;
   justify-self: space-evenly;
@@ -8,6 +13,7 @@
 
 .content {
   flex: 1;
+  color: white;
 }
 
 .ImageContent {
@@ -22,6 +28,7 @@
 
 .ScriptFont {
   font-family: 'Satisfy', cursive;
+  color: white !important;
 }
 
 .groupedButtons {
@@ -35,14 +42,10 @@
 }
 
 .ListItemContainer {
-  // display: grid;
-  // grid-template-columns: repeat(auto-fill, minmax(400px, 1fr)) !important;
-  // grid-gap: 30px !important;
-  display: flex;
-  flex-direction: column;
-  align-items: flex-start;
-
-  
+  display: grid !important;
+  grid-template-columns: repeat(auto-fit, minmax(350px, 1fr)) !important;
+  grid-gap: 30px !important;
+  margin: 0 auto;
 }
 
 @media only screen and (max-width: 1000px) {
@@ -56,13 +59,12 @@
       margin: 1rem auto;
     }
   }
-
 }
 
 @media only screen and (max-width: 700px) {
   .MainWrapper {
     flex-direction: column;
-    padding: 2rem .5rem;
+    padding: 2rem 0.5rem;
   }
 
   .ScriptFont {
