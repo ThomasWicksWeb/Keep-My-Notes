@@ -16,6 +16,10 @@ import BackgroundImage from '../../images/blue-bg-4.png';
 import NotesExampleImage from '../../images/screenshot-notes.png';
 import FileSearchImage from '../../images/file-search.svg';
 
+import CheckmarkImage from '../../images/checkmark.svg'
+import ResponsiveImage from '../../images/responsive.svg'
+import FileSyncImage from '../../images/sync-files.svg'
+
 const IndexPage = () => {
   const { userState } = useContext(AuthContext);
 
@@ -85,19 +89,23 @@ const IndexPage = () => {
 
         <hr />
 
+        <h3 className="is-size-2 has-text-centered has-text-weight-bold block">What we do well</h3>
         <ul className={classnames('container', styles.ListItemContainer)}>
           <CheckBoxListItem
-            icon="fas fa-mobile"
+            img={ResponsiveImage}
+            imgAlt="Responsive design"
             title="Works on all platforms"
             subtitle="From your phone to laptop to desktop"
           />
           <CheckBoxListItem
-            icon="fas fa-check-circle"
+            img={CheckmarkImage}
+            imgAlt="Checkmark! Easy and simple to use!"
             title="Super simple and easy to use"
             subtitle="Easy to pickup Keep My Notes in just a few minutes"
           />
           <CheckBoxListItem
-            icon="fas fa-sync-alt"
+            img={FileSyncImage}
+            imgAlt="Notes are synced across all devices! Neato!"
             title="Synced Across all devices"
             subtitle="Your notes are wherever you are"
           />
@@ -117,6 +125,10 @@ const IndexPage = () => {
 
       <Helmet>
         <title>Welcome | Keep My Notes</title>
+        <meta
+          name="description"
+          content="Keep My Notes - the lightning fast notes app on the web!"
+        />
       </Helmet>
     </>
   );
