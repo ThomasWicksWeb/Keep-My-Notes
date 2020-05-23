@@ -3,14 +3,12 @@ import classnames from 'classnames';
 import PropTypes from 'prop-types'
 import styles from './CheckBoxListItem.module.scss';
 
-const CheckBoxListItem = ({ icon, title, subtitle }) => {
+const CheckBoxListItem = ({ img, imgAlt, title, subtitle }) => {
   return (
     <li className={classnames('has-text-centered', styles.listItem)}>
-      <i
-        className={classnames('is-size-3', icon, styles.icon)}
-      ></i>
-      <h3 className={classnames('is-size-4', styles.iconTitle)}>{title}</h3>
-      <h4 className={classnames('is-size-6 has-text-grey', styles.iconSubtitle)}>{subtitle}</h4>
+      <img src={img} alt={imgAlt} className={styles.GridListImage} />
+      <h3 className='is-size-4'>{title}</h3>
+      <h4 className='is-size-6 has-text-grey'>{subtitle}</h4>
     </li>
   );
 };
