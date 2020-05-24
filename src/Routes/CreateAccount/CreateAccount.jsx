@@ -54,7 +54,7 @@ const CreateAccount = () => {
               <input
                 className="input"
                 type="email"
-                placeholder="Email"
+                placeholder="Your email"
                 required
                 value={email}
                 onChange={handleEmail}
@@ -68,7 +68,7 @@ const CreateAccount = () => {
               <input
                 className="input"
                 type="password"
-                placeholder="Password"
+                placeholder="Sshh... Don't tell anyone!"
                 required
                 value={password}
                 onChange={handlePassword}
