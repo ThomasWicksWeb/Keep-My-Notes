@@ -9,7 +9,8 @@ import { AuthContext } from '../../contexts/AuthContext';
 
 // Notifications
 import { ToastContainer, toast } from 'react-toastify';
-import { NotificationSuccess } from '../../components/NotificationSuccess';
+import 'react-toastify/dist/ReactToastify.css';
+// import { NotificationSuccess } from '../../components/NotificationSuccess';
 // import { NotificationDanger } from '../../components/NotificationDanger';
 // import 'react-toastify/dist/ReactToastify.css';
 
@@ -44,35 +45,77 @@ const Home = () => {
   // Value for the <selevt> element to filter notes
   const [selectVal, setSelectedVal] = useState('desc');
 
-
   // Fetches user's notes from Firestore once the user state is set
   useEffect(() => {
     if (userState) {
       getCollectionData(userState.uid).then(setNotes);
     }
-  }, [userState, newNote, selectVal]);
+  }, [userState, newNote]);
 
   // If the user's ID hasn't loaded, show nothing
   if (!userState) {
     return <></>;
   }
 
+  // Get initial set of notes from FireBase on page load
+  async function getCollectionData() {
+    const snapshot = await db
+      .collection('users')
+      .doc(userState.uid)
+      .collection('Notes')
+      .orderBy('LastEdit', 'desc')
+      .get();
+    const storedNotes = await Promise.all(
+      snapshot.docs.map(async (doc) => await doc.data())
+    );
+    return storedNotes;
+  }
+
+  // Handle search bar input
   const handleSearchInput = (e) => {
     setSearchInput(e.target.value);
   };
 
+  // Handle <select> filter input
   const handleSelectChange = (e) => {
-    console.log(e.target.value);
-    setSelectedVal(e.target.value);
+    const target = e.target.value;
+    setSelectedVal(target);
+
+    // Based on the selected sort value, sort the locally stored notes in selected order and update state
+
+    // Sort by more recently added/updated notes
+    if (target === 'desc') {
+      const SortedNotes = allNotes.sort((a, b) =>
+        a.LastEdit < b.LastEdit ? 1 : -1
+      );
+      setNotes(SortedNotes);
+
+      // Sort by oldest notes
+    } else if (target === 'asc') {
+      const SortedNotes = allNotes.sort((a, b) =>
+        b.LastEdit < a.LastEdit ? 1 : -1
+      );
+      setNotes(SortedNotes);
+
+      // Sort notes alphabetically A -> Z
+    } else if (target === 'alphabeticalDesc') {
+      const SortedNotes = allNotes.sort((a, b) => (a.Title > b.Title ? 1 : -1));
+      setNotes(SortedNotes);
+
+      // Sort notes alphabetically Z -> A
+    } else if (target === 'alphabeticalAsc') {
+      const SortedNotes = allNotes.sort((a, b) => (b.Title > a.Title ? 1 : -1));
+      setNotes(SortedNotes);
+    }
   };
 
   // Green success notification
-  // const NotificationSuccess = (text) => {
-  //   toast.success(text, {
-  //     position: 'top-center',
-  //     autoClose: 3000,
-  //   });
-  // };
+  const NotificationSuccess = (text) => {
+    toast.success(text, {
+      position: 'top-center',
+      autoClose: 3000,
+    });
+  };
 
   // Red danger notification
   const NotificationDanger = (text) => {
@@ -86,47 +129,6 @@ const Home = () => {
   const toggleModalAddNewNote = () => {
     setModalAddNewNote(!isOpenAddNewNote);
   };
-
-  // Async retrieves notes from Firebase Firestore for current user
-  async function getCollectionData() {
-    // Sort by desc or asc (desc by default on page load)
-    if (selectVal === 'desc' || selectVal === 'asc') {
-      const snapshot = await db
-        .collection('users')
-        .doc(userState.uid)
-        .collection('Notes')
-        .orderBy('LastEdit', selectVal)
-        .get();
-      const storedNotes = await Promise.all(
-        snapshot.docs.map(async (doc) => await doc.data())
-      );
-      return storedNotes;
-    } else if (selectVal === 'alphabeticalDesc') {
-      // Else sort by alphabetical order A -> Z
-      const snapshot = await db
-        .collection('users')
-        .doc(userState.uid)
-        .collection('Notes')
-        .orderBy('Title', 'asc')
-        .get();
-      const storedNotes = await Promise.all(
-        snapshot.docs.map(async (doc) => await doc.data())
-      );
-      return storedNotes;
-    } else {
-      // Else sort by alphabetical order Z -> A
-      const snapshot = await db
-        .collection('users')
-        .doc(userState.uid)
-        .collection('Notes')
-        .orderBy('Title', 'desc')
-        .get();
-      const storedNotes = await Promise.all(
-        snapshot.docs.map(async (doc) => await doc.data())
-      );
-      return storedNotes;
-    }
-  }
 
   return (
     <section className="section">
@@ -185,12 +187,12 @@ const Home = () => {
 
           {/* If notes exist, render them, else render placeholder */}
           <AllNotes
-            user={userState}
-            setNewNote={setNewNote}
-            allNotes={allNotes}
-            SearchInput={SearchInput}
-            NotificationSuccess={NotificationSuccess}
-            NotificationDanger={NotificationDanger}
+            user={userState} // Pass user object for FireBase calls
+            setNewNote={setNewNote} // Function to add a new note to FireBase
+            allNotes={allNotes} // Array of 'note' objects
+            SearchInput={SearchInput} // Pass search input for .filter
+            NotificationSuccess={NotificationSuccess} // Notification needs to be passed as a prop or else it will not be shown
+            NotificationDanger={NotificationDanger} // Notification needs to be passed as a prop or else it will not be shown
           />
         </div>
       </div>
@@ -205,10 +207,7 @@ const Home = () => {
       />
       <Helmet>
         <title>Notes | Keep My Notes</title>
-        <meta
-          name="description"
-          content="View all your notes..."
-        />
+        <meta name="description" content="View all your notes..." />
       </Helmet>
     </section>
   );
