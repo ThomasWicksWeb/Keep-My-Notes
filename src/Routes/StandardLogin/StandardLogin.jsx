@@ -21,10 +21,6 @@ const StandardLogin = () => {
       .auth()
       .signInWithEmailAndPassword(email, password)
       .then(function () {
-        toast.success('Login successful!', {
-          position: 'top-center',
-          autoClose: 3000,
-        });
         history.push('/notes');
       })
       .catch(function (error) {
