@@ -10,9 +10,6 @@ import { AuthContext } from '../../contexts/AuthContext';
 // Notifications
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
-// import { NotificationSuccess } from '../../components/NotificationSuccess';
-// import { NotificationDanger } from '../../components/NotificationDanger';
-// import 'react-toastify/dist/ReactToastify.css';
 
 // Custom components
 import { AllNotes } from './AllNotes';
