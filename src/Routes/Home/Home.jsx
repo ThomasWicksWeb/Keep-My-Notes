@@ -51,7 +51,6 @@ const Home = () => {
       getCollectionData(userState.uid).then(setNotes);
     }
   }, [userState, newNote]);
-  // }, [userState, newNote, selectVal]);
 
   // If the user's ID hasn't loaded, show nothing
   if (!userState) {
@@ -82,7 +81,7 @@ const Home = () => {
     const target = e.target.value;
     setSelectedVal(target);
 
-    // Based on the selected sort value, sort the locally stored notes and update state
+    // Based on the selected sort value, sort the locally stored notes in selected order and update state
 
     // Sort by more recently added/updated notes
     if (target === 'desc') {
@@ -130,48 +129,6 @@ const Home = () => {
   const toggleModalAddNewNote = () => {
     setModalAddNewNote(!isOpenAddNewNote);
   };
-
-
-  // Async retrieves notes from Firebase Firestore for current user
-  // async function getCollectionData() {
-  //   // Sort by desc or asc (desc by default on page load)
-  //   if (selectVal === 'desc' || selectVal === 'asc') {
-  //     const snapshot = await db
-  //       .collection('users')
-  //       .doc(userState.uid)
-  //       .collection('Notes')
-  //       .orderBy('LastEdit', selectVal)
-  //       .get();
-  //     const storedNotes = await Promise.all(
-  //       snapshot.docs.map(async (doc) => await doc.data())
-  //     );
-  //     return storedNotes;
-  //   } else if (selectVal === 'alphabeticalDesc') {
-  //     // Else sort by alphabetical order A -> Z
-  //     const snapshot = await db
-  //       .collection('users')
-  //       .doc(userState.uid)
-  //       .collection('Notes')
-  //       .orderBy('Title', 'asc')
-  //       .get();
-  //     const storedNotes = await Promise.all(
-  //       snapshot.docs.map(async (doc) => await doc.data())
-  //     );
-  //     return storedNotes;
-  //   } else {
-  //     // Else sort by alphabetical order Z -> A
-  //     const snapshot = await db
-  //       .collection('users')
-  //       .doc(userState.uid)
-  //       .collection('Notes')
-  //       .orderBy('Title', 'desc')
-  //       .get();
-  //     const storedNotes = await Promise.all(
-  //       snapshot.docs.map(async (doc) => await doc.data())
-  //     );
-  //     return storedNotes;
-  //   }
-  // }
 
   return (
     <section className="section">
