@@ -1,0 +1,9 @@
+.FilterAndSearch {
+  display: flex;
+  margin: -.75rem 0 2.5rem 0;
+
+  & .searchContainer {
+    flex: 1;
+    padding-left: 1.5rem;
+  }
+}
