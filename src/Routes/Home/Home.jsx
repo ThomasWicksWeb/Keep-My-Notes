@@ -13,16 +13,13 @@ import 'react-toastify/dist/ReactToastify.css';
 
 // Custom components
 import { AllNotes } from './AllNotes';
+import { CreateNote } from './CreateNote';
 import { ModalAddNewNote } from './ModalAddNewNote';
 import { FilterAndSearch } from './FilterAndSearch';
 import Emoji from '../../components/Emoji';
 
-// Third party
-import classnames from 'classnames';
-
 // Styling
 import 'bulma/css/bulma.css';
-import styles from './Home.module.scss';
 
 const Home = () => {
   // User data from AuthContext
@@ -30,16 +27,12 @@ const Home = () => {
 
   // 'Add Note' modal is clased by default
   const [isOpenAddNewNote, setModalAddNewNote] = useState(false);
-
   // Data for a new note to be added to Firebase
   const [newNote, setNewNote] = useState({});
-
   // Array of all notes
   const [allNotes, setNotes] = useState([]);
-
   // Search field input
   const [SearchInput, setSearchInput] = useState('');
-
   // Value for the <selevt> element to filter notes
   const [selectVal, setSelectedVal] = useState('desc');
 
@@ -99,18 +92,10 @@ const Home = () => {
               My Notes <Emoji Emoji="✏️" Label="Note Pad" />
             </strong>
           </h1>
-
           <hr />
 
-          {/* Button to open modal to create new note */}
-          <button
-            className={classnames('button is-info', styles.createNoteButton)}
-            onClick={toggleModalAddNewNote}
-          >
-            <strong>
-              Create Note <i className="fas fa-plus"></i>
-            </strong>
-          </button>
+          {/* Button to open a modal to create a new note */}
+          <CreateNote toggleModalAddNewNote={toggleModalAddNewNote} />
 
           {/* <select> filters and search input */}
           <FilterAndSearch
@@ -142,7 +127,7 @@ const Home = () => {
         isOpen={isOpenAddNewNote}
         setNewNote={setNewNote}
       />
-      <ToastContainer />
+      <ToastContainer /> 
       <Helmet>
         <title>Notes | Keep My Notes</title>
         <meta name="description" content="View all your notes..." />
