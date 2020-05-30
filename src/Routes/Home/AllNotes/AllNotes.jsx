@@ -6,7 +6,7 @@ import Emoji from '../../../components/Emoji';
 import styles from './AllNotes.module.scss';
 
 // If no notes exist for the user, return placeholder <div> letting the user know that no notes exist
-const CheckIfNotesExist = ({ allNotes, user, setNewNote, SearchInput, NotificationSuccess, NotificationDanger }) => {
+const AllNotes = ({ allNotes, user, setNewNote, SearchInput, NotificationSuccess, NotificationDanger }) => {
   // If there aren't any notes, display text saying so
   if (allNotes.length === 0) {
     return (
@@ -74,11 +74,11 @@ const CheckIfNotesExist = ({ allNotes, user, setNewNote, SearchInput, Notificati
   }
 };
 
-CheckIfNotesExist.propType = {
+AllNotes.propType = {
   allNotes: PropTypes.array.isRequired,
   user: PropTypes.object.isRequired,
   SearchInput: PropTypes.string.isRequired,
   setNewNote: PropTypes.func.isRequired,
 };
 
-export default CheckIfNotesExist;
+export default AllNotes;

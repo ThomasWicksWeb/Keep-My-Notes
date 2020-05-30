@@ -13,15 +13,13 @@ import 'react-toastify/dist/ReactToastify.css';
 
 // Custom components
 import { AllNotes } from './AllNotes';
+import { CreateNote } from './CreateNote';
 import { ModalAddNewNote } from './ModalAddNewNote';
+import { FilterAndSearch } from './FilterAndSearch';
 import Emoji from '../../components/Emoji';
-
-// Third party
-import classnames from 'classnames';
 
 // Styling
 import 'bulma/css/bulma.css';
-import styles from './Home.module.scss';
 
 const Home = () => {
   // User data from AuthContext
@@ -29,16 +27,12 @@ const Home = () => {
 
   // 'Add Note' modal is clased by default
   const [isOpenAddNewNote, setModalAddNewNote] = useState(false);
-
   // Data for a new note to be added to Firebase
   const [newNote, setNewNote] = useState({});
-
   // Array of all notes
   const [allNotes, setNotes] = useState([]);
-
   // Search field input
   const [SearchInput, setSearchInput] = useState('');
-
   // Value for the <selevt> element to filter notes
   const [selectVal, setSelectedVal] = useState('desc');
 
@@ -68,44 +62,6 @@ const Home = () => {
     return storedNotes;
   }
 
-  // Handle search bar input
-  const handleSearchInput = (e) => {
-    setSearchInput(e.target.value);
-  };
-
-  // Handle <select> filter input
-  const handleSelectChange = (e) => {
-    const target = e.target.value;
-    setSelectedVal(target);
-
-    // Based on the selected sort value, sort the locally stored notes in selected order and update state
-
-    // Sort by more recently added/updated notes
-    if (target === 'desc') {
-      const SortedNotes = allNotes.sort((a, b) =>
-        a.LastEdit < b.LastEdit ? 1 : -1
-      );
-      setNotes(SortedNotes);
-
-      // Sort by oldest notes
-    } else if (target === 'asc') {
-      const SortedNotes = allNotes.sort((a, b) =>
-        b.LastEdit < a.LastEdit ? 1 : -1
-      );
-      setNotes(SortedNotes);
-
-      // Sort notes alphabetically A -> Z
-    } else if (target === 'alphabeticalDesc') {
-      const SortedNotes = allNotes.sort((a, b) => (a.Title > b.Title ? 1 : -1));
-      setNotes(SortedNotes);
-
-      // Sort notes alphabetically Z -> A
-    } else if (target === 'alphabeticalAsc') {
-      const SortedNotes = allNotes.sort((a, b) => (b.Title > a.Title ? 1 : -1));
-      setNotes(SortedNotes);
-    }
-  };
-
   // Green success notification
   const NotificationSuccess = (text) => {
     toast.success(text, {
@@ -129,8 +85,6 @@ const Home = () => {
 
   return (
     <section className="section">
-      <ToastContainer />
-
       <div className="container content">
         <div className="content">
           <h1 className="is-size-2 has-text-weight-bold">
@@ -138,49 +92,20 @@ const Home = () => {
               My Notes <Emoji Emoji="✏️" Label="Note Pad" />
             </strong>
           </h1>
-
           <hr />
 
-          {/* Button to open modal to create new note */}
-          <button
-            className={classnames('button is-info', styles.createNoteButton)}
-            onClick={toggleModalAddNewNote}
-          >
-            <strong>
-              Create Note <i className="fas fa-plus"></i>
-            </strong>
-          </button>
+          {/* Button to open a modal to create a new note */}
+          <CreateNote toggleModalAddNewNote={toggleModalAddNewNote} />
 
-          <div className={styles.FilterAndSearch}>
-            {/* Select element to filter notes by */}
-            <div className="select">
-              <select value={selectVal} onChange={handleSelectChange}>
-                <option disabled value="desc">
-                  Sort Notes
-                </option>
-                <option value="desc">Newest</option>
-                <option value="asc">Oldest</option>
-                <option value="alphabeticalDesc">Alphabetical A -> Z</option>
-                <option value="alphabeticalAsc">Alphabetical Z -> A</option>
-              </select>
-            </div>
-
-            {/* Input field to search notes */}
-            <div className={classnames('field', styles.searchContainer)}>
-              <p className="control has-icons-left">
-                <input
-                  className="input"
-                  type="email"
-                  placeholder="Search notes"
-                  value={SearchInput}
-                  onChange={handleSearchInput}
-                />
-                <span className="icon is-small is-left">
-                  <i className="fas fa-search"></i>
-                </span>
-              </p>
-            </div>
-          </div>
+          {/* <select> filters and search input */}
+          <FilterAndSearch
+            setNotes={setNotes}
+            setSearchInput={setSearchInput}
+            setSelectedVal={setSelectedVal}
+            selectVal={selectVal}
+            allNotes={allNotes}
+            SearchInput={SearchInput}
+          />
 
           {/* If notes exist, render them, else render placeholder */}
           <AllNotes
@@ -202,6 +127,7 @@ const Home = () => {
         isOpen={isOpenAddNewNote}
         setNewNote={setNewNote}
       />
+      <ToastContainer /> 
       <Helmet>
         <title>Notes | Keep My Notes</title>
         <meta name="description" content="View all your notes..." />
