@@ -1,9 +1,6 @@
 import React, { useContext } from 'react';
 import { Link, useHistory } from 'react-router-dom';
 
-// Toast notifications
-import { toast, ToastContainer } from 'react-toastify';
-
 // Import Auth Context
 import { AuthContext } from '../../contexts/AuthContext';
 
@@ -18,10 +15,7 @@ const NavBar = () => {
   // Handles user logout
   const handleLogout = () => {
     firebase.auth().signOut();
-    toast.success('Successfully logged out', {
-      position: 'top-center',
-    });
-    history.push('/login');
+    history.push('/');
   };
 
   const AuthDependantButtons = () => {
@@ -55,7 +49,6 @@ const NavBar = () => {
 
   return (
     <nav className="navbar" role="navigation" aria-label="main navigation">
-      <ToastContainer />
       <div className="navbar-brand">
         <Link to="/" className="navbar-item is-size-3 ScriptFont">
           Keep My Notes
