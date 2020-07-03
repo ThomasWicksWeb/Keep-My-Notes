@@ -47,15 +47,15 @@ const IndexPage = () => {
     }
   };
 
-  const backgroundImageURL = {
-    backgroundImage: `url(${BackgroundImage})`,
-  };
+  // const backgroundImageURL = {
+  //   backgroundImage: `url(${BackgroundImage})`,
+  // };
 
   return (
     <>
       <section
         className={classnames('section', styles.SplashSection)}
-        style={backgroundImageURL}
+        // style={backgroundImageURL}
       >
         <article className={classnames('container', styles.MainWrapper)}>
           <div className={classnames('content', styles.content)}>
