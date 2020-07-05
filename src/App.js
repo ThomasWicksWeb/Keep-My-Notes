@@ -16,7 +16,7 @@ import { NavBar } from './components/NavBar';
 import { AppFooter } from './components/Footer';
 
 // Logged in content
-import { Home } from './Routes/Home';
+import { Notes } from './Routes/Notes';
 import { AccountSettings } from './Routes/AccountSettings';
 
 // Logged out content
@@ -36,7 +36,7 @@ function App() {
             <Switch>
               <Route exact path="/" component={IndexPage} />
               <Route exact path="/account" component={AccountSettings} />
-              <Route exact path="/notes" component={Home} />
+              <Route exact path="/notes" component={Notes} />
               <Route exact path="/home" component={IndexPage} />
               <Route exact path="/about" component={About} />
               <Route exact path="/login" component={StandardLogin} />
