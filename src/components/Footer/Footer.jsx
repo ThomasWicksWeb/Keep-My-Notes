@@ -1,6 +1,6 @@
 import React from 'react';
 
-import {ExternalLink} from '../ExternalLink';
+import { ExternalLink } from '../ExternalLink';
 
 function AppFooter() {
   return (
@@ -32,7 +32,20 @@ function AppFooter() {
             className="is-size-6 hvr-sweep-to-right text-highlight has-text-weight-bold"
           ></ExternalLink>{' '}
         </p>
-        <p className="is-size-6">Site last updated <strong>July<sup>3rd</sup>, 2020</strong></p>
+        <p className="is-size-6">
+          Notice an error? Report a bug{' '}
+          <ExternalLink
+            text="here"
+            href="https://thomaswicks.com/report"
+            className="text-highlight hvr-sweep-to-right has-text-weight-bold"
+          ></ExternalLink>{' '}
+        </p>
+        <p className="is-size-6">
+          Site last updated{' '}
+          <strong>
+            July<sup>16th</sup>, 2020
+          </strong>
+        </p>
       </div>
     </footer>
   );
