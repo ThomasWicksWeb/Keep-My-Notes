@@ -10,7 +10,7 @@ const ModalDelete = ({
   toggleModalDelete,
   isOpen,
   setNewNote,
-  NotificationSuccess
+  NotificationSuccess,
 }) => {
   const DeleteNote = (e) => {
     e.preventDefault();
@@ -22,10 +22,9 @@ const ModalDelete = ({
       .delete()
       .then(() => {
         setNewNote({});
-        console.log('Deleted!');
       });
 
-      NotificationSuccess("Note successfully deleted")
+    NotificationSuccess('Note successfully deleted');
 
     // Close modal on update
     toggleModalDelete();
@@ -35,7 +34,7 @@ const ModalDelete = ({
     return (
       <aside className="modal is-active">
         <div className="modal-background" onClick={toggleModalDelete}></div>
-        <div className={classnames("modal-card", styles.modal)}>
+        <div className={classnames('modal-card', styles.modal)}>
           <header className="modal-card-head">
             <div className="modal-card-title">
               <h4 className="has-text-weight-normal">
