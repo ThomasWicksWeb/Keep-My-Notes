@@ -19,7 +19,7 @@ const Modal = ({
   useEffect(() => {
     setInputTitle(note.Title);
     setInputBody(note.Content);
-  }, []);
+  }, [note.Title, note.Content]);
 
   // Handles input field for note title
   const handleTitleChange = (e) => {
