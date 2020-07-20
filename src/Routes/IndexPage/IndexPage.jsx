@@ -12,7 +12,6 @@ import Emoji from '../../components/Emoji';
 import styles from './Index.module.scss';
 
 // Images
-import BackgroundImage from '../../images/blue-bg-4.png';
 import NotesExampleImage from '../../images/screenshot-notes.png';
 import FileSearchImage from '../../images/file-search.svg';
 
@@ -46,10 +45,6 @@ const IndexPage = () => {
       );
     }
   };
-
-  // const backgroundImageURL = {
-  //   backgroundImage: `url(${BackgroundImage})`,
-  // };
 
   return (
     <>
