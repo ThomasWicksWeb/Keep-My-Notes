@@ -6,9 +6,7 @@ import styles from './ModalEdit.module.scss';
 import { db } from '../../../../firebase';
 
 const Modal = ({
-  Title,
-  Body,
-  DocumentID,
+  note,
   UserID,
   toggleModal,
   isOpen,
@@ -19,8 +17,8 @@ const Modal = ({
   const [inputBody, setInputBody] = useState('');
 
   useEffect(() => {
-    setInputTitle(Title);
-    setInputBody(Body);
+    setInputTitle(note.Title);
+    setInputBody(note.Content);
   }, []);
 
   // Handles input field for note title
@@ -39,18 +37,18 @@ const Modal = ({
     db.collection('users')
       .doc(UserID)
       .collection('Notes')
-      .doc(DocumentID)
+      .doc(note.DocumentID)
       .update({
         Title: inputTitle,
         Content: inputBody,
-        DocumentID: DocumentID,
+        DocumentID: note.DocumentID,
         LastEdit: firebase.firestore.FieldValue.serverTimestamp(),
       })
       .then(() => {
         setNewNote({
           Title: inputTitle,
           Content: inputBody,
-          DocumentID: DocumentID,
+          DocumentID: note.DocumentID,
           LastEdit: firebase.firestore.FieldValue.serverTimestamp(),
         });
         NotificationSuccess('Note edited!');
@@ -61,7 +59,7 @@ const Modal = ({
   };
 
   const CheckIfEdited = () => {
-    if (Body === inputBody && Title === inputTitle) {
+    if (note.Content === inputBody && note.Title === inputTitle) {
       return (
         <button className="button is-success" disabled type="submit">
           Save changes
@@ -141,9 +139,7 @@ const Modal = ({
 };
 
 Modal.propTypes = {
-  Title: PropTypes.string.isRequired,
-  Body: PropTypes.string.isRequired,
-  DocumentID: PropTypes.string.isRequired,
+  note: PropTypes.object.isRequired,
   UserID: PropTypes.string.isRequired,
   toggleModal: PropTypes.func.isRequired,
   isOpen: PropTypes.bool.isRequired,
