@@ -64,9 +64,10 @@ const Note = ({ note, user, setNewNote, NotificationSuccess, NotificationDanger 
       />
 
       <ModalEdit
-        Title={note.Title}
-        Body={note.Content}
-        DocumentID={note.DocumentID}
+        // Title={note.Title}
+        // Body={note.Content}
+        // DocumentID={note.DocumentID}
+        note={note}
         UserID={user.uid}
         toggleModal={toggleModalEdit}
         isOpen={isOpen}
