@@ -68,8 +68,8 @@ const FilterAndSearch = ({
           </option>
           <option value="desc">Newest</option>
           <option value="asc">Oldest</option>
-          <option value="alphabeticalDesc">Alphabetical A -> Z</option>
-          <option value="alphabeticalAsc">Alphabetical Z -> A</option>
+          <option value="alphabeticalDesc">Alphabetical A -&gt; Z</option>
+          <option value="alphabeticalAsc">Alphabetical Z -&gt; A</option>
         </select>
       </div>
 
